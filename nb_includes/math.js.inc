@@ -7,12 +7,14 @@
 (function(_global) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-_global.random = function(max) {
-	if (max <= 0)
-		return undefined;
-	return Math.floor(Math.random() * max);
-}
-
+//underscore Return a random integer between min and max (inclusive). Does not check for <0 values
+_global.random = function (min, max) {
+    if (max == null) {
+        max = min;
+        min = 0;
+    }
+    return min + (0 | Math.random() * (max - min + 1));
+};
 
 // taken from underscore
 _global.uniqueId = function(prefix) {
