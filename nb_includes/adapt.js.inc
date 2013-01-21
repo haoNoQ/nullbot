@@ -221,8 +221,12 @@ function classifyObject(obj) {
 			ret.as += 1 / 3;
 		}
 	}
-	ret.kweapon += 1 / 2;
-	ret.tweapon += 1 / 2;
+	for (var i = 0; i < obj.weaponlist.length; ++i) {
+		if (getWeaponInfo(obj.weaponlist[i]).class == "KINETIC")
+			ret.kweapon += 1;
+		else
+			ret.tweapon += 1;
+	}
 	if (obj.type === STRUCTURE || (obj.type === DROID && isVTOL(obj)))
 		ret.tbody += 1;
 	else if (obj.type === DROID && obj.droidType === DROID_CYBORG)
