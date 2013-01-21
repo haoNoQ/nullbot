@@ -121,7 +121,7 @@ _global.checkProduction = function() {
 		if (structures.hqs.length > 0 && countStructList(structures.hqs) < 1)
 			return false; // don't cheat by producing vtols before design is available
 		return produceVtol(factory);
-	});	
+	});
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
