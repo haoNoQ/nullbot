@@ -13,8 +13,11 @@ _global.random = function(max) {
 	return Math.floor(Math.random() * max);
 }
 
-_global.randomID = function() {
-	return random(1000000) + "_" + random(1000000) + "_"+random(1000000) + "_"+random(1000000) + "_"+random(1000000) + "_"+random(1000000);
+
+// taken from underscore
+_global.uniqueId = function(prefix) {
+	 var id = '' + ++idCounter;
+     return prefix ? prefix + id : id;
 }
 
 // some useful array functions
