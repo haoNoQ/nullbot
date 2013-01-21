@@ -110,7 +110,7 @@ _global.checkProduction = function() {
 			return produceTruck(factory);
 		else {
 			if (structures.hqs.length === 0 || countStructList(structures.hqs) < 1)
-				return false; // don't cheat by producing tanks before design is available (also saves money for early powergens)
+				return false; // don't cheat by producing tanks before design is available (also saves money for early power generators)
 			return produceTank(factory);
 		}
 	});

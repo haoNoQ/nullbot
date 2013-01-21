@@ -28,10 +28,10 @@ function doResearch(lab) {
 		if (pursueResearch(lab, personality.earlyResearch))
 			return true;
 	// then, see if we want to research some weapons
-	if (random(4) > 0) { // TODO: make a more thoughtful desicion here
+	if (random(4) > 0) { // TODO: make a more thoughtful decision here
 		var weaponPaths = personality.weaponPaths.filterProperty("role", chooseClass());
 		var list = [];
-		var aspect = random(5); // TODO: make a more thoughtful desicion here
+		var aspect = random(5); // TODO: make a more thoughtful decision here
 		if (aspect > 3) aspect = 0;
 		weaponPaths.forEach(function(statlist) {
 			list = list.concat(weaponStatsToResList(statlist, aspect));

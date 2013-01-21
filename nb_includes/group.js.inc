@@ -13,7 +13,7 @@ _global.vtolGroup = miscGroup + 1;
 var groupInfo = [];
 
 function GroupInfo() {
-	this.cachedTarget = undefined; // the actual targer the group is pursuing
+	this.cachedTarget = undefined; // the actual target the group is pursuing
 	this.lastAttacked = undefined; // gameTime at the moment of the last unit loss
 }
 

@@ -328,7 +328,7 @@ function getMyGroupInfo(gr) {
 
 //
 // here be functions for querying statistics gathered above
-// and making adaptive desicions
+// and making adaptive decisions
 //
 
 function groupOurs(gr) {
