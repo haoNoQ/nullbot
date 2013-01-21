@@ -38,7 +38,7 @@ var personality = {
 		"R-Vehicle-Prop-Halftracks",
 		"R-Struc-PowerModuleMk1",
 	],
-	minTanks: 3, // minimal attack force at game start; double it to get the maximum group size
+	minTanks: 3, // minimal attack force at game start
 	becomeHarder: 2, // how much to increase attack force every 5 minutes
 	maxTanks: 13, // maximum for the minTanks value (since it grows at becomeHarder rate)
 	minTrucks: 5, // minimal number of trucks around
