@@ -221,8 +221,8 @@ function classifyObject(obj) {
 			ret.as += 1 / 3;
 		}
 	}
-	for (var i = 0; i < obj.weaponlist.length; ++i) {
-		if (getWeaponInfo(obj.weaponlist[i]).class == "KINETIC")
+	for (var i = 0; i < obj.weapons.length; ++i) {
+		if (getWeaponInfo(obj.weapons[i].name)["class"] === "KINETIC")
 			ret.kweapon += 1;
 		else
 			ret.tweapon += 1;
@@ -367,7 +367,7 @@ function groupTheirs(gr) {
 	return cached(uncached, 500, gr);
 }
 
-_global.chooseClass = function chooseClass(gr) {
+_global.chooseWeaponRole = function(gr) {
 	function uncached() {
 		var ours = groupOurs(gr), theirs = groupTheirs(gr);
 		var totalTheirs = theirs.tank + theirs.borg + theirs.defs + theirs.vtol;
@@ -392,6 +392,27 @@ _global.chooseClass = function chooseClass(gr) {
 				maxIdx = i;
 			}
 		return maxIdx;
+	}
+	return cached(uncached, 5000, gr);
+}
+
+_global.chooseBodyClass = function(gr) {
+	function uncached() {
+		var ours = groupOurs(gr), theirs = groupTheirs(gr);
+		var totalTheirs = theirs.kweapon + theirs.tweapon;
+		var totalOurs = ours.kbody + ours.tbody;
+		if (totalTheirs === 0)
+			return random(2) ? BODYCLASS.KINETIC : BODYCLASS.THERMAL;
+		var rating = [];
+		rating[BODYCLASS.KINETIC] = theirs.kweapon / totalTheirs;
+		rating[BODYCLASS.THERMAL] = theirs.tweapon / totalTheirs;
+		if (totalOurs > 0) {
+			rating[BODYCLASS.KINETIC] -= ours.kbody / totalOurs;
+			rating[BODYCLASS.THERMAL] -= ours.tbody / totalOurs;
+		}
+		if (rating[BODYCLASS.THERMAL] > rating[BODYCLASS.KINETIC])
+			return rating[BODYCLASS.THERMAL];
+		return BODYCLASS.KINETIC;
 	}
 	return cached(uncached, 5000, gr);
 }

@@ -175,7 +175,7 @@ function buildTowers() {
 		return false;
 	if (throttled(4 * personality.defenseTimer / oils.length))
 		return false;
-	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseClass());
+	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
 	var list = [];
 	weaponPaths.forEach(function(statlist) {
 		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.STANDALONE));
@@ -199,7 +199,7 @@ function buildGateways() {
 		return;
 	if (throttled(4 * personality.defenseTimer / oils))
 		return false;
-	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseClass());
+	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
 	var list = [];
 	weaponPaths.forEach(function(statlist) {
 		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.GATEWAY));

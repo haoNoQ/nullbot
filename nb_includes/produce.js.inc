@@ -29,8 +29,8 @@ function weaponAvailable(weapon) {
 function chooseWeapon(forVtol) {
 	if (typeof(forVtol) === "undefined")
 		forVtol = false;
-	var cls = chooseClass();
-	var weaponPaths = personality.weaponPaths.filterProperty("role", cls);
+	var role = chooseWeaponRole();
+	var weaponPaths = personality.weaponPaths.filterProperty("role", role);
 	var list = [];
 	weaponPaths.forEach(function(statlist) {
 		if (forVtol)
@@ -40,13 +40,18 @@ function chooseWeapon(forVtol) {
 	});
 	for (var i = 0; i < list.length; ++i)
 		if (weaponAvailable(list[i])) 
-			return { list: list, name: ROLENAME[cls] };
+			return { list: list, name: ROLENAME[role] };
 	return { list: weaponStatsToComponents(personality.weaponPaths.random()), name: "" };
 }
 
 function produceTank(factory) {
 	// TODO: consider thermal bodies
-	var bodies = bodyStatsToComponents(bodyStats.kinetic, BODYUSAGE.GROUND);
+	var cls = chooseBodyClass();
+	var bodies;
+	if (cls === BODYCLASS.KINETIC)
+		bodies = bodyStatsToComponents(bodyStats.kinetic, BODYUSAGE.GROUND);
+	else
+		bodies = bodyStatsToComponents(bodyStats.thermal, BODYUSAGE.GROUND);
 	var propulsions;
 	var ret = scopeRatings();
 	var rnd = random(ret.land + ret.sea);
@@ -86,7 +91,7 @@ function produceTemplate(factory) {
 	if (enumTrucks().length < personality.minTrucks) 
 		return produceTemplateFromList(factory, truckTemplates);
 	else {
-		var weaponPaths = personality.weaponPaths.filterProperty("role", chooseClass());
+		var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
 		weaponPaths.forEach(function(statlist) {
 			var ret = statlist.templates;
 			ret.reverse();

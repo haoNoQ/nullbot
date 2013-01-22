@@ -71,6 +71,12 @@ const BODYUSAGE = {
 	UNIVERSAL: 7, // COMBAT | TRUCK
 }
 
+// what sort of weapons this body is resistant to?
+const BODYCLASS = {
+	KINETIC: 0,
+	THERMAL: 1,
+}
+
 // should this module be prioritized when not having enough power?
 const MODULECOST = {
 	CHEAP: 0,
