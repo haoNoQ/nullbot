@@ -17,9 +17,9 @@
 
 
 _global.throttled = function(interval, notes) {
-	if (typeof(arguments.callee.caller.throttleTimes) === "undefined")
+	if (!defined(arguments.callee.caller.throttleTimes))
 		arguments.callee.caller.throttleTimes = {};
-	if (typeof(arguments.callee.caller.throttleTimes[notes]) === "undefined") {
+	if (!defined(arguments.callee.caller.throttleTimes[notes])) {
 		arguments.callee.caller.throttleTimes[notes] = gameTime;
 		return false;
 	}
@@ -41,12 +41,12 @@ _global.throttled = function(interval, notes) {
 // for throttled().
 
 _global.cached = function(whatToCall, interval, notes) {
-	if (typeof(arguments.callee.caller.cachedTimes) === "undefined") {
+	if (!defined(arguments.callee.caller.cachedTimes)) {
 		arguments.callee.caller.cachedTimes = {};
 		arguments.callee.caller.cachedValues = {};
 	}
 	var t = arguments.callee.caller.cachedTimes[notes];
-	if (typeof(t) === "undefined" || gameTime - t >= interval) {
+	if (!defined(t) || gameTime - t >= interval) {
 		arguments.callee.caller.cachedValues[notes] = whatToCall();
 		arguments.callee.caller.cachedTimes[notes] = gameTime;
 	}

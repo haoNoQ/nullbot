@@ -83,7 +83,7 @@ function buildModule(struct) {
 	if (trucks.length <= 0)
 		return BUILDRET.FAILURE;
 	var moduleInfo = modules.filter(function(item) { return isAvailable(item.module) && item.base === struct.stattype; }).last();
-	if (typeof(moduleInfo) === "undefined")
+	if (!defined(moduleInfo))
 		return BUILDRET.UNAVAILABLE;
 	if (struct.modules >= moduleInfo.count)
 		return BUILDRET.UNAVAILABLE;
@@ -98,7 +98,7 @@ function buildModule(struct) {
 function buildBasicStructure(statlist, importance) {
 	if (throttled(5000, statlist[0])) return BUILDRET.FAILURE;
 	// by default, don't try building things in dangerous locations
-	if (typeof(importance) === "undefined")
+	if (!defined(importance))
 		importance = IMPORTANCE.PEACETIME;
 	trucks = getTwoFreeTrucks();
 	if (trucks.length <= 0)
@@ -112,8 +112,8 @@ function buildBasicStructure(statlist, importance) {
 			idx = i;
 			break;
 		}
-	if (typeof(loc) === "undefined")
-		return BUILDRET.UNAVAILABLE;
+	if (!defined(loc))
+		return BUILDRET.FAILURE;
 	if (importance === IMPORTANCE.PEACETIME && !safeSpot(loc.x, loc.y))
 		return BUILDRET.FAILURE;
 	// now actually build
@@ -128,7 +128,7 @@ function buildBasicStructure(statlist, importance) {
 function finishStructures() {
 	enumStruct(me).filterProperty("status", BEING_BUILT).forEach(function(struct) {
 		var truck = getFreeTruckAround(struct.x, struct.y);
-		if (typeof(truck) === "undefined")
+		if (!defined(truck))
 			return false;
 		if (orderDroidObj(truck, DORDER_HELPBUILD, struct))
 			return true;
@@ -138,13 +138,13 @@ function finishStructures() {
 
 function buildStructureAround(statlist, loc) {
 	var truck = getFreeTruckAround(loc.x, loc.y);
-	if (typeof(truck) === "undefined")
+	if (!defined(truck))
 		return BUILDRET.FAILURE;
 	var stat = statlist.filter(isAvailable).last();
-	if (typeof(stat) === "undefined")
+	if (!defined(stat))
 		return BUILDRET.UNAVAILABLE;
 	loc = pickStructLocation(truck, stat, loc.x, loc.y);
-	if (typeof(loc) === "undefined")
+	if (!defined(loc))
 		return BUILDRET.FAILURE;
 	if (orderDroidBuild(truck, DORDER_BUILD, stat, loc.x, loc.y)) 
 		return BUILDRET.SUCCESS;
@@ -153,13 +153,13 @@ function buildStructureAround(statlist, loc) {
 }
 
 function captureOil(oil) {
-	if (typeof(oil) === "undefined")
+	if (!defined(oil))
 		return BUILDRET.FAILURE;
 	var truck = getFreeTruckAround(oil.x, oil.y);
-	if (typeof(truck) === "undefined")
+	if (!defined(truck))
 		return BUILDRET.FAILURE;
 	var stat = structures.derricks.filter(isAvailable).last();
-	if (typeof(stat) === "undefined")
+	if (!defined(stat))
 		return BUILDRET.UNAVAILABLE;
 	if (throttled(45000, oil.y * mapWidth + oil.x))
 		return BUILDRET.FAILURE;

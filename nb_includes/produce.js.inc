@@ -27,7 +27,7 @@ function weaponAvailable(weapon) {
 // TODO: remove this "name" thing, which is only used by adapt code
 // until droid weapons are exposed to API
 function chooseWeapon(forVtol) {
-	if (typeof(forVtol) === "undefined")
+	if (!defined(forVtol))
 		forVtol = false;
 	var role = chooseWeaponRole();
 	var weaponPaths = personality.weaponPaths.filterProperty("role", role);
@@ -55,7 +55,7 @@ function produceTank(factory) {
 	var propulsions;
 	var ret = scopeRatings();
 	var rnd = random(ret.land + ret.sea);
-	if (typeof(rnd) === "undefined") // we need only vtols?
+	if (!defined(rnd)) // we need only vtols?
 		return false;
 	if (rnd < ret.land)
 		propulsions = propulsionStatsToComponents(propulsionStats.ground);

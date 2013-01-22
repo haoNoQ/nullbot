@@ -38,7 +38,7 @@ _global.iHaveVtol = function() {
 }
 
 _global.enumStructList = function(list, player) {
-	if (typeof(player) === "undefined")
+	if (!defined(player))
 		player = me;
 	var ret = [];
 	for (var i = 0; i < list.length; ++i)
@@ -47,7 +47,7 @@ _global.enumStructList = function(list, player) {
 }
 
 _global.countStructList = function(list, player) {
-	if (typeof(player) === "undefined")
+	if (!defined(player))
 		player = me;
 	var ret = 0;
 	for (var i = 0; i < list.length; ++i) 
@@ -83,7 +83,7 @@ _global.propulsionStatsToResList = function(path) {
 
 _global.weaponStatsToResList = function(path, aspect) {
 	var ret = [];
-	if (typeof(aspect) === "undefined" || aspect === RESASPECTS.WEAPONS) {
+	if (!defined(aspect) || aspect === RESASPECTS.WEAPONS) {
 		for (var i = 0; i < path.weapons.length; ++i)
 			ret.push(path.weapons[i].res);
 		for (var i = 0; i < path.vtols.length; ++i)
@@ -91,11 +91,11 @@ _global.weaponStatsToResList = function(path, aspect) {
 		for (var i = 0; i < path.templates.length; ++i)
 			ret.push(path.templates[i].res);
 	}
-	if (typeof(aspect) === "undefined" || aspect === RESASPECTS.DEFENSES) {
+	if (!defined(aspect) || aspect === RESASPECTS.DEFENSES) {
 		for (var i = 0; i < path.defenses.length; ++i)
 			ret.push(path.defenses[i].res);
 	}
-	if (typeof(aspect) === "undefined" || aspect === RESASPECTS.EXTRAS)
+	if (!defined(aspect) || aspect === RESASPECTS.EXTRAS)
 		ret = ret.concat(path.extras);
 	return ret;
 }
@@ -107,7 +107,7 @@ _global.weaponStatsToResList = function(path, aspect) {
 _global.bodyStatsToComponents = function(stats, usage, weight) {
 	var ret = [];
 	for (var i = 0; i < stats.length; ++i)
-		if (typeof(weight) === "undefined" || stats[i].weight === weight)
+		if (!defined(weight) || stats[i].weight === weight)
 			if (stats[i].usage & usage)
 				ret.push(stats[i].stat);
 	ret.reverse();
@@ -125,7 +125,7 @@ _global.propulsionStatsToComponents = function(stats) {
 _global.weaponStatsToComponents = function(stats, weight) {
 	var ret = [];
 	for (var i = 0; i < stats.weapons.length; ++i) {
-		if (typeof(weight) === "undefined" || stats.weapons[i].weight === weight)
+		if (!defined(weight) || stats.weapons[i].weight === weight)
 			ret.push(stats.weapons[i].stat);
 	}
 	ret.reverse();
@@ -135,7 +135,7 @@ _global.weaponStatsToComponents = function(stats, weight) {
 _global.weaponStatsToVtolComponents = function(stats, weight) {
 	var ret = [];
 	for (var i = 0; i < stats.vtols.length; ++i) {
-		if (typeof(weight) === "undefined" || stats.vtols[i].weight === weight)
+		if (!defined(weight) || stats.vtols[i].weight === weight)
 			ret.push(stats.vtols[i].stat);
 	}
 	ret.reverse();
@@ -149,7 +149,7 @@ _global.weaponStatsToVtolComponents = function(stats, weight) {
 _global.weaponStatsToDefenses = function(stats, defrole) {
 	var ret = [];
 	for (var i = 0; i < stats.defenses.length; ++i)
-		if (typeof(defrole) === "undefined" || stats.defenses[i].defrole === defrole)
+		if (!defined(defrole) || stats.defenses[i].defrole === defrole)
 			ret.push(stats.defenses[i].stat);
 	// reverse not needed here
 	return ret;

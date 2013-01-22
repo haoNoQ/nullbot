@@ -38,7 +38,7 @@ function findLargestGroupIn(list) {
 	for (var i = 0; i < MAX_GROUPS; ++i)
 		sizes[i] = 0;
 	list.forEach(function(object) {
-		if (typeof(object.group) === "undefined" || object.group < 0 && object.group >= MAX_GROUPS)
+		if (!defined(object.group) || object.group < 0 && object.group >= MAX_GROUPS)
 			return;
 		++sizes[object.group];
 	});
@@ -69,7 +69,7 @@ function findNearestGroup(x, y) {
 			}
 		}
 	}
-	if (typeof(minIdx) !== "undefined") 
+	if (defined(minIdx)) 
 		return gr[minIdx];
 	gr = groupsBySize();
 	if (gr.length > 0)
@@ -82,19 +82,19 @@ function targetSuitableForHarass(object) {
 }
 
 _global.getGroupInfo = function(gr) {
-	if (typeof(groupInfo[gr]) !== "undefined")
+	if (defined(groupInfo[gr]))
 		return groupInfo[gr];
 	groupInfo[gr] = new GroupInfo();
 	return groupInfo[gr];
 }
 
 _global.setTarget = function(object, group) {
-	if (typeof(group) === "undefined")
+	if (!defined(group))
 		group = findNearestGroup(object.x, object.y);
-	if (typeof(group) === "undefined")
+	if (!defined(group))
 		return false;
 	getGroupInfo(group); // make sure everything is defined
-	if (typeof(groupInfo[group].cachedTarget) !== "undefined")
+	if (defined(groupInfo[group].cachedTarget))
 		if (throttled(10000, group)) // don't switch targets too often
 			return false;
 	groupInfo[group].cachedTarget = object;
@@ -103,7 +103,7 @@ _global.setTarget = function(object, group) {
 
 _global.invalidateTarget = function(object) {
 	groupInfo.forEach(function(info) {
-		if (typeof(info.cachedTarget) !== "undefined")
+		if (defined(info.cachedTarget))
 			if (info.cachedTarget.id === object.id)
 				info.cachedTarget = undefined;
 	});
@@ -111,7 +111,7 @@ _global.invalidateTarget = function(object) {
 
 _global.findTarget = function(gr) {
 	getGroupInfo(gr); // make sure everything is defined
-	if (typeof(groupInfo[gr].cachedTarget) !== "undefined") {
+	if (defined(groupInfo[gr].cachedTarget)) {
 		var obj = objFromId(groupInfo[gr].cachedTarget);
 		if (gr === miscGroup) {
 			// harass group should switch targets when its target gets protected, otherwise targets are permanent
@@ -163,11 +163,11 @@ _global.groupDroid = function(droid) {
 			return true;
 		});
 		var ret = grp.filter(function(i) { 
-			return groupSize(i) < attackGroupSize() * 2 && typeof(findTarget(i)) !== "undefined"; 
+			return groupSize(i) < attackGroupSize() * 2 && defined(findTarget(i)); 
 		});
 		if (ret.length === 0)
 			ret = grp.filter(function(i) { 
-				return typeof(findTarget(i)) !== "undefined"; 
+				return defined(findTarget(i)); 
 			});
 		if (ret.length === 0)
 			ret = grp;
@@ -182,7 +182,7 @@ _global.touchGroup = function(gr) {
 
 _global.groupInDanger = function(gr) {
 	getGroupInfo(gr); // make sure everything is defined
-	if (typeof(groupInfo[gr].lastAttacked) === "undefined")
+	if (!defined(groupInfo[gr].lastAttacked))
 		return false;
 	return gameTime - groupInfo[gr].lastAttacked < 10000;
 }

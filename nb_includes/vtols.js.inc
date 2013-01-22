@@ -15,7 +15,7 @@ _global.setVtolTarget = function(object) {
 }
 
 _global.invalidateVtolTarget = function(object) {
-	if (typeof(vtolTarget) !== "undefined") {
+	if (defined(vtolTarget)) {
 		if (vtolTarget.id === object.id)
 			vtolTarget = undefined;
 	}
@@ -38,7 +38,7 @@ function pickVtolTarget() {
 		list = enumDroid(enemy);
 		if (list.length > 0) return list.random();
 	}
-	if (typeof(vtolTarget) !== "undefined")
+	if (defined(vtolTarget))
 		return objFromId(vtolTarget);
 	vtolTarget = uncached();
 	return vtolTarget;

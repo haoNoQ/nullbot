@@ -67,12 +67,10 @@ function droidFree(droid) {
 
 function attackTarget(droid) {
 	var target = findTarget(droid.group);
-	if (typeof(target) === "undefined") {
+	if (!defined(target)) {
 		groupDroid(droid);
 		return;
 	}
-	if (typeof(target) === "undefined") 
-		return;
 	orderDroidLoc(droid, DORDER_SCOUT, target.x, target.y);
 }
 

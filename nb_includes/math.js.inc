@@ -7,6 +7,10 @@
 (function(_global) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+_global.defined = function(variable) {
+	return typeof(variable) !== "undefined";
+}
+
 _global.random = function(max) {
 	if (max > 0)
 		return Math.floor(Math.random() * max);

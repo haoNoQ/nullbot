@@ -32,7 +32,7 @@ function SimpleStat() {
 }
 
 function addStat(to, what, weight) {
-	if (typeof(weight) === "undefined")
+	if (!defined(weight))
 		weight = 1;
 	for (var prop in to) 
 		if (prop !== "addStat")
@@ -116,7 +116,7 @@ _global.isEnemy = function(player) {
 }
 
 function canReachFromBase(propulsion, location) {
-	if (typeof(propulsion) !== "undefined")
+	if (defined(propulsion))
 		return propulsionCanReach(propulsion, baseLocation.x, baseLocation.y, location.x, location.y);
 }
 
@@ -141,7 +141,7 @@ function threatensBase(droid) {
 function countLandTargets(player) {
 	function uncached() {
 		var currProp = propulsionStatsToComponents(propulsionStats.ground).last();
-		if (typeof(currProp) === "undefined") 
+		if (!defined(currProp)) 
 			return 0;
 		var list = enumStructList(targets, player);
 		return list.filter(function(struct) {
@@ -155,11 +155,11 @@ function countLandTargets(player) {
 function countSeaTargets(player) {
 	function uncached() {
 		var currProp = propulsionStatsToComponents(propulsionStats.hover).last();
-		if (typeof(currProp) === "undefined") 
+		if (!defined(currProp)) 
 			return 0;
 		var prevProp = propulsionStatsToComponents(propulsionStats.ground).last();
 		return enumStructList(targets, player).filter(function(struct) {
-			return (typeof(prevProp) === "undefined" || !canReachFromBase(prevProp, struct)) && canReachFromBase(currProp, struct);
+			return (!defined(prevProp) || !canReachFromBase(prevProp, struct)) && canReachFromBase(currProp, struct);
 		}).length;
 	}
 	return cached(uncached, 5000, player);
@@ -169,14 +169,14 @@ function countSeaTargets(player) {
 function countAirTargets(player) {
 	function uncached() {
 		var currProp = propulsionStatsToComponents(propulsionStats.vtol).last();
-		if (typeof(currProp) === "undefined") 
+		if (!defined(currProp)) 
 			return 0;
 		var prevProp = []
 			.concat(propulsionStatsToComponents(propulsionStats.ground))
 			.concat(propulsionStatsToComponents(propulsionStats.hover))
 			.last();
 		return enumStructList(targets, player).filter(function(struct) {
-			return (typeof(prevProp) === "undefined" || !canReachFromBase(prevProp, struct)) && canReachFromBase(currProp, struct);
+			return (!defined(prevProp) || !canReachFromBase(prevProp, struct)) && canReachFromBase(currProp, struct);
 		}).length;
 	}
 	return cached(uncached, 5000, player);
@@ -338,7 +338,7 @@ function getMyGroupInfo(gr) {
 
 function groupOurs(gr) {
 	function uncached() {
-		if (typeof(gr) !== "undefined")
+		if (defined(gr))
 			return getMyGroupInfo(gr).collapse();
 		else 
 			return myStats.collapse();
@@ -348,7 +348,7 @@ function groupOurs(gr) {
 
 function groupTheirs(gr) {
 	function uncached() {
-		if (typeof(gr) !== "undefined") {
+		if (defined(gr)) {
 			if (gr === miscGroup) {
 				var theirs = new SimpleStat();
 				enumLivingPlayers().filter(isEnemy).forEach(function(p) {
