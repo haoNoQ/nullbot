@@ -7,6 +7,15 @@
 (function(_global) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+// return random true or false in certain chance
+// 0 with chance 0% will return true
+// 50 with chance ~50% will return true
+// 100 with chance 100% will return true
+    _global.withChance = function distance(chancePersent) {
+        return random(100) <= chancePersent
+    }
+
+
 //    Get distance between to point
 //    acceptable arguments:
 //    distance(obj, obj)
