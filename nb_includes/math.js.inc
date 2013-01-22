@@ -8,13 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 _global.random = function(max) {
-	if (max <= 0)
-		return undefined;
-	return Math.floor(Math.random() * max);
-}
-
-_global.randomID = function() {
-	return random(1000000) + "_" + random(1000000) + "_"+random(1000000) + "_"+random(1000000) + "_"+random(1000000) + "_"+random(1000000);
+	if (max > 0)
+		return Math.floor(Math.random() * max);
 }
 
 // some useful array functions
