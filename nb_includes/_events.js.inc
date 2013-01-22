@@ -28,7 +28,7 @@ function eventStructureBuilt(structure) {
 function eventDestroyed(object) {
 	invalidateTarget(object);
 	invalidateVtolTarget(object);
-	if (object.type === DROID && object.player == me && object.group != vtolGroup)
+	if (object.type === DROID && object.player === me && object.group !== vtolGroup)
 		touchGroup(object.group);
 }
 
@@ -43,7 +43,7 @@ function eventAttacked(victim, attacker) {
 			fallBack(victim, attacker);
 	} else if (victim.type === STRUCTURE) {
 		if (inPanic()) {
-			if (victim.player != me)
+			if (victim.player !== me)
 				return;
 			else
 				for (var i = 0; i < MAX_GROUPS; ++i)

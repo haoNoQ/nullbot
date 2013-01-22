@@ -24,7 +24,7 @@ function doResearch(lab) {
 		].random()))
 			return true;
 	// otherwise, start with completing the fixed research path
-	if (typeof(personality.earlyResearch) != "undefined")
+	if (typeof(personality.earlyResearch) !== "undefined")
 		if (pursueResearch(lab, personality.earlyResearch))
 			return true;
 	// then, see if we want to research some weapons

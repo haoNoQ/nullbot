@@ -180,7 +180,7 @@ function buildTowers() {
 	weaponPaths.forEach(function(statlist) {
 		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.STANDALONE));
 	});
-	return buildStructureAround(list, oils.random()) != BUILDRET.UNAVAILABLE;
+	return buildStructureAround(list, oils.random()) !== BUILDRET.UNAVAILABLE;
 }
 
 function buildGateways() {
@@ -205,9 +205,9 @@ function buildGateways() {
 		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.GATEWAY));
 	});
 	if (random(2))
-		return buildStructureAround(list, {x: gates[0].x1, y: gates[0].y1}) != BUILDRET.UNAVAILABLE;
+		return buildStructureAround(list, {x: gates[0].x1, y: gates[0].y1}) !== BUILDRET.UNAVAILABLE;
 	else
-		return buildStructureAround(list, {x: gates[0].x2, y: gates[0].y2}) != BUILDRET.UNAVAILABLE;
+		return buildStructureAround(list, {x: gates[0].x2, y: gates[0].y2}) !== BUILDRET.UNAVAILABLE;
 
 }
 

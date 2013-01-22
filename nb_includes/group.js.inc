@@ -94,7 +94,7 @@ _global.setTarget = function(object, group) {
 	if (typeof(group) === "undefined")
 		return false;
 	getGroupInfo(group); // make sure everything is defined
-	if (typeof(groupInfo[group].cachedTarget) != "undefined")
+	if (typeof(groupInfo[group].cachedTarget) !== "undefined")
 		if (throttled(10000, group)) // don't switch targets too often
 			return false;
 	groupInfo[group].cachedTarget = object;
