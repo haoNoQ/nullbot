@@ -223,7 +223,7 @@ function classifyObject(obj) {
 		}
 	}
 	for (var i = 0; i < obj.weapons.length; ++i) {
-		if (getWeaponInfo(obj.weapons[i].name)["class"] === "KINETIC")
+		if (getWeaponInfo(obj.weapons[i].name).impactClass === "KINETIC")
 			ret.kweapon += 1;
 		else
 			ret.tweapon += 1;

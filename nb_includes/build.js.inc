@@ -14,12 +14,7 @@ _global.setBaseLocation = function(loc) {
 }
 
 _global.enumTrucks = function() {
-	// HACK: this whole function is a hack to avoid the fact that
-	// enumDroid(me, DROID_CONSTRUCT) doesn't enumerate cyborg engineers
-	const DROID_CYBORG_CONSTRUCT = 10;
-	var list = enumDroid(me, DROID_CONSTRUCT);
-	list = list.concat(enumDroid(me, DROID_CYBORG_CONSTRUCT));
-	return list;
+	return enumDroid(me, DROID_CONSTRUCT);
 }
 
 _global.distanceToBase = function(loc) {
