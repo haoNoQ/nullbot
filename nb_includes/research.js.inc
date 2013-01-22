@@ -41,8 +41,23 @@ function doResearch(lab) {
 	}
 	if (random(2) > 0) { // TODO: make a more thoughtful decision here
 		var ret = chooseBodyClass();
-		if (ret === BODYCLASS.KINETIC)
+		if (ret === BODYCLASS.KINETIC) {
+			if (random(2) > 0)
+				if (pursueResearch(lab, [
+					classResearch.kinetic.tank, 
+					classResearch.kinetic.borg, 
+					classResearch.kinetic.defs, 
+				].random()))
+					return true;
 			if (pursueResearch(lab, bodyStatsToResList(bodyStats.kinetic)))
+				return true;
+		}
+		if (random(2) > 0)
+			if (pursueResearch(lab, [
+				classResearch.thermal.tank, 
+				classResearch.thermal.borg, 
+				classResearch.thermal.defs, 
+			].random()))
 				return true;
 		if (pursueResearch(lab, bodyStatsToResList(bodyStats.thermal)))
 			return true;

@@ -98,6 +98,33 @@ const bodyStats = {
 	],
 }
 
+const classResearch = {
+	kinetic: {
+		tank: [
+			"R-Vehicle-Metals09",
+		],
+		borg: [
+			"R-Cyborg-Metals09",
+		],
+		defs: [
+			"R-Defense-WallUpgrade12",
+			"R-Struc-Materials09",
+		],
+	},
+	thermal: {
+		tank: [
+			"R-Vehicle-Armor-Heat09",
+		],
+		borg: [
+			"R-Cyborg-Armor-Heat09",
+		],
+		defs: [
+			"R-Defense-WallUpgrade12",
+			"R-Struc-Materials09",
+		],
+	},
+}
+
 // NOTE: Please don't put hover propulsion into the ground list, etc.! 
 // Adaptation code relies on that for discovering map topology.
 // Ground propulsions need to be ground only, hover propulsions shouldn't
