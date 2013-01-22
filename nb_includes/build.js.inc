@@ -31,7 +31,7 @@ function isAvailable(stat) {
 	return isStructureAvailable(stat, me);
 }
 
-// a function for checking the presense of enemy units at the construction site
+// a function for checking the presence of enemy units at the construction site
 function safeSpot() {
 	// currently does nothing
 	return true; 

@@ -1,6 +1,7 @@
 
 /*
- * This file describes building construction procedures.
+ * This file is responsible for the adaptation system. It gathers statistics about 
+ * player choices and regulates the AI's choices accordingly.
  * 
  */
 
@@ -332,7 +333,7 @@ function getMyGroupInfo(gr) {
 
 //
 // here be functions for querying statistics gathered above
-// and making adaptive desicions
+// and making adaptive decisions
 //
 
 function groupOurs(gr) {

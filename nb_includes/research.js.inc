@@ -28,7 +28,7 @@ function doResearch(lab) {
 		if (pursueResearch(lab, personality.earlyResearch))
 			return true;
 	// then, see if we want to research some weapons
-	if (random(4) > 0) { // TODO: make a more thoughtful desicion here
+	if (random(4) > 0) { // TODO: make a more thoughtful decision here
 		var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
 		var list = [];
 		var aspect = random(5); // TODO: make a more thoughtful desicion here
@@ -39,7 +39,7 @@ function doResearch(lab) {
 		if (pursueResearch(lab, list))
 			return true;
 	}
-	if (random(2) > 0) { // TODO: make a more thoughtful desicion here
+	if (random(2) > 0) { // TODO: make a more thoughtful decision here
 		var ret = chooseBodyClass();
 		if (ret === BODYCLASS.KINETIC)
 			if (pursueResearch(lab, bodyStatsToResList(bodyStats.kinetic)))
