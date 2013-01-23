@@ -47,7 +47,7 @@ _global.enumStructList = function(list, player) {
 _global.countStructList = function(list, player) {
 	if (!defined(player))
 		player = me;
-	return list.reduce(function(summ, new_value, index){summ + countStruct(new_value, player)}, 0)
+	return list.reduce(function(summ, new_value) { return summ + countStruct(new_value, player); }, 0);
 }
 
 _global.structListLimit = function(list) {
