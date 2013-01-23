@@ -63,9 +63,10 @@ function buildOrder() {
 	if (buildMinimum(structures.gens, 1)) return true;
 	// make sure trucks go capture some oil at this moment
 	if (buildMinimumDerricks(4)) return true; 
-	if (buildMinimum(structures.hqs, 1)) return true;
 	// what if one of them is being upgraded? will need the other anyway.
+	// also, it looks like the right timing in most cases.
 	if (buildMinimum(structures.gens, 2)) return true; 
+	if (buildMinimum(structures.hqs, 1)) return true;
 	// support hover maps
 	var ret = scopeRatings(); 
 	if (ret.land === 0 && !iHaveHover())
