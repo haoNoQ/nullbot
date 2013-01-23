@@ -180,7 +180,7 @@ function buildTowers() {
 
 function buildGateways() {
 	var oils = countStructList(structures.derricks);
-	if (oils.length <= 0) 
+	if (oils <= 0) 
 		return BUILDRET.FAILURE;
 	var gates = enumGateways().filter(function(gate) {
 		var l = gate.x1 - gate.x2 + gate.y1 - gate.y2;
