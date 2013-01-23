@@ -100,13 +100,16 @@ function buildBasicStructure(statlist, importance) {
 		return BUILDRET.FAILURE;
 	// choose structure type (out of the statlist), 
 	// together with suitable location
-	var idx, loc;
+	var idx, loc, avail = false;
 	for (var i = 0; i < statlist.length; ++i)
 		if (isAvailable(statlist[i])) {
+			avail = true;
 			loc = pickStructLocation(trucks[0], statlist[i], trucks[0].x, trucks[0].y);
 			idx = i;
 			break;
 		}
+	if (!avail)
+		return BUILDRET.UNAVAILABLE;
 	if (!defined(loc))
 		return BUILDRET.FAILURE;
 	if (importance === IMPORTANCE.PEACETIME && !safeSpot(loc.x, loc.y))
