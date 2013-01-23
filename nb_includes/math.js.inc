@@ -15,11 +15,11 @@ _global.withChance = function distance(chancePercent) {
 	return 1 + random(100) <= chancePercent;
 }
 
-//    Get distance between two points
-//    acceptable arguments:
-//    distance(obj, obj)
-//    distance(x,y, obj)
-//    distance(obj,x,y)
+// Get distance between two points
+// acceptable arguments:
+//		distance(obj, obj)
+//		distance(x,y, obj)
+//		distance(obj,x,y)
 _global.distance = function distance(obj1, obj2, obj3, obj4) {
 	var x1, x2, y1, y2;
 	if (defined(obj1.x)) {
@@ -50,6 +50,7 @@ _global.defined = function(variable) {
 	return typeof(variable) !== "undefined";
 }
 
+// returns a random number between 0 and max-1 inclusively
 _global.random = function(max) {
 	if (max > 0)
 		return Math.floor(Math.random() * max);
