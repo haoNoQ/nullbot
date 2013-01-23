@@ -405,8 +405,8 @@ _global.chooseBodyClass = function(gr) {
 	function uncached() {
 		var our = groupOurs(gr), their = groupTheirs(gr);
 		return adaptVote(
-			[ our.kweapon, our.tweapon ],
-			[ their.tbody, their.kbody ]
+			[ our.kbody, our.tbody ],
+			[ their.kweapon, their.tweapon ]
 		);
 	}
 	return cached(uncached, 5000, gr);
