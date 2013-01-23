@@ -8,6 +8,28 @@
 (function(_global) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+function adaptVote(our, their) {
+	var l = our.length;
+	var ourTotal = our.reduce(function(prev, curr) { return prev + curr; });
+	var theirTotal = their.reduce(function(prev, curr) { return prev + curr; });
+	if (theirTotal === 0)
+		return random(l);
+	var rating = [];
+	for (var i = 0; i < l; ++i)
+		rating[i] = their[i] / theirTotal;
+	if (ourTotal > 0)
+		for (var i = 0; i < l; ++i)
+			rating[i] -= our[i] / ourTotal;
+	var maxRating = -Infinity;
+	var maxIdx = 0;
+	for (var i = 0; i < l; ++i) 
+		if (rating[i] > maxRating) {
+			maxRating = rating[i];
+			maxIdx = i;
+		}
+	return maxIdx;
+}
+
 //
 // here be functions for gathering player statistics
 //
@@ -370,50 +392,22 @@ function groupTheirs(gr) {
 
 _global.chooseWeaponRole = function(gr) {
 	function uncached() {
-		var ours = groupOurs(gr), theirs = groupTheirs(gr);
-		var totalTheirs = theirs.tank + theirs.borg + theirs.defs + theirs.vtol;
-		var totalOurs = ours.at + ours.ap + ours.as + ours.aa;
-		if (totalTheirs === 0)
-			return random(ROLE.LENGTH);
-		var rating = [];
-		rating[ROLE.AT] = theirs.tank / totalTheirs;
-		rating[ROLE.AP] = theirs.borg / totalTheirs;
-		rating[ROLE.AS] = theirs.defs / totalTheirs;
-		rating[ROLE.AA] = theirs.vtol / totalTheirs;
-		if (totalOurs > 0) {
-			rating[ROLE.AT] -= ours.at / totalOurs;
-			rating[ROLE.AP] -= ours.ap / totalOurs;
-			rating[ROLE.AS] -= ours.as / totalOurs;
-			rating[ROLE.AA] -= ours.aa / totalOurs;
-		}
-		var maxRating = rating[ROLE.AT], maxIdx = 0;
-		for (var i = 1; i < ROLE.LENGTH; ++i)
-			if (rating[i] > maxRating) {
-				maxRating = rating[i];
-				maxIdx = i;
-			}
-		return maxIdx;
+		var our = groupOurs(gr), their = groupTheirs(gr);
+		return adaptVote(
+			[ our.at, our.ap, our.as, our.aa ],
+			[ their.tank, their.borg, their.defs, their.vtol ]
+		);
 	}
 	return cached(uncached, 5000, gr);
 }
 
 _global.chooseBodyClass = function(gr) {
 	function uncached() {
-		var ours = groupOurs(gr), theirs = groupTheirs(gr);
-		var totalTheirs = theirs.kweapon + theirs.tweapon;
-		var totalOurs = ours.kbody + ours.tbody;
-		if (totalTheirs === 0)
-			return random(2) ? BODYCLASS.KINETIC : BODYCLASS.THERMAL;
-		var rating = [];
-		rating[BODYCLASS.KINETIC] = theirs.kweapon / totalTheirs;
-		rating[BODYCLASS.THERMAL] = theirs.tweapon / totalTheirs;
-		if (totalOurs > 0) {
-			rating[BODYCLASS.KINETIC] -= ours.kbody / totalOurs;
-			rating[BODYCLASS.THERMAL] -= ours.tbody / totalOurs;
-		}
-		if (rating[BODYCLASS.THERMAL] > rating[BODYCLASS.KINETIC])
-			return rating[BODYCLASS.THERMAL];
-		return BODYCLASS.KINETIC;
+		var our = groupOurs(gr), their = groupTheirs(gr);
+		return adaptVote(
+			[ our.kweapon, our.tweapon ],
+			[ their.tbody, their.kbody ]
+		);
 	}
 	return cached(uncached, 5000, gr);
 }
