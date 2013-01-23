@@ -326,6 +326,8 @@ function summUpMyObject(obj, stat) {
 function updateEnemyStats(player) {
 	if (throttled(30000, player))
 		return;
+	if (throttled(1000))
+		return;
 	enemyStats[player] = new EnemyStat();
 	enumStruct(player, DEFENSE).forEach(summUpEnemyObject);
 	enumDroid(player, DROID_WEAPON).forEach(summUpEnemyObject);
@@ -351,7 +353,6 @@ function getMyGroupInfo(gr) {
 	enumGroup(gr).forEach(function(obj) { summUpMyObject(obj, ret); });
 	return ret;
 }
-
 
 //
 // here be functions for querying statistics gathered above
