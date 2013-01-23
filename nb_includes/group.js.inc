@@ -158,7 +158,9 @@ _global.groupDroid = function(droid) {
 		var grp = groupsBySize().filter(function(i) {
 			if (isAlly(i))
 				return false;
-			if (enumLivingPlayers().indexOf(i) === -1)
+			if (!defined(findTarget(i)))
+				return false;
+			if (!droidCanReach(droid, findTarget(i).x, findTarget(i).y))
 				return false;
 			return true;
 		});
@@ -166,11 +168,9 @@ _global.groupDroid = function(droid) {
 			return groupSize(i) < attackGroupSize() * 2 && defined(findTarget(i)); 
 		});
 		if (ret.length === 0)
-			ret = grp.filter(function(i) { 
-				return defined(findTarget(i)); 
-			});
-		if (ret.length === 0)
 			ret = grp;
+		if (ret.length === 0)
+			ret = [ miscGroup ];
 		groupAdd(ret[0], droid);
 	}
 }

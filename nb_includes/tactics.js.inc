@@ -9,7 +9,7 @@
 
 function regroup(gr) {
 	if (inPanic()) 
-		return enumGroup(gr);
+		return enumGroup(gr).filter(checkRepaired);
 	var size = attackGroupSize();
 	if (gr === miscGroup)
 		size = personality.minMiscTanks;
@@ -67,7 +67,7 @@ function droidFree(droid) {
 
 function attackTarget(droid) {
 	var target = findTarget(droid.group);
-	if (!defined(target)) {
+	if (!defined(target) || !droidCanReach(droid, target.x, target.y)) {
 		groupDroid(droid);
 		return;
 	}
