@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 // return random true or false in certain chance
-// 0 with chance 0% will return true
-// 50 with chance ~50% will return true
-// 100 with chance 100% will return true
-_global.withChance = function distance(chancePersent) {
-	return random(100) <= chancePersent
+// 0 will return true with chance 0% 
+// 50 will return true with chance 50%
+// 100 will return true with chance 100%
+_global.withChance = function distance(chancePercent) {
+	return 1 + random(100) <= chancePercent;
 }
 
 //    Get distance between two points
