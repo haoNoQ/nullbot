@@ -104,7 +104,10 @@ function buildBasicStructure(statlist, importance) {
 	for (var i = 0; i < statlist.length; ++i)
 		if (isAvailable(statlist[i])) {
 			avail = true;
-			loc = pickStructLocation(trucks[0], statlist[i], trucks[0].x, trucks[0].y);
+			if (distanceToBase(trucks[0]) <= baseScale)
+				loc = pickStructLocation(trucks[0], statlist[i], trucks[0].x, trucks[0].y);
+			else 
+				loc = pickStructLocation(trucks[0], statlist[i], baseLocation.x, baseLocation.y);
 			idx = i;
 			break;
 		}
@@ -125,6 +128,8 @@ function buildBasicStructure(statlist, importance) {
 
 function finishStructures() {
 	enumStruct(me).filterProperty("status", BEING_BUILT).forEach(function(struct) {
+		if (throttled(10000, struct.id))
+			continue;
 		var truck = getFreeTruckAround(struct.x, struct.y);
 		if (!defined(truck))
 			return false;
@@ -159,7 +164,7 @@ function captureOil(oil) {
 	var stat = structures.derricks.filter(isAvailable).last();
 	if (!defined(stat))
 		return BUILDRET.UNAVAILABLE;
-	if (throttled(45000, oil.y * mapWidth + oil.x))
+	if (throttled(90000, oil.y * mapWidth + oil.x))
 		return BUILDRET.FAILURE;
 	if (orderDroidBuild(truck, DORDER_BUILD, stat, oil.x, oil.y)) 
 		return BUILDRET.SUCCESS;

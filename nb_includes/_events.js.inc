@@ -23,6 +23,7 @@ function eventDroidBuilt(droid, structure) {
 
 function eventStructureBuilt(structure) {
 	queue("bringTrucksToBase");
+	queue("checkConstruction");
 }
 
 function eventDestroyed(object) {
