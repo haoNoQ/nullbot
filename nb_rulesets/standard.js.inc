@@ -56,7 +56,6 @@ const fundamentalResearch = [
 	"R-Struc-PowerModuleMk1",
 	"R-Struc-RprFac-Upgrade01",
 	"R-Sys-Sensor-Tower02",
-	"R-Cyborg-Armor-Heat03",
 	"R-Struc-Power-Upgrade01c",
 	"R-Sys-CBSensor-Tower01",
 	"R-Struc-VTOLPad-Upgrade01",
@@ -65,10 +64,7 @@ const fundamentalResearch = [
 	"R-Sys-Autorepair-General",
 	"R-Wpn-LasSat",
 	"R-Struc-RprFac-Upgrade04",
-	"R-Cyborg-Metals09",
-	"R-Cyborg-Armor-Heat09",
 	"R-Struc-VTOLPad-Upgrade06",
-	"R-Struc-Materials09",
 	"R-Struc-RprFac-Upgrade06",
 ];
 
