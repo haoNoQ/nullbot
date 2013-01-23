@@ -22,17 +22,15 @@ _global.isVtolPropulsion = function(str) {
 }
 
 _global.iHaveHover = function() {
-	const COMP_PROPULSION=3; 
 	for (var i = 0; i < propulsionStats.hover.length; ++i)
-		if (componentAvailable(COMP_PROPULSION, propulsionStats.hover[i].stat))
+		if (componentAvailable(propulsionStats.hover[i].stat))
 			return true;
 	return false;
 }
 
 _global.iHaveVtol = function() {
-	const COMP_PROPULSION=3; 
 	for (var i = 0; i < propulsionStats.vtol.length; ++i)
-		if (componentAvailable(COMP_PROPULSION, propulsionStats.vtol[i].stat))
+		if (componentAvailable(propulsionStats.vtol[i].stat))
 			return true;
 	return false;
 }
