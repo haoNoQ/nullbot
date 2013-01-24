@@ -18,6 +18,10 @@
 // or simply a typical radius of a player's base
 const baseScale = 20; 
 
+// diameter of laser satellite splash/incendiary damage 
+// for use in lassat.js.inc
+const lassatSplash = 4; 
+
 const structures = {
 	factories: [ "A0LightFactory", ],
 	templateFactories: [ "A0CyborgFactory", ],

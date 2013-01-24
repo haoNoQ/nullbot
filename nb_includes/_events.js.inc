@@ -55,3 +55,7 @@ function eventAttacked(victim, attacker) {
 		setTarget(attacker);
 	}
 }
+
+function eventStructureReady(structure) {
+	fireLassat(structure);
+}

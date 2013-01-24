@@ -18,6 +18,7 @@ include(NB_INCLUDES + "produce.js.inc");
 include(NB_INCLUDES + "group.js.inc");
 include(NB_INCLUDES + "tactics.js.inc");
 include(NB_INCLUDES + "vtols.js.inc");
+include(NB_INCLUDES + "lassat.js.inc");
 
 include(NB_INCLUDES + "timers.js.inc");
 include(NB_INCLUDES + "_events.js.inc");
