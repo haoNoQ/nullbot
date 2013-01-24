@@ -257,7 +257,7 @@ _global.checkConstruction = function() {
 	if (buildMinimum(structures.vtolPads, enumDroid(me, DROID_WEAPON).filter(isVTOL).length / 2))
 		return true;
 	if (chooseObjectType() === 2) {
-		if (random(2)) {
+		if (withChance(50)) {
 			if (buildTowers())
 				return true;
 		} else {
