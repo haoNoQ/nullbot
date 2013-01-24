@@ -189,5 +189,13 @@ _global.groupInDanger = function(gr) {
 	return gameTime - groupInfo[gr].lastAttacked < 10000;
 }
 
+_global.rebalanceGroups = function() {
+	if (groupSize(miscGroup) > personality.maxMiscTanks && !throttled(5000)) {
+		var list = enumGroup(miscGroup).shuffle();
+		for (var i = personality.maxMiscTanks; i < personality.maxMiscTanks + 5 && i < list.length; ++i) 
+			groupDroid(list[i]);
+	}
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 })(this);

@@ -79,6 +79,10 @@ Array.prototype.someProperty = function(property, value) {
 	});
 }
 
+Array.prototype.shuffle = function() {
+	return this.sort(function() { return 0.5 - Math.random(); })
+}
+
 // cluster analysis happens here
 _global.naiveFindClusters = function(list, size) {
 	var ret = { clusters: [], xav: [], yav: [], maxIdx: 0, maxCount: 0 };

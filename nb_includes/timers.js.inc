@@ -18,6 +18,7 @@ _global.setTimers = function() {
 	setTimer("checkAttack", 3000 + 4 * rnd());
 	setTimer("checkVtols", 3000 + 4 * rnd());
 	setTimer("updateAllAdaptInfo", 2500 + 4 * rnd());
+	setTimer("rebalanceGroups", 10000 + 20 * rnd());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
