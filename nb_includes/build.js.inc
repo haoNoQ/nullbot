@@ -175,8 +175,6 @@ function buildTowers() {
 	var oils = enumStructList(structures.derricks);
 	if (oils.length === 0)
 		return false;
-	if (throttled(4 * personality.defenseTimer / oils.length))
-		return false;
 	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
 	var list = [];
 	weaponPaths.forEach(function(statlist) {
@@ -199,8 +197,6 @@ function buildGateways() {
 	}).sort(function(one, two) { return distanceToBase({x: one.x1, y: one.y1}) - distanceToBase({x: two.x1, y: two.y1}); });
 	if (gates.length === 0)
 		return;
-	if (throttled(4 * personality.defenseTimer / oils))
-		return false;
 	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
 	var list = [];
 	weaponPaths.forEach(function(statlist) {
@@ -260,12 +256,14 @@ _global.checkConstruction = function() {
 			return true;
 	if (buildMinimum(structures.vtolPads, enumDroid(me, DROID_WEAPON).filter(isVTOL).length / 2))
 		return true;
-	if (random(2)) {
-		if (buildTowers())
-			return true;
-	} else {
-		if (buildGateways())
-			return true;
+	if (chooseObjectType() === 2) {
+		if (random(2)) {
+			if (buildTowers())
+				return true;
+		} else {
+			if (buildGateways())
+				return true;
+		}
 	}
 	if (buildBasicStructure(structures.extras) !== BUILDRET.UNAVAILABLE) 
 		return true;

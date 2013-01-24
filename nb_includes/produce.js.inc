@@ -107,26 +107,35 @@ function produceTemplate(factory) {
 }
 
 _global.checkProduction = function() {
-	enumStructList(structures.factories).filter(structureIdle).forEach(function(factory) {
-		var trucks = enumTrucks();
-		if (trucks.length < personality.minTrucks || (iHaveHover() && trucks.filter(function(droid) {
-			return isHoverPropulsion(droid.propulsion);
-		}).length < personality.minHoverTrucks))
-			return produceTruck(factory);
-		else {
-			if (structures.hqs.length === 0 || countStructList(structures.hqs) < 1)
-				return false; // don't cheat by producing tanks before design is available (also saves money for early generators)
-			return produceTank(factory);
-		}
-	});
-	enumStructList(structures.templateFactories).filter(structureIdle).forEach(function(factory) {
-		return produceTemplate(factory);
-	});	
-	enumStructList(structures.vtolFactories).filter(structureIdle).forEach(function(factory) {
-		if (structures.hqs.length > 0 && countStructList(structures.hqs) < 1)
-			return false; // don't cheat by producing vtols before design is available
-		return produceVtol(factory);
-	});
+	// TODO: what if template factories don't make borgs or standard factories don't make tanks in this ruleset?
+	switch(chooseObjectType()) {
+		case 0:
+			enumStructList(structures.factories).filter(structureIdle).forEach(function(factory) {
+				var trucks = enumTrucks();
+				if (trucks.length < personality.minTrucks || (iHaveHover() && trucks.filter(function(droid) {
+					return isHoverPropulsion(droid.propulsion);
+				}).length < personality.minHoverTrucks))
+					return produceTruck(factory);
+				else {
+					if (structures.hqs.length === 0 || countStructList(structures.hqs) < 1)
+						return false; // don't cheat by producing tanks before design is available (also saves money for early generators)
+					return produceTank(factory);
+				}
+			});
+			break;
+		case 1:
+			enumStructList(structures.templateFactories).filter(structureIdle).forEach(function(factory) {
+				return produceTemplate(factory);
+			});
+			break;
+		case 3:
+			enumStructList(structures.vtolFactories).filter(structureIdle).forEach(function(factory) {
+				if (structures.hqs.length > 0 && countStructList(structures.hqs) < 1)
+					return false; // don't cheat by producing vtols before design is available
+				return produceVtol(factory);
+			});
+			break;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

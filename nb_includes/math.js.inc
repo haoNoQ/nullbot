@@ -73,6 +73,12 @@ Array.prototype.filterProperty = function(property, value) {
 	});
 }
 
+Array.prototype.someProperty = function(property, value) {
+	return this.some(function(element) {
+		return element[property] === value;
+	});
+}
+
 // cluster analysis happens here
 _global.naiveFindClusters = function(list, size) {
 	var ret = { clusters: [], xav: [], yav: [], maxIdx: 0, maxCount: 0 };

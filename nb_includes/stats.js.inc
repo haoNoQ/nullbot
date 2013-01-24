@@ -57,6 +57,17 @@ _global.structListLimit = function(list) {
 	return ret;
 }
 
+_global.guessWeaponRole = function(name) {
+	for (var stat in weaponStats) {
+		if (weaponStats[stat].weapons.someProperty("stat", name))
+			return weaponStats[stat].role;
+		if (weaponStats[stat].vtols.someProperty("stat", name))
+			return weaponStats[stat].role;
+		if (weaponStats[stat].templates.some(function(i) { return i.weapons.indexOf(name) > -1; }))
+			return weaponStats[stat].role;
+	}
+}
+
 //
 // here be functions for querying out research paths 
 //

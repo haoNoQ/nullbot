@@ -214,34 +214,33 @@ function classifyObject(obj) {
 		return ret;
 	if (obj.type === FEATURE)
 		return ret;
-	if (obj.player === me) {
-		if (obj.name.indexOf("AT") > -1)
-			ret.at += 1;
-		else if (obj.name.indexOf("AP") > -1)
-			ret.ap += 1;
-		else if (obj.name.indexOf("AS") > -1)
-			ret.as += 1;
-		else if (obj.name.indexOf("AA") > -1)
-			ret.aa += 1;
-		else {
-			ret.at += 1 / 4;
-			ret.ap += 1 / 4;
-			ret.as += 1 / 4;
-			ret.aa += 1 / 4;
-		}
-	} else {
-		if (obj.canHitAir && !obj.canHitGround) 
-			ret.aa += 1;
-		if (obj.canHitAir && obj.canHitGround) {
-			ret.at += 1 / 4;
-			ret.ap += 1 / 4;
-			ret.as += 1 / 4;
-			ret.aa += 1 / 4;
-		}
-		if (!obj.canHitAir && obj.canHitGround) {
-			ret.at += 1 / 3;
-			ret.ap += 1 / 3;
-			ret.as += 1 / 3;
+	for (var i = 0; i < obj.weapons.length; ++i) {
+		switch(guessWeaponRole(obj.weapons[i].name)) {
+			case ROLE.AT:
+				ret.at += 1;
+				break;
+			case ROLE.AP:
+				ret.ap += 1;
+				break;
+			case ROLE.AS:
+				ret.as += 1;
+				break;
+			case ROLE.AA:
+				ret.aa += 1;
+				break;
+			default: 
+				if (obj.canHitAir && obj.canHitGround) {
+					ret.at += 1 / 4;
+					ret.ap += 1 / 4;
+					ret.as += 1 / 4;
+					ret.aa += 1 / 4;
+				} else if (obj.canHitAir && !obj.canHitGround) {
+					ret.aa += 1;
+				} else {
+					ret.at += 1 / 3;
+					ret.ap += 1 / 3;
+					ret.as += 1 / 3;
+				}
 		}
 	}
 	for (var i = 0; i < obj.weapons.length; ++i) {
@@ -326,8 +325,6 @@ function summUpMyObject(obj, stat) {
 function updateEnemyStats(player) {
 	if (throttled(30000, player))
 		return;
-	if (throttled(1000))
-		return;
 	enemyStats[player] = new EnemyStat();
 	enumStruct(player, DEFENSE).forEach(summUpEnemyObject);
 	enumDroid(player, DROID_WEAPON).forEach(summUpEnemyObject);
@@ -411,6 +408,31 @@ _global.chooseBodyClass = function(gr) {
 		);
 	}
 	return cached(uncached, 5000, gr);
+}
+
+_global.chooseObjectType = function() {
+	function uncached() {
+		var ret;
+		var our = groupOurs(), their = groupTheirs();
+		if (withChance(50)) {
+			ret = adaptVote(
+				[ our.tank, our.borg ],
+				[ their.ap, their.at ]
+			);
+		} else if (withChance(50)) {
+			ret = 2 * adaptVote(
+				[ our.tank + our.borg + our.vtol, our.defs ],
+				[ their.as, their.at + their.ap + their.aa ]
+			);
+		} else {
+			ret = 3 * adaptVote(
+				[ our.tank + our.borg + our.defs, our.vtol ],
+				[ their.aa, their.at + their.ap + their.as ]
+			);
+		}
+		return ret;
+	}
+	return cached(uncached, 5000);
 }
 
 _global.scopeRatings = function() {

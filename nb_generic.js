@@ -48,7 +48,6 @@ var personality = {
 	maxMiscTanks: 10, // number of tanks used for defense and harass
 	maxPower: 300, // build expensive things if we have more than that
 	repairAt: 50, // how much % healthy should droid be to join the attack group instead of repairing
-	defenseTimer: 40000, // how often to build defenses if we have 4 oil derricks
 }
 
 // this function describes the early build order
