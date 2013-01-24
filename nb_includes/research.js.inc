@@ -43,14 +43,14 @@ function doResearch(lab) {
 		if (chooseBodyClass() === BODYCLASS.KINETIC) {
 			if (withChance(50)) {
 				switch (chooseObjectType()) {
-					case 0:
-						if (pursueResearch(lab, classResearch.kinetic.tank))
+					case 2:
+						if (pursueResearch(lab, classResearch.kinetic.defs))
 							return true;
 					case 1:
 						if (pursueResearch(lab, classResearch.kinetic.borg))
 							return true;
-					case 2:
-						if (pursueResearch(lab, classResearch.kinetic.defs))
+					case 0:
+						if (pursueResearch(lab, classResearch.kinetic.tank))
 							return true;
 				}
 			}
@@ -59,14 +59,14 @@ function doResearch(lab) {
 		}
 		if (withChance(50))
 			switch (chooseObjectType()) {
-				case 0:
-					if (pursueResearch(lab, classResearch.kinetic.tank))
+				case 2:
+					if (pursueResearch(lab, classResearch.thermal.defs))
 						return true;
 				case 1:
-					if (pursueResearch(lab, classResearch.kinetic.borg))
+					if (pursueResearch(lab, classResearch.thermal.borg))
 						return true;
-				case 2:
-					if (pursueResearch(lab, classResearch.kinetic.defs))
+				case 0:
+					if (pursueResearch(lab, classResearch.thermal.tank))
 						return true;
 			}
 		if (pursueResearch(lab, bodyStatsToResList(bodyStats.thermal)))
