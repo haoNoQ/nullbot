@@ -8,17 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 _global.isHoverPropulsion = function(str) {
-	for (var i = 0; i < propulsionStats.hover.length; ++i)
-		if (str === propulsionStats.hover[i].stat)
-			return true;
-	return false;
+	return propulsionStats.hover.someProperty("stat", str);
 }
 
 _global.isVtolPropulsion = function(str) {
-	for (var i = 0; i < propulsionStats.vtol.length; ++i)
-		if (str === propulsionStats.vtol[i].stat)
-			return true;
-	return false;
+	return propulsionStats.vtol.someProperty("stat", str);
 }
 
 _global.iHaveHover = function() {
@@ -38,16 +32,33 @@ _global.iHaveVtol = function() {
 _global.enumStructList = function(list, player) {
 	if (!defined(player))
 		player = me;
-	var ret = [];
-	for (var i = 0; i < list.length; ++i)
-		ret = ret.concat(enumStruct(player, list[i]));
-	return ret;
+	return list.reduce(function(summ, new_value) { return summ.concat(enumStruct(player, new_value)); }, []);
 }
 
 _global.countStructList = function(list, player) {
 	if (!defined(player))
 		player = me;
 	return list.reduce(function(summ, new_value) { return summ + countStruct(new_value, player); }, 0);
+}
+
+function enumFinishedStruct(player, stat) {
+	return enumStruct(player, stat).filterProperty("status", BUILT);
+}
+
+function countFinishedStruct(player, stat) {
+	return enumFinishedStruct(player, stat).length;
+}
+
+_global.enumFinishedStructList = function(list, player) {
+	if (!defined(player))
+		player = me;
+	return list.reduce(function(summ, new_value) { return summ.concat(enumFinishedStruct(player, new_value)); }, []);
+}
+
+_global.countFinishedStructList = function(list, player) {
+	if (!defined(player))
+		player = me;
+	return list.reduce(function(summ, new_value) { return summ + countFinishedStruct(new_value, player); }, 0);
 }
 
 _global.structListLimit = function(list) {
