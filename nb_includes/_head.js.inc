@@ -82,3 +82,8 @@ const MODULECOST = {
 	CHEAP: 0,
 	EXPENSIVE: 1,
 }
+
+// just nowhere to put this
+function myPower() {
+	return playerPower(me) - queuedPower(me);
+}

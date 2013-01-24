@@ -136,6 +136,8 @@ _global.checkProduction = function() {
 			});
 			break;
 	}
+	if (myPower() > personality.maxPower)
+		queue("checkConstruction");
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

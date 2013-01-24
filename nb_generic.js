@@ -61,7 +61,7 @@ function buildOrder() {
 	if (buildMinimum(structures.factories, 1)) return true;
 	if (buildMinimum(structures.gens, 1)) return true;
 	// make sure trucks go capture some oil at this moment
-	if (buildMinimumDerricks(4)) return true; 
+	if (buildMinimumDerricks(3)) return true;
 	// what if one of them is being upgraded? will need the other anyway.
 	// also, it looks like the right timing in most cases.
 	if (buildMinimum(structures.gens, 2)) return true; 
@@ -74,9 +74,19 @@ function buildOrder() {
 		if (buildMinimum(structures.labs, 4)) return true;
 	// build more factories and labs when we have enough income
 	if (buildMinimum(structures.labs, derrickCount / 3)) return true;
-	if (buildMinimum(structures.factories, derrickCount / 5)) return true;
-	if (buildMinimum(structures.templateFactories, derrickCount / 5)) return true;
-	if (buildMinimum(structures.vtolFactories, derrickCount / 8)) return true;
+	if (buildMinimum(structures.factories, 2)) return true;
+	if (buildMinimum(structures.templateFactories, 1)) return true;
+	if (buildMinimum(structures.vtolFactories, 1)) return true;
+	if (myPower() > personality.maxPower) {
+		switch (chooseObjectType()) {
+			case 0:
+				if (buildMinimum(structures.factories, Infinity)) return true;
+			case 1:
+				if (buildMinimum(structures.templateFactories, Infinity)) return true;
+			case 3:
+				if (buildMinimum(structures.vtolFactories, Infinity)) return true;
+		}
+	}
 	return false;
 }
 
