@@ -61,8 +61,8 @@ function produceTank(factory) {
 		propulsions = propulsionStatsToComponents(propulsionStats.ground);
 	else 
 		propulsions = propulsionStatsToComponents(propulsionStats.hover);
-	var w1 = chooseWeapon(), w2 = chooseWeapon(), w3 = chooseWeapon();
-	return ourBuildDroid(factory, "Ground Tank " + w1.name, bodies, propulsions, w1.list, w2.list, w3.list);
+	var w = chooseWeapon();
+	return ourBuildDroid(factory, "Ground Tank " + w.name, bodies, propulsions, w.list, w.list, w.list);
 }
 
 function produceVtol(factory) {
