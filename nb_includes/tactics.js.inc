@@ -67,11 +67,13 @@ function droidFree(droid) {
 
 function attackTarget(droid) {
 	var target = findTarget(droid.group);
-	if (!defined(target) || !droidCanReach(droid, target.x, target.y)) {
-		groupDroid(droid);
-		return;
-	}
-	orderDroidLoc(droid, DORDER_SCOUT, target.x, target.y);
+	if (droid.group != miscGroup)
+		if (!defined(target) || !droidCanReach(droid, target.x, target.y)) {
+			groupDroid(droid);
+			return;
+		}
+	if (defined(target))
+		orderDroidLoc(droid, DORDER_SCOUT, target.x, target.y);
 }
 
 _global.fallBack = function(droid, threat) {
@@ -86,7 +88,10 @@ _global.fallBack = function(droid, threat) {
 
 _global.checkAttack = function() {
 	for (var i = 0; i <= MAX_GROUPS; ++i)
-		regroup(i).forEach(attackTarget);
+		if (!throttled(3000, i)) {
+			regroup(i).forEach(attackTarget);
+			break;
+		}
 }
 
 _global.inPanic = function() {
