@@ -169,7 +169,6 @@ function captureOil(oil) {
 	if (orderDroidBuild(truck, DORDER_BUILD, stat, oil.x, oil.y)) 
 		return BUILDRET.SUCCESS;
 	return BUILDRET.FAILURE;
-
 }
 
 function buildTowers() {
@@ -211,7 +210,6 @@ function buildGateways() {
 		return buildStructureAround(list, {x: gates[0].x1, y: gates[0].y1}) !== BUILDRET.UNAVAILABLE;
 	else
 		return buildStructureAround(list, {x: gates[0].x2, y: gates[0].y2}) !== BUILDRET.UNAVAILABLE;
-
 }
 
 _global.buildMinimum = function(statlist, count, importance) {
