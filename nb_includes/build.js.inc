@@ -44,12 +44,6 @@ function truckFree(truck) {
 	return true;
 }
 
-_global.bringTrucksToBase = function() {
-	enumTrucks().filter(truckFree).forEach(function(truck) {
-		orderDroid(truck, DORDER_RTB);
-	});
-}
-
 // returns one or two free trucks
 function getTwoFreeTrucks() {
 	var trucks = enumTrucks().filter(truckFree);
@@ -127,16 +121,21 @@ function buildBasicStructure(statlist, importance) {
 }
 
 function finishStructures() {
+	var success = false;
 	enumStruct(me).filterProperty("status", BEING_BUILT).forEach(function(struct) {
+		if (success)
+			return;
 		if (throttled(10000, struct.id))
-			continue;
+			return;
+		if (struct.stattype === RESOURCE_EXTRACTOR)
+			return;
 		var truck = getFreeTruckAround(struct.x, struct.y);
 		if (!defined(truck))
-			return false;
+			return;
 		if (orderDroidObj(truck, DORDER_HELPBUILD, struct))
-			return true;
+			success = true;
 	});
-	return false;
+	return success;
 }
 
 function buildStructureAround(statlist, loc) {
@@ -216,13 +215,16 @@ _global.buildMinimum = function(statlist, count, importance) {
 }
 
 function captureSomeOil() {
+	if (throttled(500))
+		return true;
+	if (countStructList(structures.derricks) >= 4 * structListLimit(structures.gens))
+		return false;
 	var oils = [];
 	oilResources.forEach(function(stat) { oils = oils.concat(enumFeature(-1, stat)); });
+	oils = oils.concat(enumStructList(structures.derricks).filterProperty("status", BEING_BUILT));
 	oils = oils.sort(function(one, two) {
 		return distanceToBase(one) - distanceToBase(two);
 	});
-	if (countStructList(structures.derricks) >= 4 * structListLimit(structures.gens))
-		return BUILDRET.UNAVAILABLE;
 	for (var i = 0; i < oils.length; ++i)
 		if (captureOil(oils[i]) === BUILDRET.SUCCESS)
 			return true;
