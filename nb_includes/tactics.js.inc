@@ -73,7 +73,7 @@ function attackTarget(droid) {
 			return;
 		}
 	if (defined(target))
-		orderDroidLoc(droid, DORDER_SCOUT, target.x, target.y);
+		orderDroidObj(droid, DORDER_ATTACK, target);
 }
 
 _global.fallBack = function(droid, threat) {
