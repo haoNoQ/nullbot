@@ -40,25 +40,35 @@ function doResearch(lab) {
 			return true;
 	}
 	if (withChance(50)) { // TODO: make a more thoughtful decision here
-		var ret = chooseBodyClass();
-		if (ret === BODYCLASS.KINETIC) {
-			if (withChance(50))
-				if (pursueResearch(lab, [
-					classResearch.kinetic.tank, 
-					classResearch.kinetic.borg, 
-					classResearch.kinetic.defs, 
-				].random()))
-					return true;
+		if (chooseBodyClass() === BODYCLASS.KINETIC) {
+			if (withChance(50)) {
+				switch (chooseObjectClass()) {
+					case 0:
+						if (pursueResearch(lab, classResearch.kinetic.tank))
+							return true;
+					case 1:
+						if (pursueResearch(lab, classResearch.kinetic.borg))
+							return true;
+					case 2:
+						if (pursueResearch(lab, classResearch.kinetic.defs))
+							return true;
+				}
+			}
 			if (pursueResearch(lab, bodyStatsToResList(bodyStats.kinetic)))
 				return true;
 		}
 		if (withChance(50))
-			if (pursueResearch(lab, [
-				classResearch.thermal.tank, 
-				classResearch.thermal.borg, 
-				classResearch.thermal.defs, 
-			].random()))
-				return true;
+			switch (chooseObjectClass()) {
+				case 0:
+					if (pursueResearch(lab, classResearch.kinetic.tank))
+						return true;
+				case 1:
+					if (pursueResearch(lab, classResearch.kinetic.borg))
+						return true;
+				case 2:
+					if (pursueResearch(lab, classResearch.kinetic.defs))
+						return true;
+			}
 		if (pursueResearch(lab, bodyStatsToResList(bodyStats.thermal)))
 			return true;
 	}
