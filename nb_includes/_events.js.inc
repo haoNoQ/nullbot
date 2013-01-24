@@ -29,8 +29,6 @@ function eventStructureBuilt(structure) {
 function eventDestroyed(object) {
 	invalidateTarget(object);
 	invalidateVtolTarget(object);
-	if (object.type === DROID && object.player === me && object.group !== vtolGroup)
-		touchGroup(object.group);
 }
 
 function eventAttacked(victim, attacker) {
@@ -39,9 +37,11 @@ function eventAttacked(victim, attacker) {
 	if (isAlly(attacker.player))
 		return; // don't respond to accidental friendly fire
 	if (victim.type === DROID) {
-		setTarget(attacker, victim.group);
-		if (!isVTOL(victim))
-			fallBack(victim, attacker);
+		fallBack(victim, attacker);
+		if (!isVTOL(victim) && defined(victim.group)) {
+			setTarget(attacker, victim.group);
+			touchGroup(victim.group);
+		}
 	} else if (victim.type === STRUCTURE) {
 		if (inPanic()) {
 			if (victim.player !== me)
