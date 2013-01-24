@@ -109,6 +109,12 @@ function produceTemplate(factory) {
 _global.checkProduction = function() {
 	// TODO: what if template factories don't make borgs or standard factories don't make tanks in this ruleset?
 	switch(chooseObjectType()) {
+		case 1:
+			enumIdleStructList(structures.templateFactories).forEach(function(factory) {
+				return produceTemplate(factory);
+			});
+			if (myPower() < personality.maxPower)
+				break;
 		case 0:
 			enumIdleStructList(structures.factories).forEach(function(factory) {
 				var trucks = enumTrucks();
@@ -122,19 +128,16 @@ _global.checkProduction = function() {
 					return produceTank(factory);
 				}
 			});
-			break;
-		case 1:
-			enumIdleStructList(structures.templateFactories).forEach(function(factory) {
-				return produceTemplate(factory);
-			});
-			break;
+			if (myPower() < personality.maxPower)
+				break;
 		case 3:
 			enumIdleStructList(structures.vtolFactories).forEach(function(factory) {
 				if (!iCanDesign())
 					return false; // don't cheat by producing vtols before design is available
 				return produceVtol(factory);
 			});
-			break;
+			if (myPower() < personality.maxPower)
+				break;
 	}
 	if (myPower() > personality.maxPower)
 		queue("checkConstruction");
