@@ -153,7 +153,7 @@ _global.groupDroid = function(droid) {
 			groupAdd(vtolGroup, droid);
 			return;
 		}
-		if (random(5) === 0 && groupSize(miscGroup) < personality.maxMiscTanks)
+		if (withChance(20) && groupSize(miscGroup) < personality.maxMiscTanks)
 			groupAdd(miscGroup, droid);
 		var grp = groupsBySize().filter(function(i) {
 			if (isAlly(i))
