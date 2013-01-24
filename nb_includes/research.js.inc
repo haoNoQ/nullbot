@@ -42,7 +42,7 @@ function doResearch(lab) {
 	if (withChance(50)) { // TODO: make a more thoughtful decision here
 		if (chooseBodyClass() === BODYCLASS.KINETIC) {
 			if (withChance(50)) {
-				switch (chooseObjectClass()) {
+				switch (chooseObjectType()) {
 					case 0:
 						if (pursueResearch(lab, classResearch.kinetic.tank))
 							return true;
@@ -58,7 +58,7 @@ function doResearch(lab) {
 				return true;
 		}
 		if (withChance(50))
-			switch (chooseObjectClass()) {
+			switch (chooseObjectType()) {
 				case 0:
 					if (pursueResearch(lab, classResearch.kinetic.tank))
 						return true;
