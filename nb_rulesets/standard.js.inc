@@ -257,10 +257,11 @@ const weaponStats = {
 			{ res: "R-Wpn-Sunburst", stat: "Rocket-VTOL-Sunburst", weight: WEIGHT.LIGHT }, // sunburst a2a
 		],
 		defenses: [
-			{ res: "R-Defense-Sunburst", stat: "Emplacement-MRL-pit", defrole: DEFROLE.STANDALONE }, // sunburst
-			{ res: "R-Defense-SamSite1", stat: "Emplacement-MRL-pit", defrole: DEFROLE.STANDALONE }, // avenger
-			{ res: "R-Defense-SamSite2", stat: "Emplacement-MRL-pit", defrole: DEFROLE.STANDALONE }, // vindicator
-			{ res: "R-Defense-WallTower-SamHvy", stat: "Emplacement-MRL-pit", defrole: DEFROLE.GATEWAY }, // vindicator hardpoint
+			{ res: "R-Defense-Sunburst", stat: "P0-AASite-Sunburst", defrole: DEFROLE.STANDALONE }, // sunburst
+			{ res: "R-Defense-SamSite1", stat: "P0-AASite-SAM1", defrole: DEFROLE.STANDALONE }, // avenger
+			{ res: "R-Defense-WallTower-SamSite", stat: "WallTower-SamSite", defrole: DEFROLE.GATEWAY }, // avenger
+			{ res: "R-Defense-SamSite2", stat: "P0-AASite-SAM2", defrole: DEFROLE.STANDALONE }, // vindicator
+			{ res: "R-Defense-WallTower-SamHvy", stat: "WallTower-SamHvy", defrole: DEFROLE.GATEWAY }, // vindicator hardpoint
 		],
 		templates: [],
 		extras: [],
