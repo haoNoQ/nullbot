@@ -37,6 +37,7 @@ var personality = {
 		"R-Defense-Tower01",
 		"R-Vehicle-Prop-Halftracks",
 		"R-Struc-PowerModuleMk1",
+		"R-Wpn-MG-Damage03",
 	],
 	minTanks: 3, // minimal attack force at game start
 	becomeHarder: 2, // how much to increase attack force every 5 minutes
@@ -66,6 +67,8 @@ function buildOrder() {
 	// also, it looks like the right timing in most cases.
 	if (buildMinimum(structures.gens, 2)) return true; 
 	if (buildMinimum(structures.hqs, 1)) return true;
+	// make sure trucks go capture some oil at this moment
+	if (buildMinimumDerricks(7)) return true;
 	// support hover maps
 	var ret = scopeRatings(); 
 	if (ret.land === 0 && !iHaveHover())
