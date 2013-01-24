@@ -217,7 +217,7 @@ _global.buildMinimum = function(statlist, count, importance) {
 function captureSomeOil() {
 	if (throttled(500))
 		return true;
-	if (countStructList(structures.derricks) >= 4 * structListLimit(structures.gens))
+	if (countFinishedStructList(structures.derricks) >= 4 * structListLimit(structures.gens))
 		return false;
 	var oils = [];
 	oilResources.forEach(function(stat) { oils = oils.concat(enumFeature(-1, stat)); });
@@ -232,7 +232,7 @@ function captureSomeOil() {
 }
 
 _global.buildMinimumDerricks = function(count) {
-	if (countStructList(structures.derricks) < count)
+	if (countFinishedStructList(structures.derricks) < count)
 		if (captureSomeOil())
 			return true;
 	return false;
@@ -243,7 +243,7 @@ _global.checkConstruction = function() {
 		return true;
 	if (buildOrder())
 		return true;
-	var oils = countStructList(structures.derricks);
+	var oils = countFinishedStructList(structures.derricks);
 	var gens = countStructList(structures.gens);
 	if (oils > 4 * gens)
 		if (buildBasicStructure(structures.gens) !== BUILDRET.UNAVAILABLE)

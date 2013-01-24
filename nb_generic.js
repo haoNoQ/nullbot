@@ -52,7 +52,7 @@ var personality = {
 
 // this function describes the early build order
 function buildOrder() {
-	var derrickCount = countStructList(structures.derricks);
+	var derrickCount = countFinishedStructList(structures.derricks);
 	// might be good for Insane AI, or for rebuilding
 	if (derrickCount > 0) 
 		if (buildMinimum(structures.gens, 1)) return true;

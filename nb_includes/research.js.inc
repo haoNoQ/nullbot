@@ -70,11 +70,7 @@ function doResearch(lab) {
 }
 
 _global.checkResearch = function() {
-	var list = enumStructList(structures.labs).filter(structureIdle);
-	for (var i = 0; i < list.length; ++i)
-		if (doResearch(list[i]))
-			return true;
-	return false;
+	enumIdleStructList(structures.labs).forEach(doResearch);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

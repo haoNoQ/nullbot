@@ -41,24 +41,16 @@ _global.countStructList = function(list, player) {
 	return list.reduce(function(summ, new_value) { return summ + countStruct(new_value, player); }, 0);
 }
 
-function enumFinishedStruct(player, stat) {
-	return enumStruct(player, stat).filterProperty("status", BUILT);
-}
-
-function countFinishedStruct(player, stat) {
-	return enumFinishedStruct(player, stat).length;
-}
-
 _global.enumFinishedStructList = function(list, player) {
-	if (!defined(player))
-		player = me;
-	return list.reduce(function(summ, new_value) { return summ.concat(enumFinishedStruct(player, new_value)); }, []);
+	return enumStructList(list, player).filterProperty("status", BUILT);
 }
 
 _global.countFinishedStructList = function(list, player) {
-	if (!defined(player))
-		player = me;
-	return list.reduce(function(summ, new_value) { return summ + countFinishedStruct(new_value, player); }, 0);
+	return enumFinishedStructList(list, player).length;
+}
+
+_global.enumIdleStructList = function(list, player) {
+	return enumFinishedStructList(list, player).filter(structureIdle);
 }
 
 _global.structListLimit = function(list) {
