@@ -106,41 +106,54 @@ function produceTemplate(factory) {
 	return false;
 }
 
+function checkTankProduction() {
+	enumIdleStructList(structures.factories).forEach(function(factory) {
+		var trucks = enumTrucks();
+		if (trucks.length < personality.minTrucks || (iHaveHover() && trucks.filter(function(droid) {
+			return isHoverPropulsion(droid.propulsion);
+		}).length < personality.minHoverTrucks))
+			return produceTruck(factory);
+		else {
+			if (!iCanDesign())
+				return false; // don't cheat by producing tanks before design is available (also saves money for early generators)
+			return produceTank(factory);
+		}
+	});
+}
+
+function checkTemplateProduction() {
+	enumIdleStructList(structures.templateFactories).forEach(function(factory) {
+		return produceTemplate(factory);
+	});
+}
+
+function checkVtolProduction() {
+	enumIdleStructList(structures.vtolFactories).forEach(function(factory) {
+		if (!iCanDesign())
+			return false; // don't cheat by producing vtols before design is available
+		return produceVtol(factory);
+	});
+}
+
 _global.checkProduction = function() {
-	// TODO: what if template factories don't make borgs or standard factories don't make tanks in this ruleset?
 	switch(chooseObjectType()) {
 		case 1:
-			enumIdleStructList(structures.templateFactories).forEach(function(factory) {
-				return produceTemplate(factory);
-			});
-			if (myPower() < personality.maxPower)
+			if (checkTemplateProduction())
 				break;
 		case 0:
-			enumIdleStructList(structures.factories).forEach(function(factory) {
-				var trucks = enumTrucks();
-				if (trucks.length < personality.minTrucks || (iHaveHover() && trucks.filter(function(droid) {
-					return isHoverPropulsion(droid.propulsion);
-				}).length < personality.minHoverTrucks))
-					return produceTruck(factory);
-				else {
-					if (!iCanDesign())
-						return false; // don't cheat by producing tanks before design is available (also saves money for early generators)
-					return produceTank(factory);
-				}
-			});
-			if (myPower() < personality.maxPower)
+			if (checkTankProduction())
 				break;
 		case 3:
-			enumIdleStructList(structures.vtolFactories).forEach(function(factory) {
-				if (!iCanDesign())
-					return false; // don't cheat by producing vtols before design is available
-				return produceVtol(factory);
-			});
-			if (myPower() < personality.maxPower)
+			if (checkVtolProduction())
 				break;
 	}
-	if (myPower() > personality.maxPower)
+	// if having too much energy, don't care about what we produce
+	if (myPower() > personality.maxPower) {
 		queue("checkConstruction");
+		checkTemplateProduction();
+		checkTankProduction();
+		checkVtolProduction();
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

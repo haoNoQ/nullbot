@@ -56,21 +56,22 @@ function doResearch(lab) {
 			}
 			if (pursueResearch(lab, bodyStatsToResList(bodyStats.kinetic)))
 				return true;
+		} else {
+			if (withChance(50))
+				switch (chooseObjectType()) {
+					case 2:
+						if (pursueResearch(lab, classResearch.thermal.defs))
+							return true;
+					case 1:
+						if (pursueResearch(lab, classResearch.thermal.borg))
+							return true;
+					case 0:
+						if (pursueResearch(lab, classResearch.thermal.tank))
+							return true;
+				}
+			if (pursueResearch(lab, bodyStatsToResList(bodyStats.thermal)))
+				return true;
 		}
-		if (withChance(50))
-			switch (chooseObjectType()) {
-				case 2:
-					if (pursueResearch(lab, classResearch.thermal.defs))
-						return true;
-				case 1:
-					if (pursueResearch(lab, classResearch.thermal.borg))
-						return true;
-				case 0:
-					if (pursueResearch(lab, classResearch.thermal.tank))
-						return true;
-			}
-		if (pursueResearch(lab, bodyStatsToResList(bodyStats.thermal)))
-			return true;
 	}
 	// if nothing of the above holds, do some generic research
 	if (pursueResearch(lab, fundamentalResearch))
