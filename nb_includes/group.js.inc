@@ -78,7 +78,10 @@ function findNearestGroup(x, y) {
 }
 
 function targetSuitableForHarass(object) {
-	return enumRange(object.x, object.y, baseScale / 2, ENEMIES, false).length <= groupSize(miscGroup);
+	function uncached() {
+		return enumRange(object.x, object.y, baseScale / 2, ENEMIES, false).length <= groupSize(miscGroup);
+	}
+	return cached(uncached, 60000);
 }
 
 _global.getGroupInfo = function(gr) {
@@ -122,10 +125,7 @@ _global.findTarget = function(gr) {
 	}
 	// find harass targets for the misc group
 	if (gr === miscGroup) { 
-		var list = [];
-		for (var i = 0; i < maxPlayers; ++i)
-			if (isEnemy(i))
-				list = list.concat(enumStructList(miscTargets, i));
+		var list = enumStructList(miscTargets, enumLivingPlayers().filter(isEnemy).random());
 		list = list.filter(targetSuitableForHarass).sort(function(one, two) {
 			return distanceToBase(one) - distanceToBase(two);
 		});
