@@ -71,6 +71,29 @@ _global.guessWeaponRole = function(name) {
 	}
 }
 
+_global.guessBodyWeight = function(name) {
+	var ret;
+	for (var stat in bodyStats) {
+		ret = bodyStats[stat].filterProperty("stat", name).last();
+		if (defined(ret))
+			return ret.weight;
+	}
+	debug("Ruleset error: Couldn't guess weight of", name);
+}
+
+_global.guessWeaponWeight = function(name) {
+	var ret;
+	for (var stat in weaponStats) {
+		ret = weaponStats[stat].weapons.filterProperty("stat", name).last();
+		if (defined(ret))
+			return ret.weight;
+		ret = weaponStats[stat].vtols.filterProperty("stat", name).last();
+		if (defined(ret))
+			return ret.weight;
+	}
+	debug("Ruleset error: Couldn't guess weight of", name);
+}
+
 //
 // here be functions for querying out research paths 
 //

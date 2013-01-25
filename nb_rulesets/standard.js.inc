@@ -166,15 +166,15 @@ const weaponStats = {
 		role: ROLE.AP,
 		chatalias: "mg",
 		weapons: [
-			{ res: "R-Wpn-MG1Mk1", stat: "MG1Mk1", weight: WEIGHT.LIGHT }, // mg
+			{ res: "R-Wpn-MG1Mk1", stat: "MG1Mk1", weight: WEIGHT.ULTRALIGHT }, // mg
 			{ res: "R-Wpn-MG2Mk1", stat: "MG2Mk1", weight: WEIGHT.LIGHT }, // tmg
-			{ res: "R-Wpn-MG3Mk1", stat: "MG3Mk1", weight: WEIGHT.LIGHT }, // hmg
-			{ res: "R-Wpn-MG4", stat: "MG4ROTARYMk1", weight: WEIGHT.LIGHT }, // ag
-			{ res: "R-Wpn-MG5", stat: "MG5TWINROTARY", weight: WEIGHT.LIGHT }, // tag
+			{ res: "R-Wpn-MG3Mk1", stat: "MG3Mk1", weight: WEIGHT.MEDIUM }, // hmg
+			{ res: "R-Wpn-MG4", stat: "MG4ROTARYMk1", weight: WEIGHT.MEDIUM }, // ag
+			{ res: "R-Wpn-MG5", stat: "MG5TWINROTARY", weight: WEIGHT.MEDIUM }, // tag
 		],
 		vtols: [
-			{ res: "R-Wpn-MG3Mk1", stat: "MG3-VTOL", weight: WEIGHT.LIGHT }, // vtol hmg
-			{ res: "R-Wpn-MG4", stat: "MG4ROTARY-VTOL", weight: WEIGHT.LIGHT }, // vtol ag
+			{ res: "R-Wpn-MG3Mk1", stat: "MG3-VTOL", weight: WEIGHT.ULTRALIGHT }, // vtol hmg
+			{ res: "R-Wpn-MG4", stat: "MG4ROTARY-VTOL", weight: WEIGHT.MEDIUM }, // vtol ag
 		],
 		defenses: [
 			{ res: "R-Defense-Tower01", stat: "GuardTower1", defrole: DEFROLE.GATEWAY }, // hmg tower
@@ -202,7 +202,7 @@ const weaponStats = {
 			{ res: "R-Wpn-Missile2A-T", stat: "Missile-A-T", weight: WEIGHT.LIGHT }, // scourge
 		],
 		vtols: [
-			{ res: "R-Wpn-Rocket05-MiniPod", stat: "Rocket-VTOL-Pod", weight: WEIGHT.LIGHT }, // pod
+			{ res: "R-Wpn-Rocket05-MiniPod", stat: "Rocket-VTOL-Pod", weight: WEIGHT.ULTRALIGHT }, // pod
 			{ res: "R-Wpn-Rocket01-LtAT", stat: "Rocket-VTOL-LtA-T", weight: WEIGHT.LIGHT }, // lancer
 			{ res: "R-Wpn-Rocket07-Tank-Killer", stat: "Rocket-VTOL-HvyA-T", weight: WEIGHT.LIGHT }, // tk
 			{ res: "R-Wpn-Missile2A-T", stat: "Missile-VTOL-AT", weight: WEIGHT.LIGHT }, // scourge
@@ -236,10 +236,10 @@ const weaponStats = {
 		chatalias: "rox",
 		weapons: [
 			{ res: "R-Wpn-Rocket02-MRL", stat: "Rocket-MRL", weight: WEIGHT.LIGHT }, // mra
-			{ res: "R-Wpn-Rocket03-HvAT", stat: "Rocket-BB", weight: WEIGHT.LIGHT }, // bb
-			{ res: "R-Wpn-Rocket06-IDF", stat: "Rocket-IDF", weight: WEIGHT.HEAVY }, // ripple
-			{ res: "R-Wpn-MdArtMissile", stat: "Missile-MdArt", weight: WEIGHT.MEDIUM }, // seraph
-			{ res: "R-Wpn-HvArtMissile", stat: "Missile-HvyArt", weight: WEIGHT.HEAVY }, // archie
+			{ res: "R-Wpn-Rocket03-HvAT", stat: "Rocket-BB", weight: WEIGHT.MEDIUM }, // bb
+			{ res: "R-Wpn-Rocket06-IDF", stat: "Rocket-IDF", weight: WEIGHT.ULTRAHEAVY }, // ripple
+			{ res: "R-Wpn-MdArtMissile", stat: "Missile-MdArt", weight: WEIGHT.HEAVY }, // seraph
+			{ res: "R-Wpn-HvArtMissile", stat: "Missile-HvyArt", weight: WEIGHT.ULTRAHEAVY }, // archie
 		],
 		vtols: [
 			{ res: "R-Wpn-Rocket03-HvAT", stat: "Rocket-VTOL-BB", weight: WEIGHT.LIGHT }, // bb

@@ -16,19 +16,13 @@ const ROLE = {
 	LENGTH: 4, // number of items in this enum
 }
 
-// indexed by the previous enum's values
-const ROLENAME = [
-	"AT",
-	"AP",
-	"AS",
-	"AA",
-];
-
-// what sort of body to use for this weapon
+// this controls body and weapon compatibility
 const WEIGHT = {
-	LIGHT: 0, 
-	MEDIUM: 1, 
-	HEAVY: 2, 
+	ULTRALIGHT: 0,
+	LIGHT: 1, 
+	MEDIUM: 2, 
+	HEAVY: 3, 
+	ULTRAHEAVY: 4,
 }
 
 // what to use this defensive structure for
