@@ -26,11 +26,12 @@ include(NB_RULESETS + "standard.js.inc");
 
 // variables defining the personality
 var personality = {
-	weaponPaths: [ // weapons to use
+	weaponPaths: [ // weapons to use; put late-game paths below!
 		weaponStats.rockets_AT, 
 		weaponStats.machineguns, 
 		weaponStats.rockets_AS, 
 		weaponStats.rockets_AA, 
+		weaponStats.rockets_late_AP,
 	],
 	earlyResearch: [ // fixed research path for the early game
 		"R-Wpn-MG-Damage01",
