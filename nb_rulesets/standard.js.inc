@@ -193,6 +193,44 @@ const weaponStats = {
 			"R-Wpn-MG-Damage08",
 		],
 	},
+	flamers: {
+		role: ROLE.AP,
+		chatalias: "fl",
+		weapons: [
+			{ res: "R-Wpn-Flamer01Mk1", stat: "Flame1Mk1", weight: WEIGHT.LIGHT }, // flamer
+			{ res: "R-Wpn-Flame2", stat: "Flame2", weight: WEIGHT.HEAVY }, // inferno
+			{ res: "R-Wpn-Plasmite-Flamer", stat: "PlasmiteFlamer", weight: WEIGHT.HEAVY }, // plasmite
+		],
+		vtols: [],
+		defenses: [
+			{ res: "R-Defense-Pillbox05", stat: "PillBox5", defrole: DEFROLE.GATEWAY }, // flamer bunker
+			{ res: "R-Defense-HvyFlamer", stat: "Tower-Projector", defrole: DEFROLE.GATEWAY }, // inferno bunker
+			{ res: "R-Defense-PlasmiteFlamer", stat: "Plasmite-flamer-bunker", defrole: DEFROLE.GATEWAY }, // plasmite bunker
+		],
+		templates: [
+			{ res: "R-Wpn-Flamer01Mk1", body: "CyborgFlamerGrd", prop: "CyborgLegs", weapons: [ "CyborgFlamer01", ] }, // flamer cyborg
+			{ res: "R-Wpn-Flame2", body: "Cyb-Bod-Thermite", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Thermite", ] }, // flamer cyborg
+		],
+		extras: [
+			"R-Wpn-Flamer-ROF03",
+			"R-Wpn-Flamer-Damage09",
+		],
+	},
+	fireBombs: {
+		role: ROLE.AS,
+		chatalias: "fb", 
+		weapons: [],
+		vtols: [
+			{ res: "R-Wpn-Bomb03", stat: "Bomb3-VTOL-LtINC", weight: WEIGHT.LIGHT },
+			{ res: "R-Wpn-Bomb04", stat: "Bomb4-VTOL-HvyINC", weight: WEIGHT.HEAVY },
+			{ res: "R-Wpn-Bomb05", stat: "Bomb5-VTOL-Plasmite", weight: WEIGHT.HEAVY },
+		],
+		defenses: [],
+		templates: [],
+		extras: [
+			"R-Wpn-Bomb-Accuracy03",
+		],
+	},
 	rockets_AT: {
 		role: ROLE.AT,
 		chatalias: "rox",
