@@ -138,11 +138,19 @@ function finishStructures() {
 	return success;
 }
 
-function buildStructureAround(statlist, loc) {
+function buildStructureAround(statlist, loc, unique) {
 	var truck = getFreeTruckAround(loc.x, loc.y);
 	if (!defined(truck))
 		return BUILDRET.FAILURE;
-	var stat = statlist.filter(isAvailable).last();
+	var stat = statlist.filter(isAvailable).filter(function(s) {
+		if (unique !== true)
+			return true;
+		var list = enumStruct(me, s);
+		for (var i = 0; i < list.length; ++i)
+			if (distance(list[i], loc) < baseScale / 2)
+				return false;
+		return true;
+	}).last();
 	if (!defined(stat))
 		return BUILDRET.UNAVAILABLE;
 	loc = pickStructLocation(truck, stat, loc.x, loc.y);
@@ -175,11 +183,14 @@ function buildTowers() {
 	if (oils.length === 0)
 		return false;
 	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
-	var list = [];
-	weaponPaths.forEach(function(statlist) {
-		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.STANDALONE));
-	});
-	return buildStructureAround(list, oils.random()) !== BUILDRET.UNAVAILABLE;
+	if (withChance(70)) {
+		var list = [];
+		weaponPaths.forEach(function(statlist) {
+			list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.STANDALONE));
+		});
+		return buildStructureAround(list, oils.random()) !== BUILDRET.UNAVAILABLE;
+	} 
+	return buildStructureAround(structures.sensors, oils.random(), true);
 }
 
 function buildGateways() {
