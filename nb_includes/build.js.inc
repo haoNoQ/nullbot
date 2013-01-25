@@ -122,19 +122,20 @@ function buildBasicStructure(statlist, importance) {
 
 function finishStructures() {
 	var success = false;
-	enumStruct(me).filterProperty("status", BEING_BUILT).forEach(function(struct) {
+	var list = enumStruct(me).filterProperty("status", BEING_BUILT);
+	for (var i = 0; i < list.length; ++i) {
 		if (success)
 			return;
-		if (throttled(10000, struct.id))
+		if (throttled(10000, list[i].id))
 			return;
-		if (struct.stattype === RESOURCE_EXTRACTOR)
+		if (list[i].stattype === RESOURCE_EXTRACTOR)
 			return;
-		var truck = getFreeTruckAround(struct.x, struct.y);
+		var truck = getFreeTruckAround(list[i].x, list[i].y);
 		if (!defined(truck))
 			return;
-		if (orderDroidObj(truck, DORDER_HELPBUILD, struct))
+		if (orderDroidObj(truck, DORDER_HELPBUILD, list[i]))
 			success = true;
-	});
+	};
 	return success;
 }
 
