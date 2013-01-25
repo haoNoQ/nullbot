@@ -323,7 +323,7 @@ function summUpMyObject(obj, stat) {
 }
 
 function updateEnemyStats(player) {
-	if (throttled(30000, player))
+	if (throttled(30000))
 		return;
 	enemyStats[player] = new EnemyStat();
 	enumStruct(player, DEFENSE).forEach(summUpEnemyObject);
