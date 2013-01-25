@@ -340,12 +340,13 @@ function updateMyInfo() {
 
 _global.updateAllAdaptInfo = function() {
 	var success = false;
-	enumLivingPlayers().filter(isEnemy).forEach(function(p) {
-		if (!success && !throttled(3000 * (maxPlayers + 1), p)) { // need to make sure we update ourselves at least sometimes
-			updateEnemyStats(p);
+	var enemies = enumLivingPlayers().filter(isEnemy);
+	for (var p = 0; p < enemies.length; ++p) {
+		if (!success && !throttled(3000 * (maxPlayers + 1), enemies[p])) { // need to make sure we update ourselves at least sometimes
+			updateEnemyStats(enemies[p]);
 			success = true;
 		}
-	});
+	}
 	if (!success)
 		updateMyInfo();
 }
