@@ -295,8 +295,9 @@ _global.checkConstruction = function() {
 	if (oils > 4 * gens)
 		if (buildBasicStructure(structures.gens) !== BUILDRET.UNAVAILABLE)
 			return true;
-	if (captureSomeOil())
-		return true;
+	if (withChance(50))
+		if (captureSomeOil())
+			return true;
 	var str = [];
 	for (var i = 0; i < modules.length; ++i)
 		str = str.concat(enumStruct(me, modules[i].base));
