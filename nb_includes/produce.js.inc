@@ -136,36 +136,38 @@ function produceTemplateFromList(factory, list) {
 
 function produceTemplate(factory) {
 	var list = [];
-	if (enumTrucks().length < personality.minTrucks) 
-		return produceTemplateFromList(factory, truckTemplates);
-	else {
-		var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
-		weaponPaths.forEach(function(statlist) {
-			var ret = statlist.templates;
-			ret.reverse();
-			list = list.concat(ret);
+	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
+	weaponPaths.forEach(function(statlist) {
+		var ret = statlist.templates;
+		ret.reverse();
+		list = list.concat(ret);
+	});
+	if (produceTemplateFromList(factory, list))
+		return;
+	// if didn't find a template of correct class, still produce templates;
+	// TODO: it shouldn't work when some weapon paths become outdated
+	return produceTemplateFromList(factory, personality.weaponPaths.random().templates);
+}
+
+function checkTruckProduction() {
+	var trucks = enumTrucks();
+	if (trucks.length < personality.minTrucks || (iHaveHover() && trucks.filter(function(droid) {
+		return isHoverPropulsion(droid.propulsion);
+	}).length < personality.minHoverTrucks))
+		enumIdleStructList(structures.factories).forEach(function(factory) {
+			produceTruck(factory);
 		});
-		if (produceTemplateFromList(factory, list))
-			return;
-		// if didn't find a template of correct class, still produce templates;
-		// TODO: it shouldn't work when some weapon paths become outdated
-		return produceTemplateFromList(factory, personality.weaponPaths.random().templates);
-	}
-	return false;
+	if (enumTrucks().length < personality.minTrucks)
+		enumIdleStructList(structures.templateFactories).forEach(function(factory) {
+			produceTemplateFromList(factory, truckTemplates);
+		});
 }
 
 function checkTankProduction() {
+	if (!iCanDesign())
+		return false; // don't cheat by producing tanks before design is available (also saves money for early generators)
 	enumIdleStructList(structures.factories).forEach(function(factory) {
-		var trucks = enumTrucks();
-		if (trucks.length < personality.minTrucks || (iHaveHover() && trucks.filter(function(droid) {
-			return isHoverPropulsion(droid.propulsion);
-		}).length < personality.minHoverTrucks))
-			return produceTruck(factory);
-		else {
-			if (!iCanDesign())
-				return false; // don't cheat by producing tanks before design is available (also saves money for early generators)
-			return produceTank(factory);
-		}
+		return produceTank(factory);
 	});
 }
 
@@ -176,14 +178,15 @@ function checkTemplateProduction() {
 }
 
 function checkVtolProduction() {
+	if (!iCanDesign())
+		return false; // don't cheat by producing vtols before design is available
 	enumIdleStructList(structures.vtolFactories).forEach(function(factory) {
-		if (!iCanDesign())
-			return false; // don't cheat by producing vtols before design is available
 		return produceVtol(factory);
 	});
 }
 
 _global.checkProduction = function() {
+	checkTruckProduction();
 	switch(chooseObjectType()) {
 		case 1:
 			if (checkTemplateProduction())
