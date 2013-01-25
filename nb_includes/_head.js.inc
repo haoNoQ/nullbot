@@ -16,7 +16,14 @@ const ROLE = {
 	LENGTH: 4, // number of items in this enum
 }
 
-// this controls body and weapon compatibility
+// this controls body and weapon compatibility.
+// A little explanation:
+// w \ b | L | M | H  bodies can't be "ultra-", 
+//    UL | + | - | -  ultra-light weapons are for light bodies only,
+//     L | + | + | -  light weapons are for light or medium bodies,
+//     M | + | + | +  medium weapons are for all bodies,
+//     H | - | + | +  heavy weapons are for medium or heavy bodies,
+//    UH | - | - | +  ultra-heavy weapons are for heavy bodies only.
 const WEIGHT = {
 	ULTRALIGHT: 0,
 	LIGHT: 1, 
