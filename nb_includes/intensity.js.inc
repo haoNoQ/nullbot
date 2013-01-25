@@ -14,7 +14,8 @@
 // if your function requires several throttling cases, you can use the optional
 // notes value:
 //		if (throttled(60000, player)) return;
-
+// NOTE: it won't work if the function repeatedly dies and gets created again, eg.
+// a function defined inside forEach(function(...){...}) can't be throttled
 
 _global.throttled = function(interval, notes) {
 	if (!defined(arguments.callee.caller.throttleTimes))
@@ -39,6 +40,8 @@ _global.throttled = function(interval, notes) {
 //		}
 // add necessary notes to the cached() call if necessary, similar to how you do it
 // for throttled().
+// NOTE: it won't work if the function repeatedly dies and gets created again, eg.
+// a function defined inside forEach(function(...){...}) can't have caching inside
 
 _global.cached = function(whatToCall, interval, notes) {
 	if (!defined(arguments.callee.caller.cachedTimes)) {
