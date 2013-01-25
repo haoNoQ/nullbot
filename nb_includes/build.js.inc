@@ -206,9 +206,11 @@ function buildGateways() {
 		var l = gate.x1 - gate.x2 + gate.y1 - gate.y2;
 		if (l < 0) 
 			l = -l;
-		var cnt = enumRange(gate.x1, gate.y1, l, me).filterProperty("stattype", DEFENSE).length;
-		cnt    += enumRange(gate.x2, gate.y2, l, me).filterProperty("stattype", DEFENSE).length;
-		return cnt < l;
+		var cnt = enumRange(gate.x1, gate.y1, l, ALLIES).filterProperty("stattype", DEFENSE).length;
+		cnt    += enumRange(gate.x2, gate.y2, l, ALLIES).filterProperty("stattype", DEFENSE).length;
+		cnt    -= enumRange(gate.x1, gate.y1, l, ENEMIES).filterProperty("stattype", DEFENSE).length;
+		cnt    -= enumRange(gate.x2, gate.y2, l, ENEMIES).filterProperty("stattype", DEFENSE).length;
+		return cnt > 0 && cnt < l;
 	}).sort(function(one, two) { return distanceToBase({x: one.x1, y: one.y1}) - distanceToBase({x: two.x1, y: two.y1}); });
 	if (gates.length === 0)
 		return;
