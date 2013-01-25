@@ -189,8 +189,13 @@ function buildTowers() {
 			list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.STANDALONE));
 		});
 		return buildStructureAround(list, oils.random()) !== BUILDRET.UNAVAILABLE;
-	} 
-	return buildStructureAround(structures.sensors, oils.random(), true);
+	}
+	var list = [];
+	weaponPaths.forEach(function(statlist) {
+		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.FORTRESS));
+	});
+	list = list.concat(structures.sensors);
+	return buildStructureAround(list, oils.random(), true);
 }
 
 function buildGateways() {
@@ -216,6 +221,27 @@ function buildGateways() {
 		return buildStructureAround(list, {x: gates[0].x1, y: gates[0].y1}) !== BUILDRET.UNAVAILABLE;
 	else
 		return buildStructureAround(list, {x: gates[0].x2, y: gates[0].y2}) !== BUILDRET.UNAVAILABLE;
+}
+
+function buildArty() {
+	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
+	var list = [];
+	weaponPaths.forEach(function(statlist) {
+		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.ARTY));
+	});
+	return buildBasicStructure(list);
+}
+
+function buildDefenses() {
+	if (withChance(33)) {
+		if (buildTowers()) // includes sensor towers and forts
+			return true;
+	} else if (withChance(50)) {
+		if (buildGateways())
+			return true;
+	} else
+		if (buildArty())
+			return true;
 }
 
 _global.buildMinimum = function(statlist, count, importance) {
@@ -276,15 +302,9 @@ _global.checkConstruction = function() {
 			return true;
 	if (buildMinimum(structures.vtolPads, enumDroid(me, DROID_WEAPON).filter(isVTOL).length / 2))
 		return true;
-	if (chooseObjectType() === 2) {
-		if (withChance(50)) {
-			if (buildTowers())
-				return true;
-		} else {
-			if (buildGateways())
-				return true;
-		}
-	}
+	if (chooseObjectType() === 2)
+		if (buildDefenses())
+			return true;
 	if (buildBasicStructure(structures.extras) !== BUILDRET.UNAVAILABLE) 
 		return true;
 	return false;
