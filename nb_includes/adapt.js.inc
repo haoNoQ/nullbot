@@ -417,25 +417,21 @@ _global.chooseBodyClass = function(gr) {
 
 _global.chooseObjectType = function() {
 	function uncached() {
-		var ret;
 		var our = groupOurs(), their = groupTheirs();
-		if (withChance(50)) {
-			ret = adaptVote(
-				[ our.tank, our.borg ],
-				[ their.ap, their.at ]
-			);
-		} else if (withChance(50)) {
-			ret = 2 * adaptVote(
+		if (adaptVote(
 				[ our.tank + our.borg + our.vtol, our.defs ],
 				[ their.as, their.at + their.ap + their.aa ]
-			);
-		} else {
-			ret = 3 * adaptVote(
+			) === 1)
+			return 2;
+		if (adaptVote(
 				[ our.tank + our.borg + our.defs, our.vtol ],
 				[ their.aa, their.at + their.ap + their.as ]
-			);
-		}
-		return ret;
+			) === 1)
+			return 3;
+		return adaptVote(
+			[ our.tank, our.borg ],
+			[ their.ap, their.at ]
+		);
 	}
 	return cached(uncached, 5000);
 }
