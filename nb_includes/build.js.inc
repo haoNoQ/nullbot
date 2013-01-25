@@ -231,6 +231,7 @@ function buildArty() {
 	weaponPaths.forEach(function(statlist) {
 		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.ARTY));
 	});
+	list = list.reverse();
 	return buildBasicStructure(list);
 }
 
