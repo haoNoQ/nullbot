@@ -323,8 +323,6 @@ function summUpMyObject(obj, stat) {
 }
 
 function updateEnemyStats(player) {
-	if (throttled(30000))
-		return;
 	enemyStats[player] = new EnemyStat();
 	enumStruct(player, DEFENSE).forEach(summUpEnemyObject);
 	enumDroid(player, DROID_WEAPON).forEach(summUpEnemyObject);
@@ -341,8 +339,15 @@ function updateMyInfo() {
 }
 
 _global.updateAllAdaptInfo = function() {
-	enumLivingPlayers().forEach(updateEnemyStats);
-	updateMyInfo();
+	var success = false;
+	enumLivingPlayers().filter(isEnemy).forEach(function(p) {
+		if (!success && !throttled(3000 * (maxPlayers + 1), p)) { // need to make sure we update ourselves at least sometimes
+			updateEnemyStats(p);
+			success = true;
+		}
+	});
+	if (!success)
+		updateMyInfo();
 }
 
 function getMyGroupInfo(gr) {

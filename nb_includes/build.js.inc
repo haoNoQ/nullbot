@@ -217,14 +217,21 @@ _global.buildMinimum = function(statlist, count, importance) {
 function captureSomeOil() {
 	if (throttled(500))
 		return true;
+	function getOilList() {
+		var oils = [];
+		oilResources.forEach(function(stat) { oils = oils.concat(enumFeature(-1, stat)); });
+		oils = oils.concat(enumStructList(structures.derricks).filterProperty("status", BEING_BUILT));
+		oils = oils.sort(function(one, two) {
+			return distanceToBase(one) - distanceToBase(two);
+		});
+		if (oils.length > 10)
+			oils.length = 10;
+		return oils;
+	}
+	var oils = cached(getOilList, 5000);
 	if (countFinishedStructList(structures.derricks) >= 4 * structListLimit(structures.gens))
 		return false;
-	var oils = [];
-	oilResources.forEach(function(stat) { oils = oils.concat(enumFeature(-1, stat)); });
-	oils = oils.concat(enumStructList(structures.derricks).filterProperty("status", BEING_BUILT));
-	oils = oils.sort(function(one, two) {
-		return distanceToBase(one) - distanceToBase(two);
-	});
+
 	for (var i = 0; i < oils.length; ++i)
 		if (captureOil(oils[i]) === BUILDRET.SUCCESS)
 			return true;
