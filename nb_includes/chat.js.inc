@@ -36,5 +36,22 @@ _global.chatSet = function(args) {
 	return _("No such personality! Try one of these:") + str;
 }
 
+_global.chatTruck = function(args) {
+	var droid = enumTrucks().random();
+	if (!defined(droid))
+		return _("Sorry, I have no trucks.");
+	if (donateObject(droid, args)) {
+		addBeacon(droid.x, droid.y, args);
+		return _("You can use this one.");
+	} 
+	return _("Sorry, droid transfer failed.");
+}
+
+_global.chatMoney = function(args) {
+	var power = Math.round(myPower()/3);
+	donatePower(power, args);
+	return _("Power transfered.");
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 })(this);

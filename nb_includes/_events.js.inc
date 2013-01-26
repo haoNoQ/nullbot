@@ -87,8 +87,16 @@ function eventChat(from, to, message) {
 	// don't reply on any other message coming from enemies
 	if (!isAlly(from))
 		return;
-	if (message.substr(0,7)=="!nb set") {
+	if (message.substr(0, 7) === "!nb set") {
 		chat(from, chatSet(message.substr(8)));
+		return;
+	}
+	if (message === "!nb truck") {
+		chat(from, chatTruck(from));
+		return;
+	}
+	if (message === "!nb power" || message === "!nb money") {
+		chat(from, chatMoney(from));
 		return;
 	}
 }
