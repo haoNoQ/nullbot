@@ -57,8 +57,7 @@ function addStat(to, what, weight) {
 	if (!defined(weight))
 		weight = 1;
 	for (var prop in to) 
-		if (prop !== "addStat")
-			to[prop] += what[prop] * weight;
+		to[prop] += what[prop] * weight;
 }
 
 const SCOPES = {
