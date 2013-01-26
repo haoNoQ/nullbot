@@ -69,6 +69,7 @@ _global.guessWeaponRole = function(name) {
 		if (weaponStats[stat].templates.some(function(i) { return i.weapons.indexOf(name) > -1; }))
 			return weaponStats[stat].role;
 	}
+	debug("Ruleset error: Couldn't guess role of", name);
 }
 
 _global.guessBodyWeight = function(name) {
