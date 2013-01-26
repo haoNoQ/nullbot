@@ -233,7 +233,7 @@ const weaponStats = {
 	},
 	rockets_AT: {
 		role: ROLE.AT,
-		chatalias: "rox",
+		chatalias: "rx",
 		weapons: [
 			{ res: "R-Wpn-Rocket05-MiniPod", stat: "Rocket-Pod", weight: WEIGHT.LIGHT }, // pod
 			{ res: "R-Wpn-Rocket01-LtAT", stat: "Rocket-LtA-T", weight: WEIGHT.LIGHT }, // lancer
