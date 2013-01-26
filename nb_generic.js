@@ -60,6 +60,7 @@ var subpersonalities = {
 			weaponStats.cannons, 
 			weaponStats.machineguns, 
 			weaponStats.mortars,
+			weaponStats.cannons_AA,
 		],
 		earlyResearch: [
 			"R-Wpn-MG-Damage01",

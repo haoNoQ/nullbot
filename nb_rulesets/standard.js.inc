@@ -269,6 +269,20 @@ const weaponStats = {
 			"R-Wpn-Rail-ROF03",
 		],
 	},
+	cannons_AA: {
+		role: ROLE.AA,
+		chatalias: "ca",
+		weapons: [
+			{ res: "R-Wpn-AAGun02", stat: "AAGun2Mk1", weight: WEIGHT.HEAVY },
+		],
+		vtols: [],
+		defenses: [
+			{ res: "R-Defense-AASite-QuadBof", stat: "AASite-QuadBof", defrole: DEFROLE.STANDALONE },
+			{ res: "R-Defense-WallTower-DoubleAAgun", stat: "WallTower-DoubleAAGun", defrole: DEFROLE.GATEWAY },
+		],
+		templates: [],
+		extras: [],
+	},
 	mortars: {
 		role: ROLE.AS,
 		chatalias: "mo",
