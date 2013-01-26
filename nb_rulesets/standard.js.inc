@@ -270,6 +270,59 @@ const weaponStats = {
 			"R-Wpn-Missile-Accuracy02",
 		],
 	},
+	cannons: {
+		role: ROLE.AT,
+		chatalias: "cn",
+		weapons: [
+			{ res: "R-Wpn-Cannon1Mk1", stat: "Cannon1Mk1", weight: WEIGHT.LIGHT }, // lc
+			{ res: "R-Wpn-Cannon2Mk1", stat: "Cannon2A-TMk1", weight: WEIGHT.HEAVY }, // mc
+			{ res: "R-Wpn-Cannon4AMk1", stat: "Cannon4AUTOMk1", weight: WEIGHT.HEAVY }, // hpv
+			{ res: "R-Wpn-Cannon5", stat: "Cannon5VulcanMk1", weight: WEIGHT.HEAVY }, // ac
+			{ res: "R-Wpn-Cannon6TwinAslt", stat: "Cannon6TwinAslt", weight: WEIGHT.ULTRAHEAVY }, // tac
+			{ res: "R-Wpn-Cannon3Mk1", stat: "Cannon375mmMk1", weight: WEIGHT.ULTRAHEAVY }, // hc
+			{ res: "R-Wpn-RailGun01", stat: "RailGun1Mk1", weight: WEIGHT.LIGHT }, // needle
+			{ res: "R-Wpn-RailGun02", stat: "RailGun2Mk1", weight: WEIGHT.HEAVY }, // rail
+			{ res: "R-Wpn-RailGun03", stat: "RailGun3Mk1", weight: WEIGHT.ULTRAHEAVY }, // gauss
+		],
+		vtols: [
+			{ res: "R-Wpn-Cannon1Mk1", stat: "Cannon1-VTOL", weight: WEIGHT.LIGHT }, // lc
+			{ res: "R-Wpn-Cannon4AMk1", stat: "Cannon4AUTO-VTOL", weight: WEIGHT.HEAVY }, // hpv
+			{ res: "R-Wpn-Cannon5", stat: "Cannon5Vulcan-VTOL", weight: WEIGHT.HEAVY }, // ac
+			{ res: "R-Wpn-RailGun01", stat: "RailGun1-VTOL", weight: WEIGHT.LIGHT }, // needle
+			{ res: "R-Wpn-RailGun02", stat: "RailGun2-VTOL", weight: WEIGHT.HEAVY }, // rail
+		],
+		defenses: [
+			{ res: "R-Defense-Pillbox04", stat: "PillBox4", defrole: DEFROLE.STANDALONE }, // lc bunker
+			{ res: "R-Defense-WallTower02", stat: "WallTower02", defrole: DEFROLE.GATEWAY }, // lc hard
+			{ res: "R-Defense-WallTower03", stat: "WallTower03", defrole: DEFROLE.GATEWAY }, // mc hard
+			{ res: "R-Defense-Emplacement-HPVcannon", stat: "Emplacement-HPVcannon", defrole: DEFROLE.STANDALONE }, // hpv empl
+			{ res: "R-Defense-WallTower-HPVcannon", stat: "WallTower-HPVcannon", defrole: DEFROLE.GATEWAY }, // hpv hard
+			{ res: "R-Defense-R-Defense-Wall-VulcanCan", stat: "Wall-VulcanCan", defrole: DEFROLE.GATEWAY }, // ac hard
+			{ res: "R-Defense-Cannon6", stat: "PillBox-Cannon6", defrole: DEFROLE.STANDALONE }, // tac bunker
+			{ res: "R-Defense-WallTower04", stat: "WallTower04", defrole: DEFROLE.GATEWAY }, // hc hard
+			{ res: "R-Defense-Super-Cannon", stat: "X-Super-Cannon", defrole: DEFROLE.FORTRESS }, // cannon fort
+			{ res: "R-Defense-GuardTower-Rail1", stat: "GuardTower-Rail1", defrole: DEFROLE.STANDALONE }, // needle tower
+			{ res: "R-Defense-Rail2", stat: "Emplacement-Rail2", defrole: DEFROLE.STANDALONE }, // rail empl
+			{ res: "R-Defense-WallTower-Rail2", stat: "WallTower-Rail2", defrole: DEFROLE.GATEWAY }, // rail hard
+			{ res: "R-Defense-Rail3", stat: "Emplacement-Rail3", defrole: DEFROLE.STANDALONE }, // gauss empl
+			{ res: "R-Defense-WallTower-Rail3", stat: "WallTower-Rail3", defrole: DEFROLE.GATEWAY }, // gauss hard
+			{ res: "R-Defense-MassDriver", stat: "X-Super-MassDriver", defrole: DEFROLE.FORTRESS }, // mass driver fort
+		],
+		templates: [
+			{ res: "R-Wpn-Cannon1Mk1", body: "CyborgCannonGrd", prop: "CyborgLegs", weapons: [ "CyborgCannon", ] }, // lc borg
+			{ res: "R-Cyborg-Hvywpn-Mcannon", body: "Cyb-Hvybod-Mcannon", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-Mcannon", ] }, // mc super
+			{ res: "R-Cyborg-Hvywpn-HPV", body: "Cyb-Hvybod-HPV", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-HPV", ] }, // hpv super
+			{ res: "R-Cyborg-Hvywpn-Acannon", body: "Cyb-Hvybod-Acannon", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-Acannon", ] }, // ac super
+			{ res: "R-Wpn-RailGun01", body: "Cyb-Bod-Rail1", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Rail1", ] }, // needle borg
+			{ res: "R-Cyborg-Hvywpn-RailGunner", body: "Cyb-Hvybod-RailGunner", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-RailGunner", ] }, // rail super
+		],
+		extras: [
+			"R-Wpn-Cannon-ROF06",
+			"R-Vehicle-Engine09", // cannons are heeeeavy
+			"R-Wpn-Rail-Damage03", // sure it's required by gauss, but what if our AI uses only cyborgs and vtols?
+			"R-Wpn-Rail-ROF03",
+		],
+	},
 	rockets_AS: {
 		role: ROLE.AS,
 		chatalias: "rox",
