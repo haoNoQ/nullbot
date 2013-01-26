@@ -76,3 +76,13 @@ function eventAttacked(victim, attacker) {
 function eventStructureReady(structure) {
 	fireLassat(structure);
 }
+
+function eventChat(from, to, message) {
+	// we are not case-sensitive
+	message = message.toLowerCase();
+	if (message === "!nb who")
+		chat(from, chatWho(from));
+	// don't reply on any other message coming from enemies
+	if (!isAlly(from))
+		return;
+}
