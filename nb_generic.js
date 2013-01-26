@@ -83,7 +83,7 @@ var subpersonalities = {
 			weaponStats.flamers,
 			weaponStats.fireMortars,
 			weaponStats.rockets_AA,
-			weaponStats.rockets_lateAP,
+			weaponStats.rockets_late_AP,
 		],
 		earlyResearch: [
 			"R-Wpn-Flamer-ROF01",
