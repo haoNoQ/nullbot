@@ -254,13 +254,16 @@ function classifyObject(obj) {
 	else if (obj.type === DROID && obj.droidType === DROID_CYBORG)
 		ret.kbody += 1;
 	else {
-		if (bodyStatsToComponents(bodyStats.thermal).someProperty("stat", obj.body))
-			ret.tbody += 1;
-		else if (bodyStatsToComponents(bodyStats.kinetic).someProperty("stat", obj.body))
-			ret.kbody += 1;
-		else {
-			ret.tbody += 1 / 2;
-			ret.kbody += 1 / 2;
+		switch (guessBodyClass(obj.body)) {
+			case BODYCLASS.KINETIC:
+				ret.kbody += 1;
+				break;
+			case BODYCLASS.THERMAL:
+				ret.tbody += 1;
+				break;
+			default:
+				ret.tbody += 1 / 2;
+				ret.kbody += 1 / 2;
 		}
 	}
 	if (obj.type === STRUCTURE)

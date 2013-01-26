@@ -56,5 +56,16 @@ _global.cached = function(whatToCall, interval, notes) {
 	return arguments.callee.caller.cachedValues[notes];
 }
 
+// if you actually want your script to send debug messages, consider using this function.
+// it will only output each message only once, so your debug log will be readable.
+_global.niceDebug = function() {
+	var msg = me + ": ";
+	for (var i = 0; i < arguments.length; ++i)
+		msg += " " + arguments[i];
+	if (throttled(Infinity, msg))
+		return;
+	debug(msg);
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 })(this);

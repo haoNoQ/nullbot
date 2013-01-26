@@ -69,7 +69,15 @@ _global.guessWeaponRole = function(name) {
 		if (weaponStats[stat].templates.some(function(i) { return i.weapons.indexOf(name) > -1; }))
 			return weaponStats[stat].role;
 	}
-	debug("Ruleset error: Couldn't guess role of", name);
+	niceDebug("Ruleset error: Couldn't guess weapon role of", name);
+}
+
+_global.guessBodyClass = function(name) {
+	if (bodyStats.thermal.someProperty("stat", name))
+		return BODYCLASS.THERMAL;
+	if (bodyStats.kinetic.someProperty("stat", name))
+		return BODYCLASS.KINETIC;
+	niceDebug("Ruleset error: Couldn't guess body class of", name);
 }
 
 _global.guessBodyWeight = function(name) {
@@ -79,7 +87,7 @@ _global.guessBodyWeight = function(name) {
 		if (defined(ret))
 			return ret.weight;
 	}
-	debug("Ruleset error: Couldn't guess weight of", name);
+	niceDebug("Ruleset error: Couldn't guess body weight of", name);
 }
 
 _global.guessWeaponWeight = function(name) {
@@ -92,7 +100,7 @@ _global.guessWeaponWeight = function(name) {
 		if (defined(ret))
 			return ret.weight;
 	}
-	debug("Ruleset error: Couldn't guess weight of", name);
+	niceDebug("Ruleset error: Couldn't guess weapon weight of", name);
 }
 
 //
