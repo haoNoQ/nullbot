@@ -216,21 +216,6 @@ const weaponStats = {
 			"R-Wpn-Flamer-Damage09",
 		],
 	},
-	fireBombs: {
-		role: ROLE.AS,
-		chatalias: "fb", 
-		weapons: [],
-		vtols: [
-			{ res: "R-Wpn-Bomb03", stat: "Bomb3-VTOL-LtINC", weight: WEIGHT.LIGHT },
-			{ res: "R-Wpn-Bomb04", stat: "Bomb4-VTOL-HvyINC", weight: WEIGHT.HEAVY },
-			{ res: "R-Wpn-Bomb05", stat: "Bomb5-VTOL-Plasmite", weight: WEIGHT.HEAVY },
-		],
-		defenses: [],
-		templates: [],
-		extras: [
-			"R-Wpn-Bomb-Accuracy03",
-		],
-	},
 	cannons: {
 		role: ROLE.AT,
 		chatalias: "cn",
@@ -282,6 +267,63 @@ const weaponStats = {
 			"R-Vehicle-Engine09", // cannons are heeeeavy
 			"R-Wpn-Rail-Damage03", // sure it's required by gauss, but what if our AI uses only cyborgs and vtols?
 			"R-Wpn-Rail-ROF03",
+		],
+	},
+	mortars: {
+		role: ROLE.AS,
+		chatalias: "mo",
+		weapons: [
+			{ res: "R-Wpn-Mortar01Lt", stat: "Mortar1Mk1", weight: WEIGHT.HEAVY },
+			{ res: "R-Wpn-Mortar02Hvy", stat: "Mortar2Mk1", weight: WEIGHT.HEAVY },
+			{ res: "R-Wpn-Mortar3", stat: "Mortar3ROTARYMk1", weight: WEIGHT.HEAVY },
+			{ res: "R-Wpn-HowitzerMk1", stat: "Howitzer105Mk1", weight: WEIGHT.ULTRAHEAVY },
+			{ res: "R-Wpn-Howitzer03-Rot", stat: "Howitzer03-Rot", weight: WEIGHT.ULTRAHEAVY },
+			{ res: "R-Wpn-HvyHowitzer", stat: "Howitzer150Mk1", weight: WEIGHT.ULTRAHEAVY },
+		],
+		vtols: [
+			{ res: "R-Wpn-Bomb01", stat: "Bomb1-VTOL-LtHE", weight: WEIGHT.LIGHT },
+			{ res: "R-Wpn-Bomb02", stat: "Bomb2-VTOL-HvHE", weight: WEIGHT.HEAVY },
+		],
+		defenses: [
+			{ res: "R-Defense-MortarPit", stat: "Emplacement-MortarPit01", defrole: DEFROLE.ARTY },
+			{ res: "R-Defense-HvyMor", stat: "Emplacement-MortarPit02", defrole: DEFROLE.ARTY },
+			{ res: "R-Defense-RotMor", stat: "Emplacement-RotMor", defrole: DEFROLE.ARTY },
+			{ res: "R-Defense-Howitzer", stat: "Emplacement-Howitzer105", defrole: DEFROLE.ARTY },
+			{ res: "R-Defense-RotHow", stat: "Emplacement-RotHow", defrole: DEFROLE.ARTY },
+			{ res: "R-Defense-HvyHowitzer", stat: "Emplacement-Howitzer150", defrole: DEFROLE.ARTY },
+		],
+		templates: [
+			{ res: "R-Wpn-Mortar01Lt", body: "Cyb-Bod-Grenade", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Grenade", ] },
+		],
+		extras: [
+			"R-Wpn-Bomb-Accuracy03",
+			"R-Wpn-Howitzer-Damage06",
+			"R-Wpn-Howitzer-ROF04",
+			"R-Wpn-Howitzer-Accuracy03",
+		],
+	},
+	fireMortars: {
+		role: ROLE.AS,
+		chatalias: "fm", 
+		weapons: [
+			{ res: "R-Wpn-Mortar-Incenediary", stat: "Mortar-Incenediary", weight: WEIGHT.HEAVY },
+			{ res: "R-Wpn-Howitzer-Incenediary", stat: "Howitzer-Incenediary", weight: WEIGHT.ULTRAHEAVY },
+		],
+		vtols: [
+			{ res: "R-Wpn-Bomb03", stat: "Bomb3-VTOL-LtINC", weight: WEIGHT.LIGHT },
+			{ res: "R-Wpn-Bomb04", stat: "Bomb4-VTOL-HvyINC", weight: WEIGHT.HEAVY },
+			{ res: "R-Wpn-Bomb05", stat: "Bomb5-VTOL-Plasmite", weight: WEIGHT.HEAVY },
+		],
+		defenses: [
+			{ res: "R-Defense-MortarPit-Incenediary", stat: "Emplacement-MortarPit-Incenediary", defrole: DEFROLE.ARTY },
+			{ res: "R-Defense-Howitzer-Incenediary", stat: "Emplacement-Howitzer-Incenediary", defrole: DEFROLE.ARTY },
+		],
+		templates: [],
+		extras: [
+			"R-Wpn-Bomb-Accuracy03",
+			"R-Wpn-Howitzer-Damage06",
+			"R-Wpn-Howitzer-ROF04",
+			"R-Wpn-Howitzer-Accuracy03",
 		],
 	},
 	rockets_AT: {

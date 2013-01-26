@@ -59,6 +59,7 @@ var subpersonalities = {
 		weaponPaths: [
 			weaponStats.cannons, 
 			weaponStats.machineguns, 
+			weaponStats.mortars,
 		],
 		earlyResearch: [
 			"R-Wpn-MG-Damage01",
