@@ -231,45 +231,6 @@ const weaponStats = {
 			"R-Wpn-Bomb-Accuracy03",
 		],
 	},
-	rockets_AT: {
-		role: ROLE.AT,
-		chatalias: "rx",
-		weapons: [
-			{ res: "R-Wpn-Rocket05-MiniPod", stat: "Rocket-Pod", weight: WEIGHT.LIGHT }, // pod
-			{ res: "R-Wpn-Rocket01-LtAT", stat: "Rocket-LtA-T", weight: WEIGHT.LIGHT }, // lancer
-			{ res: "R-Wpn-Rocket07-Tank-Killer", stat: "Rocket-HvyA-T", weight: WEIGHT.LIGHT }, // tk
-			{ res: "R-Wpn-Missile2A-T", stat: "Missile-A-T", weight: WEIGHT.LIGHT }, // scourge
-		],
-		vtols: [
-			{ res: "R-Wpn-Rocket05-MiniPod", stat: "Rocket-VTOL-Pod", weight: WEIGHT.ULTRALIGHT }, // pod
-			{ res: "R-Wpn-Rocket01-LtAT", stat: "Rocket-VTOL-LtA-T", weight: WEIGHT.LIGHT }, // lancer
-			{ res: "R-Wpn-Rocket07-Tank-Killer", stat: "Rocket-VTOL-HvyA-T", weight: WEIGHT.LIGHT }, // tk
-			{ res: "R-Wpn-Missile2A-T", stat: "Missile-VTOL-AT", weight: WEIGHT.LIGHT }, // scourge
-		],
-		defenses: [
-			{ res: "R-Defense-Tower06", stat: "GuardTower6", defrole: DEFROLE.STANDALONE }, // pod tower
-			{ res: "R-Defense-Pillbox06", stat: "GuardTower5", defrole: DEFROLE.STANDALONE }, // lancer tower
-			{ res: "R-Defense-WallTower06", stat: "WallTower06", defrole: DEFROLE.GATEWAY }, // lancer hardpoint
-			{ res: "R-Defense-HvyA-Trocket", stat: "Emplacement-HvyATrocket", defrole: DEFROLE.STANDALONE }, // tk emplacement
-			{ res: "R-Defense-WallTower-HvyA-Trocket", stat: "WallTower-HvATrocket", defrole: DEFROLE.GATEWAY }, // tk hardpoint
-			{ res: "R-Defense-Super-Rocket", stat: "X-Super-Rocket", defrole: DEFROLE.FORTRESS }, // rocket bastion
-			{ res: "R-Defense-GuardTower-ATMiss", stat: "GuardTower-ATMiss", defrole: DEFROLE.STANDALONE }, // scourge tower
-			{ res: "R-Defense-WallTower-A-Tmiss", stat: "WallTower-Atmiss", defrole: DEFROLE.GATEWAY }, // scourge hardpoint
-			{ res: "R-Defense-Super-Missile", stat: "X-Super-Missile", defrole: DEFROLE.FORTRESS }, // missile fortress
-		],
-		templates: [
-			{ res: "R-Wpn-Rocket01-LtAT", body: "CyborgRkt1Ground", prop: "CyborgLegs", weapons: [ "CyborgRocket", ] }, // lancer borg
-			{ res: "R-Cyborg-Hvywpn-TK", body: "Cyb-Hvybod-TK", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-TK", ] }, // tk super
-			{ res: "R-Wpn-Missile2A-T", body: "Cyb-Bod-Atmiss", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Atmiss", ] }, // scourge borg
-			{ res: "R-Cyborg-Hvywpn-A-T", body: "Cyb-Hvybod-A-T", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-A-T", ] }, // scourge super
-		],
-		extras: [
-			"R-Wpn-Rocket-ROF03",
-			"R-Wpn-Missile-Damage03",
-			"R-Wpn-Missile-ROF03",
-			"R-Wpn-Missile-Accuracy02",
-		],
-	},
 	cannons: {
 		role: ROLE.AT,
 		chatalias: "cn",
@@ -321,6 +282,45 @@ const weaponStats = {
 			"R-Vehicle-Engine09", // cannons are heeeeavy
 			"R-Wpn-Rail-Damage03", // sure it's required by gauss, but what if our AI uses only cyborgs and vtols?
 			"R-Wpn-Rail-ROF03",
+		],
+	},
+	rockets_AT: {
+		role: ROLE.AT,
+		chatalias: "rx",
+		weapons: [
+			{ res: "R-Wpn-Rocket05-MiniPod", stat: "Rocket-Pod", weight: WEIGHT.LIGHT }, // pod
+			{ res: "R-Wpn-Rocket01-LtAT", stat: "Rocket-LtA-T", weight: WEIGHT.LIGHT }, // lancer
+			{ res: "R-Wpn-Rocket07-Tank-Killer", stat: "Rocket-HvyA-T", weight: WEIGHT.LIGHT }, // tk
+			{ res: "R-Wpn-Missile2A-T", stat: "Missile-A-T", weight: WEIGHT.LIGHT }, // scourge
+		],
+		vtols: [
+			{ res: "R-Wpn-Rocket05-MiniPod", stat: "Rocket-VTOL-Pod", weight: WEIGHT.ULTRALIGHT }, // pod
+			{ res: "R-Wpn-Rocket01-LtAT", stat: "Rocket-VTOL-LtA-T", weight: WEIGHT.LIGHT }, // lancer
+			{ res: "R-Wpn-Rocket07-Tank-Killer", stat: "Rocket-VTOL-HvyA-T", weight: WEIGHT.LIGHT }, // tk
+			{ res: "R-Wpn-Missile2A-T", stat: "Missile-VTOL-AT", weight: WEIGHT.LIGHT }, // scourge
+		],
+		defenses: [
+			{ res: "R-Defense-Tower06", stat: "GuardTower6", defrole: DEFROLE.STANDALONE }, // pod tower
+			{ res: "R-Defense-Pillbox06", stat: "GuardTower5", defrole: DEFROLE.STANDALONE }, // lancer tower
+			{ res: "R-Defense-WallTower06", stat: "WallTower06", defrole: DEFROLE.GATEWAY }, // lancer hardpoint
+			{ res: "R-Defense-HvyA-Trocket", stat: "Emplacement-HvyATrocket", defrole: DEFROLE.STANDALONE }, // tk emplacement
+			{ res: "R-Defense-WallTower-HvyA-Trocket", stat: "WallTower-HvATrocket", defrole: DEFROLE.GATEWAY }, // tk hardpoint
+			{ res: "R-Defense-Super-Rocket", stat: "X-Super-Rocket", defrole: DEFROLE.FORTRESS }, // rocket bastion
+			{ res: "R-Defense-GuardTower-ATMiss", stat: "GuardTower-ATMiss", defrole: DEFROLE.STANDALONE }, // scourge tower
+			{ res: "R-Defense-WallTower-A-Tmiss", stat: "WallTower-Atmiss", defrole: DEFROLE.GATEWAY }, // scourge hardpoint
+			{ res: "R-Defense-Super-Missile", stat: "X-Super-Missile", defrole: DEFROLE.FORTRESS }, // missile fortress
+		],
+		templates: [
+			{ res: "R-Wpn-Rocket01-LtAT", body: "CyborgRkt1Ground", prop: "CyborgLegs", weapons: [ "CyborgRocket", ] }, // lancer borg
+			{ res: "R-Cyborg-Hvywpn-TK", body: "Cyb-Hvybod-TK", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-TK", ] }, // tk super
+			{ res: "R-Wpn-Missile2A-T", body: "Cyb-Bod-Atmiss", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Atmiss", ] }, // scourge borg
+			{ res: "R-Cyborg-Hvywpn-A-T", body: "Cyb-Hvybod-A-T", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-A-T", ] }, // scourge super
+		],
+		extras: [
+			"R-Wpn-Rocket-ROF03",
+			"R-Wpn-Missile-Damage03",
+			"R-Wpn-Missile-ROF03",
+			"R-Wpn-Missile-Accuracy02",
 		],
 	},
 	rockets_AS: {
