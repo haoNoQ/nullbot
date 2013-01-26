@@ -40,7 +40,7 @@ function SimpleStat() {
 	this.borg = 0;
 	this.defs = 0;
 	this.vtol = 0,
-	// weapon-propulsion classes used by the player (unused so far, due to API limitations)
+	// weapon-propulsion classes used by the player
 	this.at = 0;
 	this.ap = 0;
 	this.as = 0;
@@ -48,7 +48,7 @@ function SimpleStat() {
 	// armor used by the player
 	this.kbody = 0;
 	this.tbody = 0
-	// weapon-armor classes used by the player (unused so far, due to API limitations)
+	// weapon-armor classes used by the player
 	this.kweapon = 0;
 	this.tweapon = 0;
 }
