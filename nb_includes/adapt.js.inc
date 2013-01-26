@@ -254,9 +254,9 @@ function classifyObject(obj) {
 	else if (obj.type === DROID && obj.droidType === DROID_CYBORG)
 		ret.kbody += 1;
 	else {
-		if (bodyStatsToComponents(bodyStats.thermal).indexOf(obj.body) > -1)
+		if (bodyStatsToComponents(bodyStats.thermal).someProperty("stat", obj.body))
 			ret.tbody += 1;
-		else if (bodyStatsToComponents(bodyStats.thermal).indexOf(obj.body) > -1)
+		else if (bodyStatsToComponents(bodyStats.kinetic).someProperty("stat", obj.body))
 			ret.kbody += 1;
 		else {
 			ret.tbody += 1 / 2;
