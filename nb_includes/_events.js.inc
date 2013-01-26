@@ -106,7 +106,7 @@ function eventChat(from, to, message) {
 }
 
 function eventObjectTransfer(object, from) {
-	if (object.player != me)
+	if (object.player !== me)
 		return; // object was transferred from me, not to me
 	if (object.type === DROID)
 		groupDroid(object);

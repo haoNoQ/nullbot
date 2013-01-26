@@ -67,7 +67,7 @@ function droidFree(droid) {
 
 function attackTarget(droid) {
 	var target = findTarget(droid.group);
-	if (droid.group != miscGroup)
+	if (droid.group !== miscGroup)
 		if (!defined(target) || !droidCanReach(droid, target.x, target.y)) {
 			groupDroid(droid);
 			return;
