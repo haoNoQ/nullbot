@@ -323,5 +323,43 @@ const weaponStats = {
 		],
 		templates: [],
 		extras: [],
-	}
+	},
+	useless_AT: {
+		role: ROLE.AT,
+		chatalias: "AT stuff that you will never consciously research or produce, but still need to classify",
+		weapons: [],
+		vtols: [],
+		defenses: [],
+		templates: [],
+		extras: [],
+	},
+	useless_AP: {
+		role: ROLE.AP,
+		chatalias: "AP stuff that you will never consciously research or produce, but still need to classify",
+		weapons: [
+			{ res: "", stat: "MG3-Pillbox", weight: 0 }, // mg bunker dedicated weapon
+		],
+		vtols: [],
+		defenses: [],
+		templates: [],
+		extras: [],
+	},
+	useless_AS: {
+		role: ROLE.AS,
+		chatalias: "AS stuff that you will never consciously research or produce, but still need to classify",
+		weapons: [],
+		vtols: [],
+		defenses: [],
+		templates: [],
+		exxtras: [],
+	},
+	useless_AA: {
+		role: ROLE.AA,
+		chatalias: "AA stuff that you will never consciously research or produce, but still need to classify",
+		weapons: [],
+		vtols: [],
+		defenses: [],
+		templates: [],
+		extras: [],
+	},
 };
