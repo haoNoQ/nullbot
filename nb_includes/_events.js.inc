@@ -23,7 +23,7 @@ function eventStartLevel() {
 	s = s % j;
 	j = 0;
 	for (var i in subpersonalities) {
-		if (j === s )
+		if (j === s)
 			personality = subpersonalities[i];
 		++j;
 	}
