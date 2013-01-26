@@ -9,6 +9,24 @@ function eventGameInit() {
 }
 
 function eventStartLevel() {
+	// initialize pseudo-random subpersonality here
+	var j = 1, s = 0;
+	for (var i = 0; i < maxPlayers; ++i) {
+		if (allianceExistsBetween(me, i))
+			s += j;
+		j *= 2;
+	}
+	var s = s + (new Date()).getMinutes(); // the random "s" number obtained here is the same for all players in any team
+	j = 0;
+	for (var i in subpersonalities) // count the amount of subpersonalities
+		++j;
+	s = s % j;
+	j = 0;
+	for (var i in subpersonalities) {
+		if (j === s )
+			personality = subpersonalities[i];
+		++j;
+	}
 	// the following code is necessary to avoid some strange game bug when droids that 
 	// are initially buried into the ground fail to move out of the way when a building 
 	// is being placed right above them

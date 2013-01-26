@@ -25,33 +25,61 @@ include(NB_INCLUDES + "_head.js.inc");
 include(NB_RULESETS + "standard.js.inc");
 
 // variables defining the personality
-var personality = {
-	weaponPaths: [ // weapons to use; put late-game paths below!
-		weaponStats.rockets_AT, 
-		weaponStats.machineguns, 
-		weaponStats.rockets_AS, 
-		weaponStats.rockets_AA, 
-		weaponStats.rockets_late_AP,
-	],
-	earlyResearch: [ // fixed research path for the early game
-		"R-Wpn-MG-Damage01",
-		"R-Defense-Tower01",
-		"R-Vehicle-Prop-Halftracks",
-		"R-Struc-PowerModuleMk1",
-		"R-Wpn-MG-Damage03",
-	],
-	minTanks: 3, // minimal attack force at game start
-	becomeHarder: 3, // how much to increase attack force every 5 minutes
-	maxTanks: 21, // maximum for the minTanks value (since it grows at becomeHarder rate)
-	minTrucks: 5, // minimal number of trucks around
-	minHoverTrucks: 4, // minimal number of hover trucks around
-	maxTrucks: 12, // minimal number of trucks around
-	minMiscTanks: 1, // number of tanks to start harassing enemy
-	maxMiscTanks: 10, // number of tanks used for defense and harass
-	maxPower: 300, // build expensive things if we have more than that
-	repairAt: 50, // how much % healthy should droid be to join the attack group instead of repairing
-	defensiveness: 70, // the chance % of not making droids when adaptation mechanism chooses defenses
-}
+var subpersonalities = {
+	MR: {
+		chatalias: "mr",
+		weaponPaths: [ // weapons to use; put late-game paths below!
+			weaponStats.rockets_AT, 
+			weaponStats.machineguns, 
+			weaponStats.rockets_AS, 
+			weaponStats.rockets_AA, 
+			weaponStats.rockets_late_AP,
+		],
+		earlyResearch: [ // fixed research path for the early game
+			"R-Wpn-MG-Damage01",
+			"R-Defense-Tower01",
+			"R-Vehicle-Prop-Halftracks",
+			"R-Struc-PowerModuleMk1",
+			"R-Wpn-MG-Damage03",
+		],
+		minTanks: 3, // minimal attack force at game start
+		becomeHarder: 3, // how much to increase attack force every 5 minutes
+		maxTanks: 21, // maximum for the minTanks value (since it grows at becomeHarder rate)
+		minTrucks: 5, // minimal number of trucks around
+		minHoverTrucks: 4, // minimal number of hover trucks around
+		maxTrucks: 12, // minimal number of trucks around
+		minMiscTanks: 1, // number of tanks to start harassing enemy
+		maxMiscTanks: 10, // number of tanks used for defense and harass
+		maxPower: 300, // build expensive things if we have more than that
+		repairAt: 50, // how much % healthy should droid be to join the attack group instead of repairing
+		defensiveness: 70, // the chance % of not making droids when adaptation mechanism chooses defenses
+	},
+	MC: {
+		chatalias: "mc",
+		weaponPaths: [ // weapons to use; put late-game paths below!
+			weaponStats.cannons, 
+			weaponStats.machineguns, 
+		],
+		earlyResearch: [ // fixed research path for the early game
+			"R-Wpn-MG-Damage01",
+			"R-Vehicle-Prop-Halftracks",
+			"R-Wpn-Cannon1Mk1",
+			"R-Struc-PowerModuleMk1",
+			"R-Wpn-MG-Damage03",
+		],
+		minTanks: 3, // minimal attack force at game start
+		becomeHarder: 3, // how much to increase attack force every 5 minutes
+		maxTanks: 21, // maximum for the minTanks value (since it grows at becomeHarder rate)
+		minTrucks: 5, // minimal number of trucks around
+		minHoverTrucks: 4, // minimal number of hover trucks around
+		maxTrucks: 12, // minimal number of trucks around
+		minMiscTanks: 1, // number of tanks to start harassing enemy
+		maxMiscTanks: 10, // number of tanks used for defense and harass
+		maxPower: 300, // build expensive things if we have more than that
+		repairAt: 50, // how much % healthy should droid be to join the attack group instead of repairing
+		defensiveness: 70, // the chance % of not making droids when adaptation mechanism chooses defenses
+	},
+};
 
 // this function describes the early build order
 function buildOrder() {
