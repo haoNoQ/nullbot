@@ -7,7 +7,19 @@
 (function(_global) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+var forcedResearch;
+
+_global.setForcedResearch = function(list) {
+	forcedResearch = list;
+}
+
 function doResearch(lab) {
+	if (defined(forcedResearch)) {
+		if (forcedResearch === null)
+			return false;
+		if (pursueResearch(lab, forcedResearch))
+			return true;
+	}
 	// if we need to quickly get a certain propulsion to reach the enemy, prioritize that.
 	var ret = scopeRatings();
 	if (ret.land === 0 && ret.sea === 0 && !iHaveVtol())

@@ -36,6 +36,31 @@ _global.chatSet = function(args) {
 	return _("No such personality! Try one of these:") + str;
 }
 
+_global.chatRes = function(args) {
+	if (args === "cl") {
+		setForcedResearch(); // clear
+		return _("Forced research cleared, will research anything I want now.");
+	}
+	if (args === "no") {
+		setForcedResearch(null); // clear
+		return _("Research blocked, will research nothing now.");
+	}
+	if (args === "fn") {
+		setForcedResearch(fundamentalResearch);
+		return _("Researching fundamental technology.");
+	}
+	var str = " cl no fn";
+	for (var i in weaponStats) {
+		if (weaponStats[i].chatalias === args) {
+			setForcedResearch(weaponStatsToResList(weaponStats[i]));
+			return _("Researching ") + weaponStats[i].chatalias;
+		}
+		if (weaponStats[i].chatalias.indexOf("useless") < 0)
+			str = str + " " + weaponStats[i].chatalias;
+	}
+	return _("No such research path! Try one of these:") + str;
+}
+
 _global.chatTruck = function(args) {
 	var droid = enumTrucks().random();
 	if (!defined(droid))

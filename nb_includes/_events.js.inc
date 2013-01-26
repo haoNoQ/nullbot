@@ -91,6 +91,10 @@ function eventChat(from, to, message) {
 		chat(from, chatSet(message.substr(8)));
 		return;
 	}
+	if (message.substr(0, 7) === "!nb res") {
+		chat(from, chatRes(message.substr(8)));
+		return;
+	}
 	if (message === "!nb truck") {
 		chat(from, chatTruck(from));
 		return;

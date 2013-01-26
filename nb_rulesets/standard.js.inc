@@ -381,7 +381,7 @@ const weaponStats = {
 	},
 	rockets_AS: {
 		role: ROLE.AS,
-		chatalias: "rox",
+		chatalias: "rxas",
 		weapons: [
 			{ res: "R-Wpn-Rocket02-MRL", stat: "Rocket-MRL", weight: WEIGHT.LIGHT }, // mra
 			{ res: "R-Wpn-Rocket03-HvAT", stat: "Rocket-BB", weight: WEIGHT.MEDIUM }, // bb
@@ -401,7 +401,7 @@ const weaponStats = {
 	},
 	rockets_AA: {
 		role: ROLE.AA,
-		chatalias: "rox",
+		chatalias: "rxaa",
 		weapons: [
 			{ res: "R-Wpn-Sunburst", stat: "Rocket-Sunburst", weight: WEIGHT.LIGHT }, // sunburst
 			{ res: "R-Wpn-Missile-LtSAM", stat: "Missile-LtSAM", weight: WEIGHT.LIGHT }, // avenger
@@ -460,7 +460,7 @@ const weaponStats = {
 	},
 	useless_AT: {
 		role: ROLE.AT,
-		chatalias: "AT stuff that you will never consciously research or produce, but still need to classify",
+		chatalias: "useless_AT",
 		weapons: [],
 		vtols: [],
 		defenses: [],
@@ -469,7 +469,7 @@ const weaponStats = {
 	},
 	useless_AP: {
 		role: ROLE.AP,
-		chatalias: "AP stuff that you will never consciously research or produce, but still need to classify",
+		chatalias: "useless_AP",
 		weapons: [
 			{ res: "", stat: "MG3-Pillbox", weight: 0 }, // mg bunker dedicated weapon
 		],
@@ -480,7 +480,7 @@ const weaponStats = {
 	},
 	useless_AS: {
 		role: ROLE.AS,
-		chatalias: "AS stuff that you will never consciously research or produce, but still need to classify",
+		chatalias: "useless_AS",
 		weapons: [],
 		vtols: [],
 		defenses: [],
@@ -489,7 +489,7 @@ const weaponStats = {
 	},
 	useless_AA: {
 		role: ROLE.AA,
-		chatalias: "AA stuff that you will never consciously research or produce, but still need to classify",
+		chatalias: "useless_AA",
 		weapons: [],
 		vtols: [],
 		defenses: [],
