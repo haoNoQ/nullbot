@@ -34,7 +34,10 @@ function chooseWeapon(forVtol) {
 	for (var i = 0; i < list.length; ++i)
 		if (componentAvailable(list[i])) 
 			return list;
-	return weaponStatsToComponents(personality.weaponPaths.random());
+	if (forVtol)
+		return weaponStatsToComponents(personality.weaponPaths.random());
+	else
+		return weaponStatsToVtolComponents(personality.weaponPaths.random());
 }
 
 // HACK: this wrapper is necessary to use componentAvailable in functions like Array.filter
