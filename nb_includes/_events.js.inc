@@ -81,7 +81,7 @@ function eventChat(from, to, message) {
 	// we are not case-sensitive
 	message = message.toLowerCase();
 	if (message === "!nb who") {
-		chat(from, chatWho(from));
+		chat(from, chatWho(from)); 
 		return;
 	}
 	// don't reply on any other message coming from enemies
@@ -103,4 +103,11 @@ function eventChat(from, to, message) {
 		chat(from, chatMoney(from));
 		return;
 	}
+}
+
+function eventObjectTransfer(object, from) {
+	if (object.player != me)
+		return; // object was transferred from me, not to me
+	if (object.type === DROID)
+		groupDroid(object);
 }
