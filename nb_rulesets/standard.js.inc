@@ -243,7 +243,7 @@ const weaponStats = {
 			{ res: "R-Defense-WallTower03", stat: "WallTower03", defrole: DEFROLE.GATEWAY }, // mc hard
 			{ res: "R-Defense-Emplacement-HPVcannon", stat: "Emplacement-HPVcannon", defrole: DEFROLE.STANDALONE }, // hpv empl
 			{ res: "R-Defense-WallTower-HPVcannon", stat: "WallTower-HPVcannon", defrole: DEFROLE.GATEWAY }, // hpv hard
-			{ res: "R-Defense-R-Defense-Wall-VulcanCan", stat: "Wall-VulcanCan", defrole: DEFROLE.GATEWAY }, // ac hard
+			{ res: "R-Defense-Wall-VulcanCan", stat: "Wall-VulcanCan", defrole: DEFROLE.GATEWAY }, // ac hard
 			{ res: "R-Defense-Cannon6", stat: "PillBox-Cannon6", defrole: DEFROLE.STANDALONE }, // tac bunker
 			{ res: "R-Defense-WallTower04", stat: "WallTower04", defrole: DEFROLE.GATEWAY }, // hc hard
 			{ res: "R-Defense-Super-Cannon", stat: "X-Super-Cannon", defrole: DEFROLE.FORTRESS }, // cannon fort
