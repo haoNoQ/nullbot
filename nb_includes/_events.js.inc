@@ -60,6 +60,8 @@ function eventAttacked(victim, attacker) {
 			touchGroup(victim.group);
 		}
 	} else if (victim.type === STRUCTURE) {
+		if (throttled(5000))
+			return;
 		if (inPanic()) {
 			if (victim.player !== me)
 				return;

@@ -150,16 +150,6 @@ function buildOrder() {
 	if (buildMinimum(structures.factories, 2)) return true;
 	if (buildMinimum(structures.templateFactories, 1)) return true;
 	if (buildMinimum(structures.vtolFactories, 1)) return true;
-	if (myPower() > personality.maxPower) {
-		switch (chooseObjectType()) {
-			case 0:
-				if (buildMinimum(structures.factories, Infinity)) return true;
-			case 1:
-				if (buildMinimum(structures.templateFactories, Infinity)) return true;
-			case 3:
-				if (buildMinimum(structures.vtolFactories, Infinity)) return true;
-		}
-	}
 	return false;
 }
 

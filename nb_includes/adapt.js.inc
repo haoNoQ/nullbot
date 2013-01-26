@@ -440,13 +440,16 @@ _global.chooseObjectType = function() {
 }
 
 _global.scopeRatings = function() {
-	var ret = { land: 0, sea: 0, air: 0 };
-	enumLivingPlayers().filter(isEnemy).forEach(function(player) {
-		ret.land += countLandTargets(player);
-		ret.sea += countSeaTargets(player);
-		ret.air += countAirTargets(player);
-	});
-	return ret;
+	function uncached() {
+		var ret = { land: 0, sea: 0, air: 0 };
+		enumLivingPlayers().filter(isEnemy).forEach(function(player) {
+			ret.land += countLandTargets(player);
+			ret.sea += countSeaTargets(player);
+			ret.air += countAirTargets(player);
+		});
+		return ret;
+	}
+	return cached(uncached, 5000);
 }
 
 _global.spendMoney = function() {

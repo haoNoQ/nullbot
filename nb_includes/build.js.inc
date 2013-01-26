@@ -236,18 +236,6 @@ function buildArty() {
 	return buildBasicStructure(list);
 }
 
-function buildDefenses() {
-	if (withChance(33)) {
-		if (buildTowers()) // includes sensor towers and forts
-			return true;
-	} else if (withChance(50)) {
-		if (buildGateways())
-			return true;
-	} else
-		if (buildArty())
-			return true;
-}
-
 _global.buildMinimum = function(statlist, count, importance) {
 	if (countStructList(statlist) < count)
 		if (buildBasicStructure(statlist, importance) !== BUILDRET.UNAVAILABLE)
@@ -288,31 +276,60 @@ _global.buildMinimumDerricks = function(count) {
 
 _global.checkConstruction = function() {
 	if (finishStructures())
-		return true;
+		return;
+	queue("checkConstructionOne");
+}
+
+// global only to use with timers
+_global.checkConstructionOne = function() {
 	if (buildOrder())
-		return true;
+		return;
+	if (myPower() > personality.maxPower) {
+		switch (chooseObjectType()) {
+			case 0:
+				if (buildMinimum(structures.factories, Infinity)) return true;
+			case 1:
+				if (buildMinimum(structures.templateFactories, Infinity)) return true;
+			case 3:
+				if (buildMinimum(structures.vtolFactories, Infinity)) return true;
+		}
+	}
+	queue("checkConstructionTwo");
+}
+
+_global.checkConstructionTwo = function() {
 	var oils = countFinishedStructList(structures.derricks);
 	var gens = countStructList(structures.gens);
 	if (oils > 4 * gens)
 		if (buildBasicStructure(structures.gens) !== BUILDRET.UNAVAILABLE)
-			return true;
+			return;
 	if (withChance(50))
 		if (captureSomeOil())
-			return true;
+			return;
 	var str = [];
 	for (var i = 0; i < modules.length; ++i)
 		str = str.concat(enumStruct(me, modules[i].base));
 	for (var i = 0; i < str.length; ++i)
 		if (buildModule(str[i]) !== BUILDRET.UNAVAILABLE)
-			return true;
+			return;
 	if (buildMinimum(structures.vtolPads, enumDroid(me, DROID_WEAPON).filter(isVTOL).length / 2))
-		return true;
-	if (chooseObjectType() === 2)
-		if (buildDefenses())
-			return true;
+		return;
 	if (buildBasicStructure(structures.extras) !== BUILDRET.UNAVAILABLE) 
-		return true;
-	return false;
+		return;
+	if (chooseObjectType() === 2)
+		queue("buildDefenses");
+}
+
+_global.buildDefenses = function() {
+	if (withChance(33)) {
+		if (buildTowers()) // includes sensor towers and forts
+			return true;
+	} else if (withChance(50)) {
+		if (buildGateways())
+			return true;
+	} else
+		if (buildArty())
+			return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
