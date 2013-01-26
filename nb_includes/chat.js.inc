@@ -11,7 +11,7 @@
 (function(_global) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-_global.chatWho = function(player, args) {
+_global.chatWho = function(args) {
 	var str = "NullBot3 (" + scriptName + ") ";
 	switch(difficulty) {
 		case EASY: str += _("EASY"); break;
@@ -19,9 +19,21 @@ _global.chatWho = function(player, args) {
 		case HARD: str=str + _("HARD"); break;
 		case INSANE: str=str + _("INSANE"); break;
 	}
-	if (isAlly(player))
+	if (isAlly(args))
 		str += (" ~" + personality.chatalias + "~");
 	return str;
+}
+
+_global.chatSet = function(args) {
+	var str = "";
+	for (var i in subpersonalities) {
+		if (subpersonalities[i].chatalias === args) {
+			personality = subpersonalities[i];
+			return _("Personality change successful.");
+		}
+		str = str + " " + subpersonalities[i].chatalias;
+	}
+	return _("No such personality! Try one of these:") + str;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
