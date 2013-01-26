@@ -76,6 +76,49 @@ var subpersonalities = {
 		repairAt: 50,
 		defensiveness: 70,
 	},
+	FR: {
+		chatalias: "fr",
+		weaponPaths: [
+			weaponStats.rockets_AT, 
+			weaponStats.flamers,
+			weaponStats.fireMortars,
+			weaponStats.rockets_AA,
+			weaponStats.rockets_lateAP,
+		],
+		earlyResearch: [
+			"R-Wpn-Flamer-ROF01",
+			"R-Vehicle-Prop-Halftracks",
+			"R-Struc-PowerModuleMk1",
+		],
+		minTanks: 3, becomeHarder: 3, maxTanks: 21,
+		minTrucks: 5, minHoverTrucks: 4, maxTrucks: 12,
+		minMiscTanks: 1, maxMiscTanks: 10,
+		maxPower: 300,
+		repairAt: 50,
+		defensiveness: 70,
+	},
+	FC: {
+		chatalias: "fc",
+		weaponPaths: [
+			weaponStats.cannons, 
+			weaponStats.flamers, 
+			weaponStats.fireMortars,
+			weaponStats.cannons_AA,
+			weaponStats.lasers,
+		],
+		earlyResearch: [
+			"R-Wpn-Flamer-ROF01",
+			"R-Vehicle-Prop-Halftracks",
+			"R-Wpn-Cannon1Mk1",
+			"R-Struc-PowerModuleMk1",
+		],
+		minTanks: 3, becomeHarder: 3, maxTanks: 21,
+		minTrucks: 5, minHoverTrucks: 4, maxTrucks: 12,
+		minMiscTanks: 1, maxMiscTanks: 10,
+		maxPower: 300,
+		repairAt: 50,
+		defensiveness: 70,
+	},
 };
 
 // this function describes the early build order

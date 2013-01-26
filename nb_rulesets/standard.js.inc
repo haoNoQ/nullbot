@@ -422,7 +422,7 @@ const weaponStats = {
 	},
 	rockets_late_AP: {
 		role: ROLE.AP,
-		chatalias: "seraph",
+		chatalias: "sr",
 		weapons: [
 			{ res: "R-Wpn-MdArtMissile", stat: "Missile-MdArt", weight: WEIGHT.HEAVY }, // seraph
 		],
@@ -431,6 +431,31 @@ const weaponStats = {
 			{ res: "R-Defense-MdArtMissile", stat: "Emplacement-MdART-pit", defrole: DEFROLE.STANDALONE }, // seraph
 		],
 		templates: [],
+		extras: [],
+	},
+	lasers: {
+		role: ROLE.AP,
+		chatalias: "ls",
+		weapons: [
+			{ res: "R-Wpn-Laser01", stat: "Laser3BEAMMk1", weight: WEIGHT.ULTRALIGHT }, // flash
+			{ res: "R-Wpn-Laser02", stat: "Laser2PULSEMk1", weight: WEIGHT.HEAVY }, // pulse
+			{ res: "R-Wpn-HvyLaser", stat: "HeavyLaser", weight: WEIGHT.ULTRAHEAVY }, // hvy laser
+		],
+		vtols: [
+			{ res: "R-Wpn-Laser01", stat: "Laser3BEAM-VTOL", weight: WEIGHT.ULTRALIGHT }, // flash
+			{ res: "R-Wpn-Laser02", stat: "Laser2PULSE-VTOL", weight: WEIGHT.HEAVY }, // pulse
+			{ res: "R-Wpn-HvyLaser", stat: "HeavyLaser-VTOL", weight: WEIGHT.HEAVY }, // hvy laser
+		],
+		defenses: [
+			{ res: "R-Defense-PrisLas", stat: "Emplacement-PrisLas", defrole: DEFROLE.STANDALONE }, // flash empl
+			{ res: "R-Defense-PulseLas", stat: "GuardTower-BeamLas", defrole: DEFROLE.STANDALONE }, // pulse tower
+			{ res: "R-Defense-WallTower-PulseLas", stat: "WallTower-PulseLas", defrole: DEFROLE.GATEWAY }, // pulse hard
+			{ res: "R-Defense-HeavyLas", stat: "Emplacement-HeavyLaser", defrole: DEFROLE.STANDALONE }, // hvy empl
+		],
+		templates: [
+			{ res: "R-Wpn-Laser01", body: "Cyb-Bod-Las1", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Laser", ] }, // flash borg
+			{ res: "Cyb-Hvy-PulseLsr", body: "Cyb-Hvybod-PulseLsr", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-PulseLsr", ] }, // pulse super
+		],
 		extras: [],
 	},
 	useless_AT: {
