@@ -41,8 +41,8 @@ var personality = {
 		"R-Wpn-MG-Damage03",
 	],
 	minTanks: 3, // minimal attack force at game start
-	becomeHarder: 2, // how much to increase attack force every 5 minutes
-	maxTanks: 13, // maximum for the minTanks value (since it grows at becomeHarder rate)
+	becomeHarder: 3, // how much to increase attack force every 5 minutes
+	maxTanks: 21, // maximum for the minTanks value (since it grows at becomeHarder rate)
 	minTrucks: 5, // minimal number of trucks around
 	minHoverTrucks: 4, // minimal number of hover trucks around
 	maxTrucks: 12, // minimal number of trucks around
