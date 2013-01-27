@@ -47,7 +47,6 @@ var subpersonalities = {
 		maxTanks: 21, // maximum for the minTanks value (since it grows at becomeHarder rate)
 		minTrucks: 5, // minimal number of trucks around
 		minHoverTrucks: 4, // minimal number of hover trucks around
-		maxTrucks: 12, // minimal number of trucks around
 		minMiscTanks: 1, // number of tanks to start harassing enemy
 		maxMiscTanks: 10, // number of tanks used for defense and harass
 		maxPower: 300, // build expensive things if we have more than that
@@ -70,7 +69,7 @@ var subpersonalities = {
 			"R-Wpn-MG-Damage03",
 		],
 		minTanks: 3, becomeHarder: 3, maxTanks: 21,
-		minTrucks: 5, minHoverTrucks: 4, maxTrucks: 12,
+		minTrucks: 5, minHoverTrucks: 4,
 		minMiscTanks: 1, maxMiscTanks: 10,
 		maxPower: 300,
 		repairAt: 50,
@@ -91,7 +90,7 @@ var subpersonalities = {
 			"R-Struc-PowerModuleMk1",
 		],
 		minTanks: 3, becomeHarder: 3, maxTanks: 21,
-		minTrucks: 5, minHoverTrucks: 4, maxTrucks: 12,
+		minTrucks: 5, minHoverTrucks: 4,
 		minMiscTanks: 1, maxMiscTanks: 10,
 		maxPower: 300,
 		repairAt: 50,
@@ -113,7 +112,7 @@ var subpersonalities = {
 			"R-Struc-PowerModuleMk1",
 		],
 		minTanks: 3, becomeHarder: 3, maxTanks: 21,
-		minTrucks: 5, minHoverTrucks: 4, maxTrucks: 12,
+		minTrucks: 5, minHoverTrucks: 4,
 		minMiscTanks: 1, maxMiscTanks: 10,
 		maxPower: 300,
 		repairAt: 50,

@@ -154,16 +154,35 @@ function produceTemplate(factory) {
 
 function checkTruckProduction() {
 	var trucks = enumTrucks();
-	if (trucks.length < personality.minTrucks || (iHaveHover() && trucks.filter(function(droid) {
-		return isHoverPropulsion(droid.propulsion);
-	}).length < personality.minHoverTrucks))
+	if (trucks.length < personality.minTrucks || myPower() > personality.maxPower) {
+		var success = false;
 		enumIdleStructList(structures.factories).forEach(function(factory) {
-			produceTruck(factory);
+			if (success) return;
+			success = produceTruck(factory);
 		});
-	if (enumTrucks().length < personality.minTrucks)
 		enumIdleStructList(structures.templateFactories).forEach(function(factory) {
-			produceTemplateFromList(factory, truckTemplates);
+			if (success) return;
+			success = produceTemplateFromList(factory, truckTemplates);
 		});
+		if (success) return;
+	}
+	if (iHaveHover()) {
+		groundTrucks = trucks.filter(function(droid) { 
+			return !isHoverPropulsion(droid.propulsion); 
+		}).sort(function(one, two) { 
+			return one.id - two.id;
+		});
+		var success = false;
+		if (trucks.length - groundTrucks.length < personality.minHoverTrucks) {
+			enumIdleStructList(structures.factories).forEach(function(factory) {
+				if (success) return;
+				success = produceTruck(factory);
+			});
+		}
+		if (groundTrucks.length > personality.minTrucks)
+			groundTrucks.length = personality.minTrucks;
+		groundTrucks.forEach(function(droid) { orderDroid(droid, DORDER_RECYCLE); });
+	}
 }
 
 function checkTankProduction() {
