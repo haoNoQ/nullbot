@@ -31,9 +31,9 @@ function pickVtolTarget() {
 		if (list.length > 0) return list.random();
 		list = enumStruct(enemy, DEFENSE).filterProperty("canHitAir", true);
 		if (list.length > 0) return list.random();
-		list = enumStructList(enemy, miscTargets);
+		list = enumStructList(miscTargets, enemy);
 		if (list.length > 0) return list.random();
-		list = enumStructList(enemy, targets);
+		list = enumStructList(targets, enemy);
 		if (list.length > 0) return list.random();
 		list = enumDroid(enemy);
 		if (list.length > 0) return list.random();
@@ -45,7 +45,10 @@ function pickVtolTarget() {
 }
 
 function vtolReady(droid) {
-	return droid.armed > 0;
+	for (var i = 0; i < droid.weapons.length; ++i)
+		if (droid.weapons[i].armed > 0)
+			return true;
+	return false;
 }
 
 _global.checkVtols = function() {
