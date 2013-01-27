@@ -17,7 +17,7 @@ _global.setTimers = function() {
 	setTimer("spendMoney", 1000 + 2 * rnd());
 	setTimer("checkAttack", 100);
 	setTimer("checkVtols", 3000 + 4 * rnd());
-	setTimer("updateAllAdaptInfo", 2500 + 4 * rnd());
+	setTimer("adaptCycle", 100);
 	setTimer("rebalanceGroups", 10000 + 20 * rnd());
 }
 

@@ -106,11 +106,17 @@ function MyStat() {
 	}
 }
 
-var enemyStats = [];
-for (var i = 0; i < maxPlayers; ++i)
+var enemyStats = [], enemyStatsTemp = [];
+for (var i = 0; i < maxPlayers; ++i) {
 	enemyStats[i] = new EnemyStat;
+	enemyStatsTemp[i] = new EnemyStat;
+}
 
 var myStats = new MyStat;
+var myStatsTemp = new MyStat;
+
+var stack = [];
+var MAX_PER_CYCLE = 20;
 
 _global.enumLivingPlayers = function() {
 	function uncached() {
@@ -152,10 +158,11 @@ function canReachBy(scope, location) {
 	}
 }
 
+// works with stored droid objects too!
 function threatensBase(droid) {
 	if (isAlly(droid.player))
 		return false;
-	return droidCanReach(droid, baseLocation.x, baseLocation.y);
+	return canReachFromBase(droid.propulsion, droid.x, droid.y);
 }
 
 // count target structures reachable by land
@@ -248,7 +255,7 @@ function classifyObject(obj) {
 		else
 			ret.tweapon += 1;
 	}
-	if (obj.type === STRUCTURE || (obj.type === DROID && isVTOL(obj)))
+	if (obj.type === STRUCTURE || (obj.type === DROID && safeIsVtol(obj)))
 		ret.tbody += 1;
 	else if (obj.type === DROID && obj.droidType === DROID_CYBORG)
 		ret.kbody += 1;
@@ -268,7 +275,7 @@ function classifyObject(obj) {
 	if (obj.type === STRUCTURE)
 		ret.defs += 1;
 	if (obj.type === DROID) {
-		if (isVTOL(obj))
+		if (safeIsVtol(obj))
 			ret.vtol += 1;
 		else if (obj.droidType === DROID_CYBORG)
 			ret.borg += 1;
@@ -278,23 +285,22 @@ function classifyObject(obj) {
 	return ret;
 }
 
-function summUpEnemyObject(obj) {
+function summUpEnemyObject(obj, stat) {
 	var ret = classifyObject(obj);
-	var p = obj.player;
 	var w = obj.cost;
 	if (obj.type === STRUCTURE) {
 		for (var scope in SCOPES)
 			if (canReachBy(scope, obj)) // structures don't move, so they are usually counted as defense
-				addStat(enemyStats[p].defense[scope], ret, w);
+				addStat(stat.defense[scope], ret, w);
 		if (obj.range > baseScale * 2) // unless they're covering the whole map with their range
-			addStat(enemyStats[p].offense, ret, w);
+			addStat(stat.offense, ret, w);
 	}
 	if (obj.type === DROID) {
 		for (var scope in SCOPES) 
 			if (canReachBy(scope, obj)) // if the droid can't reach your base, we count it as defense only
-				addStat(enemyStats[p].defense[scope], ret, w);
+				addStat(stat.defense[scope], ret, w);
 		if (threatensBase(obj)) // otherwise count them as offense as well
-			addStat(enemyStats[p].offense, ret, w);
+			addStat(stat.offense, ret, w);
 	}
 }
 
@@ -324,33 +330,49 @@ function summUpMyObject(obj, stat) {
 	}
 }
 
-function updateEnemyStats(player) {
-	enemyStats[player] = new EnemyStat();
-	enumStruct(player, DEFENSE).forEach(summUpEnemyObject);
-	enumDroid(player, DROID_WEAPON).forEach(summUpEnemyObject);
-	enumDroid(player, DROID_CYBORG).forEach(summUpEnemyObject);
-}
-
-function updateMyInfo() {
-	if (throttled(30000))
-		return;
-	myStats = new MyStat();
-	enumStruct(me, DEFENSE).forEach(function(obj) { summUpMyObject(obj, myStats); });
-	enumDroid(me, DROID_WEAPON).forEach(function(obj) { summUpMyObject(obj, myStats); });
-	enumDroid(me, DROID_CYBORG).forEach(function(obj) { summUpMyObject(obj, myStats); });
-}
-
-_global.updateAllAdaptInfo = function() {
-	var success = false;
-	var enemies = enumLivingPlayers().filter(isEnemy);
-	for (var p = 0; p < enemies.length; ++p) {
-		if (!success && !throttled(3000 * (maxPlayers + 1), enemies[p])) { // need to make sure we update ourselves at least sometimes
-			updateEnemyStats(enemies[p]);
-			success = true;
+_global.adaptCycle = function() {
+	if (!defined(adaptCycle.player))
+		adaptCycle.player = 0;
+	if (!defined(adaptCycle.phase))
+		adaptCycle.phase = 0;
+	if (stack.length > 0) {
+		var items = MAX_PER_CYCLE;
+		if (items > stack.length)
+			items = stack.length;
+		for (var i = 0; i < items; ++i) {
+			var obj = stack.pop();
+			if (isEnemy(adaptCycle.player))
+				summUpEnemyObject(obj, enemyStatsTemp[adaptCycle.player]);
+			else if (adaptCycle.player === me)
+				summUpMyObject(obj, myStatsTemp);
 		}
+		return;
 	}
-	if (!success)
-		updateMyInfo();
+	++adaptCycle.phase;
+	switch(adaptCycle.phase) {
+		case 1:
+			stack = enumStruct(adaptCycle.player, DEFENSE);
+			return;
+		case 2:
+			stack = enumDroid(adaptCycle.player, DROID_WEAPON);
+			return;
+		case 3:
+			stack = enumDroid(adaptCycle.player, DROID_CYBORG);
+			return;
+	}
+	if (adaptCycle.player === me) {
+		myStats = myStatsTemp;
+		myStatsTemp = new MyStat;
+	} else {
+		enemyStats[adaptCycle.player] = enemyStatsTemp[adaptCycle.player];
+		enemyStatsTemp[adaptCycle.player] = new EnemyStat;
+	}
+	do {
+		++adaptCycle.player;
+		if (adaptCycle.player >= maxPlayers)
+			adaptCycle.player = 0;
+	} while (adaptCycle.player !== me && !isEnemy(adaptCycle.player));
+	adaptCycle.phase = 0;
 }
 
 function getMyGroupInfo(gr) {

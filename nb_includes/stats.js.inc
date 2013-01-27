@@ -29,6 +29,11 @@ _global.iHaveVtol = function() {
 	return false;
 }
 
+// works with stored droid objects too!
+_global.safeIsVtol = function(droid) {
+	return isVtolPropulsion(droid.propulsion);
+}
+
 _global.enumStructList = function(list, player) {
 	if (!defined(player))
 		player = me;
