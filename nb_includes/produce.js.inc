@@ -154,35 +154,35 @@ function produceTemplate(factory) {
 
 function checkTruckProduction() {
 	var trucks = enumTrucks();
-	if (trucks.length < personality.minTrucks || myPower() > personality.maxPower) {
-		var success = false;
-		enumIdleStructList(structures.factories).forEach(function(factory) {
-			if (success) return;
-			success = produceTruck(factory);
-		});
-		enumIdleStructList(structures.templateFactories).forEach(function(factory) {
-			if (success) return;
-			success = produceTemplateFromList(factory, truckTemplates);
-		});
-		if (success) return;
-	}
-	if (iHaveHover()) {
-		groundTrucks = trucks.filter(function(droid) { 
-			return !isHoverPropulsion(droid.propulsion); 
-		}).sort(function(one, two) { 
-			return one.id - two.id;
-		});
-		var success = false;
-		if (trucks.length - groundTrucks.length < personality.minHoverTrucks) {
-			enumIdleStructList(structures.factories).forEach(function(factory) {
-				if (success) return;
-				success = produceTruck(factory);
-			});
+	var hoverTrucksCount = trucks.filter(function(droid) { return isHoverPropulsion(droid.propulsion); }).length;
+	if (iHaveHover() && hoverTrucksCount < personality.minHoverTrucks) {
+		groundTrucks = trucks.filter(function(droid) { return !isHoverPropulsion(droid.propulsion); });
+		if (groundTrucks.length > personality.minTrucks) {
+			groundTrucks.length -= personality.minTrucks;
+			groundTrucks.forEach(function(droid) { orderDroid(droid, DORDER_RECYCLE); });
+			return false;
 		}
-		if (groundTrucks.length > personality.minTrucks)
-			groundTrucks.length = personality.minTrucks;
-		groundTrucks.forEach(function(droid) { orderDroid(droid, DORDER_RECYCLE); });
 	}
+	if (trucks.length >= getDroidLimit(me, DROID_CONSTRUCT))
+		return false;
+	if (trucks.length < personality.minTrucks || myPower() > personality.maxPower 
+		|| (iHaveHover() && hoverTrucksCount < personality.minHoverTrucks)
+	) {
+		var f;
+		f = enumFinishedStructList(structures.factories)[0];
+		if (defined(f))
+			if (structureIdle(f))
+				if (produceTruck(f))
+					return true;
+		if (defined(f)) 
+			return false;
+		f = enumFinishedStructList(structures.templateFactories)[0];
+		if (defined(f))
+			if (structureIdle(f))
+				if (produceTemplateFromList(f, truckTemplates))
+					return true;
+	}
+	return false;
 }
 
 function checkTankProduction() {
