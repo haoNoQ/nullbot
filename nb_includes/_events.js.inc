@@ -82,29 +82,7 @@ function eventStructureReady(structure) {
 function eventChat(from, to, message) {
 	// we are not case-sensitive
 	message = message.toLowerCase();
-	if (message === "!nb who") {
-		chat(from, chatWho(from)); 
-		return;
-	}
-	// don't reply on any other message coming from enemies
-	if (!isAlly(from))
-		return;
-	if (message.substr(0, 7) === "!nb set") {
-		chat(from, chatSet(message.substr(8)));
-		return;
-	}
-	if (message.substr(0, 7) === "!nb res") {
-		chat(from, chatRes(message.substr(8)));
-		return;
-	}
-	if (message === "!nb truck") {
-		chat(from, chatTruck(from));
-		return;
-	}
-	if (message === "!nb power" || message === "!nb money") {
-		chat(from, chatMoney(from));
-		return;
-	}
+    handleChatMessage(from, to, message)
 }
 
 function eventObjectTransfer(object, from) {
