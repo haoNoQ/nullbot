@@ -12,7 +12,6 @@
 
 var prefix = '!nb';
 
-
 // key: name in chat, value function that will be executed  function will get two params sender and argument
 var commandMap = {
     set: chatSet,
@@ -22,30 +21,26 @@ var commandMap = {
     money: chatMoney // alias for power
 };
 
-
 // list of commands that game can handle used in command matching
 var commands = Object.keys(commandMap);
 // regular expression for match the command.  Case insensitive!
-var expr = new RegExp(prefix + ' (' + commands.join('|') + ')(.*)', 'i');
+var expr = new RegExp(prefix + ' (' + commands.join('|') + ') (.*)', 'i');
 
-
-_global.handleChatMessage = function(sender, receiver, message){
-
-        // don't reply on any other message coming sender enemies
-        if (!isAlly(sender))
-            if (message ===  "!nb who") {
-                chat(sender, chatWho(sender));
-                return
-            }
-
-        var result = expr.exec(message);
-        if (result){
-            var command = result[1];
-            var argument = result[2];
-            commandMap[command](sender, argument);
-        }
-    };
-
+_global.handleChatMessage = function(sender, receiver, message) {
+	// don't reply on any other message coming sender enemies
+	if (message ===  "!nb who") {
+		chat(sender, chatWho(sender));
+		return;
+	}
+	if (!isAlly(sender))
+		return;
+	var result = expr.exec(message);
+	if (result) {
+		var command = result[1];
+		var argument = result[2];
+		chat(sender, commandMap[command](sender, argument));
+	}
+}
 
 function chatWho(sender, argument) {
 	var str = "NullBot3 (" + scriptName + ") ";
