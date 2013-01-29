@@ -332,7 +332,7 @@ function summUpMyObject(obj, stat) {
 
 _global.adaptCycle = function() {
 	if (!defined(adaptCycle.player))
-		adaptCycle.player = 0;
+		adaptCycle.player = me;
 	if (!defined(adaptCycle.phase))
 		adaptCycle.phase = 0;
 	if (stack.length > 0) {
