@@ -75,7 +75,7 @@ function targetSuitableForHarass(object) {
 	function uncached() {
 		return enumRange(object.x, object.y, baseScale / 2, ENEMIES, false).length <= groupSize(miscGroup);
 	}
-	return cached(uncached, 60000);
+	return cached(uncached, 60000, object.id);
 }
 
 function getGroupInfo(gr) {
@@ -131,8 +131,6 @@ function regroup(gr) {
 	if (inPanic()) 
 		return enumGroup(gr).filter(checkRepaired);
 	var size = attackGroupSize();
-	if (gr === miscGroup)
-		size = personality.minMiscTanks;
 	if (size < groupSize(gr) / 2)
 		size = groupSize(gr) / 2;
 	var ret = naiveFindClusters(enumGroup(gr).filter(checkRepaired), (baseScale / 3));
@@ -265,7 +263,7 @@ _global.groupDroid = function(droid) {
 			groupAdd(vtolGroup, droid);
 			return;
 		}
-		if (withChance(20) && groupSize(miscGroup) < personality.maxMiscTanks) {
+		if (withChance(100 - groupSize(miscGroup) * 100 / personality.maxMiscTanks)) {
 			groupAdd(miscGroup, droid);
 			return;
 		}
@@ -326,13 +324,14 @@ _global.fallBack = function(droid, threat) {
 }
 
 _global.checkAttack = function() {
-	for (var i = 0; i <= MAX_GROUPS; ++i)
+	for (var i = 0; i < MAX_GROUPS; ++i)
 		if (!throttled(3000, i)) {
 			regroup(i).forEach(attackTarget);
 			break;
 		}
 	if (throttled(1000))
 		return;
+	enumGroup(miscGroup).filter(checkRepaired).forEach(attackTarget);
 	var droids = enumGroup(vtolGroup).filter(vtolReady);
 	if (droids.length > personality.minTanks)
 		droids.forEach(function(droid) {
