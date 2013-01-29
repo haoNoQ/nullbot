@@ -12,19 +12,15 @@
 
 var prefix = '!nb';
 
-// key: name in chat, value function that will be executed  function will get two params sender and argument
+// key: name in chat, value: function that will be executed
+// function gets two params: sender and argument
 var commandMap = {
     set: chatSet,
     res: chatRes,
     truck: chatTruck,
     power: chatMoney,
-    money: chatMoney // alias for power
+    money: chatMoney, // alias for "power"
 };
-
-// list of commands that game can handle used in command matching
-var commands = Object.keys(commandMap);
-// regular expression for match the command.  Case insensitive!
-var expr = new RegExp(prefix + ' (' + commands.join('|') + ') (.*)', 'i');
 
 _global.handleChatMessage = function(sender, receiver, message) {
 	// don't reply on any other message coming sender enemies
@@ -34,12 +30,13 @@ _global.handleChatMessage = function(sender, receiver, message) {
 	}
 	if (!isAlly(sender))
 		return;
-	var result = expr.exec(message);
-	if (result) {
-		var command = result[1];
-		var argument = result[2];
+	var result = message.split(" ").filter(String);
+	if (result[0] !== prefix)
+		return;
+	var command = result[1];
+	var argument = result[2];
+	if (defined(commandMap[command]))
 		chat(sender, commandMap[command](sender, argument));
-	}
 }
 
 function chatWho(sender, argument) {
