@@ -121,6 +121,8 @@ var subpersonalities = {
 };
 
 // this function describes the early build order
+// you can rely on personality.chatalias for choosing different build orders for
+// different subpersonalities
 function buildOrder() {
 	var derrickCount = countFinishedStructList(structures.derricks);
 	// might be good for Insane AI, or for rebuilding
@@ -132,14 +134,14 @@ function buildOrder() {
 	if (buildMinimum(structures.gens, 1)) return true;
 	// make sure trucks go capture some oil at this moment
 	if (buildMinimumDerricks(1)) return true;
-	if (buildMinimum(structures.hqs, 1)) return true;
 	// what if one of them is being upgraded? will need the other anyway.
 	// also, it looks like the right timing in most cases.
-	if (buildMinimum(structures.gens, 2)) return true; 
+	if (buildMinimum(structures.gens, 2)) return true;
+	if (buildMinimum(structures.hqs, 1)) return true;
 	// make sure we have at least that much oils by now
 	if (buildMinimumDerricks(5)) return true;
 	// support hover maps
-	var ret = scopeRatings(); 
+	var ret = scopeRatings();
 	if (ret.land === 0 && !iHaveHover())
 		if (buildMinimum(structures.labs, 4)) return true;
 	if (ret.land === 0 && ret.sea === 0 && !iHaveVtol())
