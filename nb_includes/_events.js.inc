@@ -45,7 +45,6 @@ function eventStructureBuilt(structure) {
 
 function eventDestroyed(object) {
 	invalidateTarget(object);
-	invalidateVtolTarget(object);
 }
 
 function eventAttacked(victim, attacker) {
