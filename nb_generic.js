@@ -48,7 +48,7 @@ var subpersonalities = {
 		minTrucks: 5, // minimal number of trucks around
 		minHoverTrucks: 4, // minimal number of hover trucks around
 		minMiscTanks: 1, // number of tanks to start harassing enemy
-		maxMiscTanks: 10, // number of tanks used for defense and harass
+		maxMiscTanks: 6, // number of tanks used for defense and harass
 		maxPower: 300, // build expensive things if we have more than that
 		repairAt: 50, // how much % healthy should droid be to join the attack group instead of repairing
 		defensiveness: 70, // the chance % of not making droids when adaptation mechanism chooses defenses
@@ -70,7 +70,7 @@ var subpersonalities = {
 		],
 		minTanks: 3, becomeHarder: 3, maxTanks: 21,
 		minTrucks: 5, minHoverTrucks: 4,
-		minMiscTanks: 1, maxMiscTanks: 10,
+		minMiscTanks: 1, maxMiscTanks: 6,
 		maxPower: 300,
 		repairAt: 50,
 		defensiveness: 70,
@@ -91,7 +91,7 @@ var subpersonalities = {
 		],
 		minTanks: 3, becomeHarder: 3, maxTanks: 21,
 		minTrucks: 5, minHoverTrucks: 4,
-		minMiscTanks: 1, maxMiscTanks: 10,
+		minMiscTanks: 1, maxMiscTanks: 6,
 		maxPower: 300,
 		repairAt: 50,
 		defensiveness: 70,
@@ -113,7 +113,7 @@ var subpersonalities = {
 		],
 		minTanks: 3, becomeHarder: 3, maxTanks: 21,
 		minTrucks: 5, minHoverTrucks: 4,
-		minMiscTanks: 1, maxMiscTanks: 10,
+		minMiscTanks: 1, maxMiscTanks: 6,
 		maxPower: 300,
 		repairAt: 50,
 		defensiveness: 70,
