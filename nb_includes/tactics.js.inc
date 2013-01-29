@@ -295,6 +295,19 @@ _global.rebalanceGroups = function() {
 		for (var i = personality.maxMiscTanks; i < personality.maxMiscTanks + 5 && i < list.length; ++i)
 			groupDroid(list[i]);
 	}
+	if (throttled(5000))
+		return;
+	var ret = groupsBySize();
+	if (ret.length > 0)
+		if (ret[0] > 0 && ret[0] < attackGroupSize())
+			for (var i = 1; i < ret.length; ++i) {
+				var list = enumGroup(ret[i]);
+				for (var j = 0; j < list.length; ++j)
+					if (droidCanReach(list[i], findTarget(ret[0]).x, findTarget(ret[0]).y)) {
+						groupAdd(ret[0], list[i]);
+						return;
+					}
+			}
 }
 
 _global.touchGroup = function(gr) {
@@ -325,7 +338,6 @@ _global.checkAttack = function() {
 		droids.forEach(function(droid) {
 			orderDroidObj(droid, DORDER_ATTACK, pickVtolTarget());
 		});
-
 }
 
 _global.inPanic = function() {
