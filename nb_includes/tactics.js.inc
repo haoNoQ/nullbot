@@ -323,6 +323,10 @@ _global.fallBack = function(droid, threat) {
 	orderDroidLoc(droid, DORDER_MOVE, x, y);
 }
 
+_global.dangerLevel = function(loc) {
+	return enumRange(loc.x, loc.y, baseScale / 2, ENEMIES, false).length;
+}
+
 _global.checkAttack = function() {
 	for (var i = 0; i < MAX_GROUPS; ++i)
 		if (!throttled(3000, i)) {
@@ -333,9 +337,13 @@ _global.checkAttack = function() {
 		return;
 	enumGroup(miscGroup).filter(checkRepaired).forEach(attackTarget);
 	var droids = enumGroup(vtolGroup).filter(vtolReady);
-	if (droids.length > personality.minTanks)
+	var target = pickVtolTarget();
+	var size = dangerLevel(target);
+	if (size > attackGroupSize())
+		size = attackGroupSize();
+	if (droids.length > size)
 		droids.forEach(function(droid) {
-			orderDroidObj(droid, DORDER_ATTACK, pickVtolTarget());
+			orderDroidObj(droid, DORDER_ATTACK, target);
 		});
 }
 

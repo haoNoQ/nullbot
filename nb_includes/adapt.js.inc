@@ -448,7 +448,7 @@ _global.chooseObjectType = function() {
 				[ their.as, their.at + their.ap + their.aa ]
 			) === 1)
 			return 2;
-		if (iHaveVtol() && adaptVote(
+		if (iHaveVtol() && withChance(personality.vtolness) && adaptVote(
 				[ our.tank + our.borg + our.defs, our.vtol ],
 				[ their.aa, their.at + their.ap + their.as ]
 			) === 1)
