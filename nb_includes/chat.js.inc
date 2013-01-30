@@ -30,7 +30,7 @@ _global.handleChatMessage = function(sender, receiver, message) {
 	}
 	if (!isAlly(sender))
 		return;
-	var result = message.split(" ").filter(String);
+	var result = message.split(/ +/);
 	if (result[0] !== prefix)
 		return;
 	var command = result[1];
