@@ -99,6 +99,9 @@ function findTarget(gr) {
 	// find harass targets for the misc group
 	if (gr === miscGroup) {
 		var list = enumStructList(miscTargets, enumLivingPlayers().filter(isEnemy).random());
+		powerUps.forEach(function(stat) { // pick up oil drums and artifacts
+			list = list.concat(enumFeature(-1, stat));
+		});
 		list = list.filter(targetSuitableForHarass).sort(function(one, two) {
 			return distanceToBase(one) - distanceToBase(two);
 		});
@@ -191,7 +194,17 @@ function attackTarget(droid) {
 			return;
 		}
 	if (defined(target))
-		orderDroidObj(droid, DORDER_ATTACK, target);
+		switch (target.type) {
+			case STRUCTURE:
+				orderDroidLoc(droid, DORDER_SCOUT, target.x, target.y);
+				break;
+			case DROID:
+				orderDroidObj(droid, DORDER_ATTACK, target);
+				break;
+			case FEATURE:
+				orderDroidObj(droid, DORDER_RECOVER, target);
+				break;
+		}
 }
 
 function pickVtolTarget() {
