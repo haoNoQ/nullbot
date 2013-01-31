@@ -27,9 +27,8 @@ function isAvailable(stat) {
 }
 
 // a function for checking the presence of enemy units at the construction site
-function safeSpot() {
-	// currently does nothing
-	return true; 
+function safeSpot(x, y) {
+	return dangerLevel({x: x, y: y}) <= 0;
 }
 
 function truckFree(truck) {
