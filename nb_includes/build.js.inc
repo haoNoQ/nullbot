@@ -183,7 +183,7 @@ function buildTowers() {
 	var oils = enumStructList(structures.derricks);
 	if (oils.length === 0)
 		return false;
-	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
+	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRoleSmooth());
 	if (withChance(70)) {
 		var list = [];
 		weaponPaths.forEach(function(statlist) {
@@ -215,7 +215,7 @@ function buildGateways() {
 	}).sort(function(one, two) { return distanceToBase({x: one.x1, y: one.y1}) - distanceToBase({x: two.x1, y: two.y1}); });
 	if (gates.length === 0)
 		return;
-	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
+	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRoleSmooth());
 	var list = [];
 	weaponPaths.forEach(function(statlist) {
 		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.GATEWAY));
@@ -227,7 +227,7 @@ function buildGateways() {
 }
 
 function buildArty() {
-	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
+	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRoleSmooth());
 	var list = [];
 	weaponPaths.forEach(function(statlist) {
 		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.ARTY));
