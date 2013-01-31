@@ -338,6 +338,8 @@ _global.checkAttack = function() {
 	enumGroup(miscGroup).filter(checkRepaired).forEach(attackTarget);
 	var droids = enumGroup(vtolGroup).filter(vtolReady);
 	var target = pickVtolTarget();
+	if (!defined(target))
+		return;
 	var size = dangerLevel(target);
 	if (size > attackGroupSize())
 		size = attackGroupSize();
