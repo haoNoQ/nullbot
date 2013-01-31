@@ -41,7 +41,10 @@ function doResearch(lab) {
 			return true;
 	// then, see if we want to research some weapons
 	if (withChance(70)) { // TODO: make a more thoughtful decision here
-		var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
+		var role = random(ROLE.LENGTH);
+		if (withChance(85))
+			role = chooseWeaponRole();
+		var weaponPaths = personality.weaponPaths.filterProperty("role", role);
 		var list = [];
 		var aspect = random(5); // TODO: make a more thoughtful desicion here
 		if (aspect > 3) aspect = 0;
