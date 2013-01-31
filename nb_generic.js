@@ -42,9 +42,9 @@ var subpersonalities = {
 			"R-Struc-PowerModuleMk1",
 			"R-Wpn-MG-Damage03",
 		],
-		minTanks: 3, // minimal attack force at game start
+		minTanks: 1, // minimal attack force at game start
 		becomeHarder: 3, // how much to increase attack force every 5 minutes
-		maxTanks: 21, // maximum for the minTanks value (since it grows at becomeHarder rate)
+		maxTanks: 16, // maximum for the minTanks value (since it grows at becomeHarder rate)
 		minTrucks: 3, // minimal number of trucks around
 		minHoverTrucks: 4, // minimal number of hover trucks around
 		minMiscTanks: 1, // number of tanks to start harassing enemy
@@ -69,7 +69,7 @@ var subpersonalities = {
 			"R-Struc-PowerModuleMk1",
 			"R-Wpn-MG-Damage03",
 		],
-		minTanks: 3, becomeHarder: 3, maxTanks: 21,
+		minTanks: 1, becomeHarder: 3, maxTanks: 16,
 		minTrucks: 3, minHoverTrucks: 4,
 		minMiscTanks: 1, maxMiscTanks: 2,
 		vtolness: 70, defensiveness: 70,
@@ -90,7 +90,7 @@ var subpersonalities = {
 			"R-Vehicle-Prop-Halftracks",
 			"R-Struc-PowerModuleMk1",
 		],
-		minTanks: 3, becomeHarder: 3, maxTanks: 21,
+		minTanks: 1, becomeHarder: 3, maxTanks: 16,
 		minTrucks: 3, minHoverTrucks: 4,
 		minMiscTanks: 1, maxMiscTanks: 2,
 		vtolness: 70, defensiveness: 70,
@@ -112,7 +112,7 @@ var subpersonalities = {
 			"R-Wpn-Cannon1Mk1",
 			"R-Struc-PowerModuleMk1",
 		],
-		minTanks: 3, becomeHarder: 3, maxTanks: 21,
+		minTanks: 1, becomeHarder: 3, maxTanks: 16,
 		minTrucks: 3, minHoverTrucks: 4,
 		minMiscTanks: 1, maxMiscTanks: 2,
 		vtolness: 70, defensiveness: 70,
