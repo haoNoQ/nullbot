@@ -196,7 +196,7 @@ function buildTowers() {
 		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.FORTRESS));
 	});
 	list = list.concat(structures.sensors);
-	return buildStructureAround(list, oils.random(), true);
+	return buildStructureAround(list, oils.random(), true) !== BUILDRET.UNAVAILABLE;
 }
 
 function buildGateways() {
