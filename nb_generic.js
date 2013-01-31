@@ -45,13 +45,13 @@ var subpersonalities = {
 		minTanks: 3, // minimal attack force at game start
 		becomeHarder: 3, // how much to increase attack force every 5 minutes
 		maxTanks: 21, // maximum for the minTanks value (since it grows at becomeHarder rate)
-		minTrucks: 5, // minimal number of trucks around
+		minTrucks: 3, // minimal number of trucks around
 		minHoverTrucks: 4, // minimal number of hover trucks around
 		minMiscTanks: 1, // number of tanks to start harassing enemy
-		maxMiscTanks: 6, // number of tanks used for defense and harass
+		maxMiscTanks: 2, // number of tanks used for defense and harass
 		vtolness: 70, // the chance % of not making droids when adaptation mechanism chooses vtols
 		defensiveness: 70, // same thing for defenses; set this to 100 to enable turtle AI specific code
-		maxPower: 300, // build expensive things if we have more than that
+		maxPower: 700, // build expensive things if we have more than that
 		repairAt: 50, // how much % healthy should droid be to join the attack group instead of repairing
 	},
 	MC: {
@@ -70,10 +70,10 @@ var subpersonalities = {
 			"R-Wpn-MG-Damage03",
 		],
 		minTanks: 3, becomeHarder: 3, maxTanks: 21,
-		minTrucks: 5, minHoverTrucks: 4,
-		minMiscTanks: 1, maxMiscTanks: 6,
+		minTrucks: 3, minHoverTrucks: 4,
+		minMiscTanks: 1, maxMiscTanks: 2,
 		vtolness: 70, defensiveness: 70,
-		maxPower: 300,
+		maxPower: 700,
 		repairAt: 50,
 	},
 	FR: {
@@ -91,10 +91,10 @@ var subpersonalities = {
 			"R-Struc-PowerModuleMk1",
 		],
 		minTanks: 3, becomeHarder: 3, maxTanks: 21,
-		minTrucks: 5, minHoverTrucks: 4,
-		minMiscTanks: 1, maxMiscTanks: 6,
+		minTrucks: 3, minHoverTrucks: 4,
+		minMiscTanks: 1, maxMiscTanks: 2,
 		vtolness: 70, defensiveness: 70,
-		maxPower: 300,
+		maxPower: 700,
 		repairAt: 50,
 	},
 	FC: {
@@ -113,10 +113,10 @@ var subpersonalities = {
 			"R-Struc-PowerModuleMk1",
 		],
 		minTanks: 3, becomeHarder: 3, maxTanks: 21,
-		minTrucks: 5, minHoverTrucks: 4,
-		minMiscTanks: 1, maxMiscTanks: 6,
+		minTrucks: 3, minHoverTrucks: 4,
+		minMiscTanks: 1, maxMiscTanks: 2,
 		vtolness: 70, defensiveness: 70,
-		maxPower: 300,
+		maxPower: 700,
 		repairAt: 50,
 	},
 };
@@ -130,8 +130,8 @@ function buildOrder() {
 	if (derrickCount > 0) 
 		if (buildMinimum(structures.gens, 1)) return true;
 	// lab, factory, gen, cc - the current trivial build order for the 3.2+ starting conditions
-	if (buildMinimum(structures.factories, 1)) return true;
 	if (buildMinimum(structures.labs, 1)) return true;
+	if (buildMinimum(structures.factories, 1)) return true;
 	if (buildMinimum(structures.gens, 1)) return true;
 	// make sure trucks go capture some oil at this moment
 	if (buildMinimumDerricks(1)) return true;
@@ -147,12 +147,21 @@ function buildOrder() {
 		if (buildMinimum(structures.labs, 4)) return true;
 	if (ret.land === 0 && ret.sea === 0 && !iHaveVtol())
 		if (buildMinimum(structures.labs, 4)) return true;
-	// build more factories and labs when we have enough income
-	if (buildMinimum(structures.labs, derrickCount / 3)) return true;
-	if (buildMinimum(structures.factories, 2)) return true;
-	if (buildMinimum(structures.templateFactories, 1)) return true;
-	if (buildMinimum(structures.vtolFactories, 1)) return true;
-	return false;
+	// since we reached that far, we can afford some more trucks
+	if (gameTime > 300000) {
+		personality.minTrucks = 5;
+		personality.maxPower = 300;
+		personality.minMiscTanks = 2;
+		personality.minMiscTanks = 6;
+		// build more factories and labs when we have enough income
+		if (buildMinimum(structures.labs, derrickCount / 3)) return true;
+		if (buildMinimum(structures.factories, 2)) return true;
+		if (buildMinimum(structures.templateFactories, 1)) return true;
+		if (buildMinimum(structures.vtolFactories, 1)) return true;
+		return false;
+	}
+	
+	return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
