@@ -102,7 +102,12 @@ function findTarget(gr) {
 		powerUps.forEach(function(stat) { // pick up oil drums and artifacts
 			list = list.concat(enumFeature(-1, stat));
 		});
-		list = list.filter(targetSuitableForHarass).sort(function(one, two) {
+		list = list.filter(targetSuitableForHarass).filter(function(feature) {
+			if (iHaveHover())
+				if (propulsionCanReach(propulsionStats.hover[0].stat, baseLocation.x, baseLocation.y, feature.x, feature.y))
+					return true;
+			return propulsionCanReach(propulsionStats.ground[0].stat, baseLocation.x, baseLocation.y, feature.x, feature.y);
+		}).sort(function(one, two) {
 			return distanceToBase(one) - distanceToBase(two);
 		});
 		if (list.length > 0) {
