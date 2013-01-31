@@ -45,6 +45,8 @@ const structures = {
 
 const oilResources = [ "OilResource", ];
 
+const powerUps = [ "OilDrum", "Crate" ];
+
 // NOTE: you cannot use specific stats as bases, but only stattypes
 // probably better make use of .name rather than of .stattype here?
 const modules = [
