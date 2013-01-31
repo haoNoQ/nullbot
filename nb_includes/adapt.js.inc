@@ -442,6 +442,16 @@ _global.chooseBodyClass = function(gr) {
 
 _global.chooseObjectType = function() {
 	function uncached() {
+		// behaviour specific for a turtle AI
+		if (personality.defensiveness === 100)
+			if (iHaveVtol() && withChance(personality.vtolness) && adaptVote(
+				[ our.defs, our.vtol ],
+				[ their.aa, their.at + their.ap + 2 * their.as ]
+			) === 1)
+			return 3;
+		else
+			return 2;
+		// behaviour of a generic AI
 		var our = groupOurs(), their = groupTheirs();
 		if (withChance(personality.defensiveness) && adaptVote(
 				[ our.tank + our.borg + our.vtol, our.defs ],
