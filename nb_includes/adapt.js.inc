@@ -429,6 +429,13 @@ _global.chooseWeaponRole = function(gr) {
 	return cached(uncached, 5000, gr);
 }
 
+// returns a random wrong value with 15% probability
+_global.chooseWeaponRoleSmooth = function(gr) {
+	if (withChance(20))
+		return random(ROLE.LENGTH);
+	return chooseWeaponRole(gr);
+}
+
 _global.chooseBodyClass = function(gr) {
 	function uncached() {
 		var our = groupOurs(gr), their = groupTheirs(gr);
