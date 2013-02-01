@@ -82,8 +82,8 @@ function buildOrder() {
 	if (derrickCount > 0)
 		if (buildMinimum(structures.gens, 1)) return true;
 	// lab, factory, gen, cc - the current trivial build order for the 3.2+ starting conditions
-	if (buildMinimum(structures.factories, 1)) return true;
 	if (buildMinimum(structures.labs, 1)) return true;
+	if (buildMinimum(structures.factories, 1)) return true;
 	if (buildMinimum(structures.gens, 1)) return true;
 	// make sure trucks go capture some oil at this moment
 	if (buildMinimumDerricks(1)) return true;
@@ -92,9 +92,10 @@ function buildOrder() {
 	if (buildMinimum(structures.gens, 2)) return true;
 	if (buildMinimum(structures.hqs, 1)) return true;
 	// make sure we have at least that much oils by now
-	if (buildMinimumDerricks(5)) return true;
-	// support hover maps
-	if (buildMinimum(structures.labs, 4)) return true;
+	if (buildMinimumDerricks(3)) return true;
+	// make sure we have enough labs
+	if (gameTime > 600000)
+		if (buildMinimum(structures.labs, derrickCount / 2)) return true;
 	return false;
 }
 
