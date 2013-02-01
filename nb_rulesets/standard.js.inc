@@ -181,6 +181,7 @@ const weaponStats = {
 		],
 		defenses: [
 			{ res: "R-Defense-Tower01", stat: "GuardTower1", defrole: DEFROLE.GATEWAY }, // hmg tower
+			{ res: "R-Defense-Tower01", stat: "GuardTower1", defrole: DEFROLE.STANDALONE }, // hmg tower
 			{ res: "R-Defense-Pillbox01", stat: "PillBox1", defrole: DEFROLE.STANDALONE }, // hmg bunker
 			{ res: "R-Defense-WallTower01", stat: "WallTower01", defrole: DEFROLE.GATEWAY }, // hmg hardpoint
 			{ res: "R-Defense-RotMG", stat: "Pillbox-RotMG", defrole: DEFROLE.STANDALONE }, // ag bunker
@@ -359,6 +360,7 @@ const weaponStats = {
 		],
 		defenses: [
 			{ res: "R-Defense-Tower06", stat: "GuardTower6", defrole: DEFROLE.STANDALONE }, // pod tower
+			{ res: "R-Defense-Tower06", stat: "GuardTower6", defrole: DEFROLE.GATEWAY }, // pod tower
 			{ res: "R-Defense-Pillbox06", stat: "GuardTower5", defrole: DEFROLE.STANDALONE }, // lancer tower
 			{ res: "R-Defense-WallTower06", stat: "WallTower06", defrole: DEFROLE.GATEWAY }, // lancer hardpoint
 			{ res: "R-Defense-HvyA-Trocket", stat: "Emplacement-HvyATrocket", defrole: DEFROLE.STANDALONE }, // tk emplacement

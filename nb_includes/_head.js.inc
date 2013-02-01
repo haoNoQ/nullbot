@@ -84,7 +84,15 @@ const MODULECOST = {
 	EXPENSIVE: 1,
 }
 
+//
 // just nowhere to put this
+//
+
 function myPower() {
 	return playerPower(me) - queuedPower(me);
 }
+
+function isAvailable(stat) {
+	return isStructureAvailable(stat, me);
+}
+

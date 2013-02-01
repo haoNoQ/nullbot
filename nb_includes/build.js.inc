@@ -21,9 +21,13 @@ _global.distanceToBase = function(loc) {
 	return distBetweenTwoPoints(loc.x, loc.y, baseLocation.x, baseLocation.y);
 }
 
-// a shortened version of isStructureAvailable() for convenience
-function isAvailable(stat) {
-	return isStructureAvailable(stat, me);
+function randomLocation() {
+	var x = baseLocation.x + random(baseScale) - baseScale / 2;
+	var y = baseLocation.y + random(baseScale) - baseScale / 2;
+	if (x < 3 || y < 3 || x > mapWidth - 4 || y > mapHeight - 4)
+		return baseLocation;
+	return {x: x, y: y};
+	
 }
 
 // a function for checking the presence of enemy units at the construction site
@@ -99,8 +103,10 @@ function buildBasicStructure(statlist, importance) {
 			avail = true;
 			if (distanceToBase(trucks[0]) <= baseScale)
 				loc = pickStructLocation(trucks[0], statlist[i], trucks[0].x, trucks[0].y);
-			else 
-				loc = pickStructLocation(trucks[0], statlist[i], baseLocation.x, baseLocation.y);
+			else {
+				var rndLoc = randomLocation();
+				loc = pickStructLocation(trucks[0], statlist[i],rndLoc.x, rndLoc.y);
+			}
 			idx = i;
 			break;
 		}
@@ -178,61 +184,47 @@ function captureOil(oil) {
 	return BUILDRET.FAILURE;
 }
 
+function chooseDefense(defrole) {
+	weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRoleSmooth());
+	var ret = weaponStatsListToAvailableDefenses(weaponPaths, defrole);
+	if (ret.length === 0) // TODO: think about outdated defenses here
+		ret = weaponStatsListToAvailableDefenses(personality.weaponPaths.shuffle(), defrole);
+	return ret;
+}
+
 function buildTowers() {
 	var oils = enumStructList(structures.derricks);
 	if (oils.length === 0)
 		return false;
-	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRoleSmooth());
-	if (withChance(70)) {
-		var list = [];
-		weaponPaths.forEach(function(statlist) {
-			list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.STANDALONE));
-		});
-		return buildStructureAround(list, oils.random()) !== BUILDRET.UNAVAILABLE;
-	}
-	var list = [];
-	weaponPaths.forEach(function(statlist) {
-		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.FORTRESS));
-	});
-	list = list.concat(structures.sensors);
-	return buildStructureAround(list, oils.random(), true) !== BUILDRET.UNAVAILABLE;
+	if (withChance(70))
+		return buildStructureAround(chooseDefense(DEFROLE.STANDALONE), oils.random()) !== BUILDRET.UNAVAILABLE;
+	return buildStructureAround(chooseDefense(DEFROLE.FORTRESS).concat(structures.sensors), oils.random(), true) !== BUILDRET.UNAVAILABLE;
 }
 
 function buildGateways() {
 	var oils = countStructList(structures.derricks);
-	if (oils <= 0) 
+	if (oils <= 0)
 		return BUILDRET.FAILURE;
 	var gates = enumGateways().filter(function(gate) {
 		var l = gate.x1 - gate.x2 + gate.y1 - gate.y2;
-		if (l < 0) 
+		if (l < 0)
 			l = -l;
 		var cnt = enumRange(gate.x1, gate.y1, l, ALLIES).filterProperty("stattype", DEFENSE).length;
 		cnt    += enumRange(gate.x2, gate.y2, l, ALLIES).filterProperty("stattype", DEFENSE).length;
 		cnt    -= enumRange(gate.x1, gate.y1, l, ENEMIES).filterProperty("stattype", DEFENSE).length;
 		cnt    -= enumRange(gate.x2, gate.y2, l, ENEMIES).filterProperty("stattype", DEFENSE).length;
-		return cnt >= 0 && cnt < l;
+		return cnt >= 0 && (cnt < l || (personality.defensiveness === 100 && withChance(70)));
 	}).sort(function(one, two) { return distanceToBase({x: one.x1, y: one.y1}) - distanceToBase({x: two.x1, y: two.y1}); });
 	if (gates.length === 0)
 		return;
-	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRoleSmooth());
-	var list = [];
-	weaponPaths.forEach(function(statlist) {
-		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.GATEWAY));
-	});
-	if (random(2))
-		return buildStructureAround(list, {x: gates[0].x1, y: gates[0].y1}) !== BUILDRET.UNAVAILABLE;
+	if (withChance(50))
+		return buildStructureAround(chooseDefense(DEFROLE.GATEWAY), {x: gates[0].x1, y: gates[0].y1}) !== BUILDRET.UNAVAILABLE;
 	else
-		return buildStructureAround(list, {x: gates[0].x2, y: gates[0].y2}) !== BUILDRET.UNAVAILABLE;
+		return buildStructureAround(chooseDefense(DEFROLE.GATEWAY), {x: gates[0].x2, y: gates[0].y2}) !== BUILDRET.UNAVAILABLE;
 }
 
 function buildArty() {
-	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRoleSmooth());
-	var list = [];
-	weaponPaths.forEach(function(statlist) {
-		list = list.concat(weaponStatsToDefenses(statlist, DEFROLE.ARTY));
-	});
-	list = list.reverse();
-	return buildBasicStructure(list);
+	return buildBasicStructure(chooseDefense(DEFROLE.ARTY));
 }
 
 _global.buildMinimum = function(statlist, count, importance) {
