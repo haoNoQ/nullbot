@@ -180,6 +180,7 @@ const weaponStats = {
 			{ res: "R-Wpn-MG4", stat: "MG4ROTARY-VTOL", weight: WEIGHT.MEDIUM }, // vtol ag
 		],
 		defenses: [
+			// turtle AI needs early versatile towers, hence duplicate stat
 			{ res: "R-Defense-Tower01", stat: "GuardTower1", defrole: DEFROLE.GATEWAY }, // hmg tower
 			{ res: "R-Defense-Tower01", stat: "GuardTower1", defrole: DEFROLE.STANDALONE }, // hmg tower
 			{ res: "R-Defense-Pillbox01", stat: "PillBox1", defrole: DEFROLE.STANDALONE }, // hmg bunker
@@ -290,7 +291,7 @@ const weaponStats = {
 		role: ROLE.AS,
 		chatalias: "mo",
 		weapons: [
-			{ res: "R-Wpn-Mortar01Lt", stat: "Mortar1Mk1", weight: WEIGHT.HEAVY },
+			{ res: "R-Wpn-Mortar01Lt", stat: "Mortar1Mk1", weight: WEIGHT.HEAVY }, // duplicate stat!
 			{ res: "R-Wpn-Mortar02Hvy", stat: "Mortar2Mk1", weight: WEIGHT.HEAVY },
 			{ res: "R-Wpn-Mortar3", stat: "Mortar3ROTARYMk1", weight: WEIGHT.HEAVY },
 			{ res: "R-Wpn-HowitzerMk1", stat: "Howitzer105Mk1", weight: WEIGHT.ULTRAHEAVY },
@@ -323,6 +324,7 @@ const weaponStats = {
 		role: ROLE.AS,
 		chatalias: "fm", 
 		weapons: [
+			{ res: "R-Wpn-Mortar01Lt", stat: "Mortar1Mk1", weight: WEIGHT.HEAVY }, // duplicate stat!
 			{ res: "R-Wpn-Mortar-Incenediary", stat: "Mortar-Incenediary", weight: WEIGHT.HEAVY },
 			{ res: "R-Wpn-Howitzer-Incenediary", stat: "Howitzer-Incenediary", weight: WEIGHT.ULTRAHEAVY },
 		],
@@ -359,8 +361,9 @@ const weaponStats = {
 			{ res: "R-Wpn-Missile2A-T", stat: "Missile-VTOL-AT", weight: WEIGHT.LIGHT }, // scourge
 		],
 		defenses: [
-			{ res: "R-Defense-Tower06", stat: "GuardTower6", defrole: DEFROLE.STANDALONE }, // pod tower
+			// rocket turtle AI needs early AT gateway towers, hence duplicate stat
 			{ res: "R-Defense-Tower06", stat: "GuardTower6", defrole: DEFROLE.GATEWAY }, // pod tower
+			{ res: "R-Defense-Tower06", stat: "GuardTower6", defrole: DEFROLE.STANDALONE }, // pod tower
 			{ res: "R-Defense-Pillbox06", stat: "GuardTower5", defrole: DEFROLE.STANDALONE }, // lancer tower
 			{ res: "R-Defense-WallTower06", stat: "WallTower06", defrole: DEFROLE.GATEWAY }, // lancer hardpoint
 			{ res: "R-Defense-HvyA-Trocket", stat: "Emplacement-HvyATrocket", defrole: DEFROLE.STANDALONE }, // tk emplacement
@@ -465,7 +468,14 @@ const weaponStats = {
 	useless_AT: {
 		role: ROLE.AT,
 		chatalias: "useless_AT",
-		weapons: [],
+		weapons: [
+			{ stat: "CannonSuper" }, // cannon fort weapon
+			{ stat: "RocketSuper" }, // rocket bastion weapon
+			{ stat: "MissileSuper" }, // missile fort weapon
+			{ stat: "MassDriver" }, // mass driver fort weapon
+			{ stat: "MortarEMP" }, // emp mortar
+			{ stat: "EMP-Cannon" }, // emp cannon
+		],
 		vtols: [],
 		defenses: [],
 		templates: [],
@@ -475,7 +485,11 @@ const weaponStats = {
 		role: ROLE.AP,
 		chatalias: "useless_AP",
 		weapons: [
-			{ res: "", stat: "MG3-Pillbox", weight: 0 }, // mg bunker dedicated weapon
+			{ stat: "MG1-Pillbox" }, // imaginary invisible single mg, may be found on some maps
+			{ stat: "MG2-Pillbox" }, // imaginary invisible twin mg, may be found on some maps
+			{ stat: "MG3-Pillbox" }, // mg bunker dedicated weapon
+			{ stat: "NEXUSlink" }, // nexus link (still unused)
+			{ stat: "MG4ROTARY-Pillbox" }, // ag bunker dedicated weapon
 		],
 		vtols: [],
 		defenses: [],
@@ -485,16 +499,21 @@ const weaponStats = {
 	useless_AS: {
 		role: ROLE.AS,
 		chatalias: "useless_AS",
-		weapons: [],
+		weapons: [
+			{ stat: "PlasmaHeavy" }, // plasma cannon (still unused)
+		],
 		vtols: [],
 		defenses: [],
 		templates: [],
-		exxtras: [],
+		extras: [],
 	},
 	useless_AA: {
 		role: ROLE.AA,
 		chatalias: "useless_AA",
-		weapons: [],
+		weapons: [
+			{ stat: "QuadMg1AAGun" }, // whirlwind (still unused)
+			{ stat: "QuadRotAAGun" }, // hurricane (still unused)
+		],
 		vtols: [],
 		defenses: [],
 		templates: [],
