@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 function ourBuildDroid(factory, name, bodies, propulsions, weapons1, weapons2, weapons3) {
-	buildDroid(factory, name, bodies, propulsions, "", "", weapons1, weapons2, weapons3);
+	return buildDroid(factory, name, bodies, propulsions, "", "", weapons1, weapons2, weapons3);
 }
 
 function produceTruck(factory) {
@@ -165,7 +165,7 @@ function checkTruckProduction() {
 	}
 	if (trucks.length >= getDroidLimit(me, DROID_CONSTRUCT))
 		return false;
-	if (trucks.length < personality.minTrucks || myPower() > personality.maxPower 
+	if (trucks.length < personality.minTrucks || myPower() > personality.maxPower
 		|| (iHaveHover() && hoverTrucksCount < personality.minHoverTrucks)
 	) {
 		var f;
@@ -174,7 +174,7 @@ function checkTruckProduction() {
 			if (structureIdle(f))
 				if (produceTruck(f))
 					return true;
-		if (defined(f)) 
+		if (defined(f))
 			return false;
 		f = enumFinishedStructList(structures.templateFactories)[0];
 		if (defined(f))
@@ -208,17 +208,18 @@ function checkVtolProduction() {
 }
 
 _global.checkProduction = function() {
-	checkTruckProduction();
+	if (checkTruckProduction())
+		return; // will proceed on the next cycle
 	switch(chooseObjectType()) {
 		case 1:
 			if (checkTemplateProduction())
-				break;
+				return;
 		case 0:
 			if (checkTankProduction())
-				break;
+				return;
 		case 3:
 			if (checkVtolProduction())
-				break;
+				return;
 	}
 	// if having too much energy, don't care about what we produce
 	if (myPower() > personality.maxPower) {
