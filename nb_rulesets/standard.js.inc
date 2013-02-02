@@ -520,8 +520,8 @@ const weaponStats = {
 		role: ROLE.AA,
 		chatalias: "useless_AA",
 		weapons: [
-			{ stat: "QuadMg1AAGun" }, // whirlwind (still unused)
-			{ stat: "QuadRotAAGun" }, // hurricane (still unused)
+			{ stat: "QuadMg1AAGun" }, // hurricane (still unused)
+			{ stat: "QuadRotAAGun" }, // whirlwind (still unused)
 		],
 		vtols: [],
 		defenses: [],
