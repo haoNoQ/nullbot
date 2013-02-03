@@ -1,7 +1,7 @@
 
 /*
  * This file is responsible for moving combat unit around.
- * 
+ *
  */
 
 (function(_global) {
@@ -10,12 +10,17 @@
 _global.MAX_GROUPS = maxPlayers;
 _global.miscGroup = MAX_GROUPS;
 _global.vtolGroup = miscGroup + 1;
-var vtolTarget;
 var groupInfo = [];
 
 function GroupInfo() {
-	this.cachedTarget = undefined; // the actual target the group is pursuing
-	this.lastAttacked = undefined; // gameTime at the moment of the last unit loss
+	this.lastAttacked = undefined; // gameTime at the moment of the last combat
+}
+
+function safeGetObject(label) {
+	var obj = getObject(label);
+	if (obj === null)
+		return undefined;
+	return obj;
 }
 
 function groupsBySize() {
@@ -85,10 +90,18 @@ function getGroupInfo(gr) {
 	return groupInfo[gr];
 }
 
+function groupTargetLabel(gr) {
+	return "NullBot_" + me + "_GroupTarget_" + gr;
+}
+
+function vtolTargetLabel() {
+	return "NullBot_" + me + "_VtolTarget";
+}
+
 function findTarget(gr) {
 	getGroupInfo(gr); // make sure everything is defined
-	if (defined(groupInfo[gr].cachedTarget)) {
-		var obj = objFromId(groupInfo[gr].cachedTarget);
+	var obj = safeGetObject(groupTargetLabel(gr));
+	if (defined(obj)) {
 		if (gr === miscGroup) {
 			// harass group should switch targets when its target gets protected, otherwise targets are permanent
 			if (throttled(10000) || targetSuitableForHarass(obj))
@@ -110,22 +123,26 @@ function findTarget(gr) {
 		}).sort(function(one, two) {
 			return distanceToBase(one) - distanceToBase(two);
 		});
-		if (list.length > 0) {
-			groupInfo[gr].cachedTarget = list[random(Math.max(3, list.length))];
-			return groupInfo[gr].cachedTarget;
+		obj = list[random(Math.min(3, list.length))];
+		if (obj) {
+			addLabel(obj, groupTargetLabel(gr));
+			return obj;
 		}
 	}
 	// fund structure targets
 	var list = enumStructList(targets, gr);
 	if (list.length > 0)
-		groupInfo[gr].cachedTarget = list.random();
+		obj = list.random();
 	else {
 		// find remaining droids
 		list = enumDroid(gr);
 		if (list.length > 0)
-			groupInfo[gr].cachedTarget = list.random();
+			obj = list.random();
 	}
-	return groupInfo[gr].cachedTarget;
+	if (defined(obj)) {
+		addLabel(obj, groupTargetLabel(gr));
+		return obj;
+	}
 }
 
 function groupInDanger(gr) {
@@ -136,7 +153,7 @@ function groupInDanger(gr) {
 }
 
 function regroup(gr) {
-	if (inPanic()) 
+	if (inPanic())
 		return enumGroup(gr).filter(checkRepaired);
 	var size = attackGroupSize();
 	if (size < groupSize(gr) / 2)
@@ -229,10 +246,14 @@ function pickVtolTarget() {
 		list = enumDroid(enemy);
 		if (list.length > 0) return list.random();
 	}
-	if (defined(vtolTarget))
-		return objFromId(vtolTarget);
-	vtolTarget = uncached();
-	return vtolTarget;
+	var obj = safeGetObject(vtolTargetLabel());
+	if (defined(obj))
+		return obj;
+	obj = uncached();
+	if (defined(obj)) {
+		addLabel(obj, vtolTargetLabel());
+		return obj;
+	}
 }
 
 function vtolReady(droid) {
@@ -252,27 +273,15 @@ _global.attackGroupSize = function() {
 _global.setTarget = function(object, group) {
 	if (!defined(group)) {
 		group = findNearestGroup(object.x, object.y);
-		vtolTarget = object;
+		addLabel(object, vtolTargetLabel());
 	}
 	if (!defined(group))
 		return false;
-	getGroupInfo(group); // make sure everything is defined
-	if (defined(groupInfo[group].cachedTarget))
+	if (defined(safeGetObject(groupTargetLabel(group))))
 		if (throttled(10000, group)) // don't switch targets too often
 			return false;
-	groupInfo[group].cachedTarget = object;
+	addLabel(object, groupTargetLabel(group));
 	return true;
-}
-
-_global.invalidateTarget = function(object) {
-	groupInfo.forEach(function(info) {
-		if (defined(info.cachedTarget))
-			if (info.cachedTarget.id === object.id)
-				info.cachedTarget = undefined;
-	});
-	if (defined(vtolTarget))
-		if (vtolTarget.id === object.id)
-			vtolTarget = undefined;
 }
 
 _global.groupDroid = function(droid) {

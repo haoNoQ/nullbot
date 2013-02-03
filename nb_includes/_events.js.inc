@@ -43,14 +43,6 @@ function eventStructureBuilt(structure) {
 	queue("checkConstruction");
 }
 
-function eventDestroyed(object) {
-	invalidateTarget(object);
-}
-
-function eventPickup(feature, droid) {
-	invalidateTarget(feature);
-}
-
 function eventAttacked(victim, attacker) {
 	if (attacker === null)
 		return; // no idea why it happens sometimes
