@@ -266,6 +266,8 @@ _global.buildMinimumDerricks = function(count) {
 }
 
 _global.checkConstruction = function() {
+	if (enumTrucks().filter(truckFree).length === 0)
+		return;
 	if (finishStructures())
 		return;
 	queue("checkConstructionOne");
