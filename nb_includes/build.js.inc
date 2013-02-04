@@ -299,15 +299,20 @@ _global.checkConstructionTwo = function() {
 	if (withChance(50))
 		if (captureSomeOil())
 			return;
+	queue("checkConstructionThree");
+}
+
+_global.checkConstructionThree = function() {
 	var str = [];
-	for (var i = 0; i < modules.length; ++i)
-		str = str.concat(enumStruct(me, modules[i].base));
-	for (var i = 0; i < str.length; ++i)
-		if (buildModule(str[i]) !== BUILDRET.UNAVAILABLE)
-			return;
+	for (var i = 0; i < modules.length; ++i) {
+		str = enumStruct(me, modules[i].base);
+		for (var j = 0; j < str.length; ++j)
+			if (buildModule(str[j]) !== BUILDRET.UNAVAILABLE)
+				return;
+	}
 	if (buildMinimum(structures.vtolPads, enumDroid(me, DROID_WEAPON).filter(isVTOL).length / 2))
 		return;
-	if (buildBasicStructure(structures.extras) !== BUILDRET.UNAVAILABLE) 
+	if (!throttled(180000) && buildBasicStructure(structures.extras) !== BUILDRET.UNAVAILABLE)
 		return;
 	if (chooseObjectType() === 2)
 		queue("buildDefenses");
