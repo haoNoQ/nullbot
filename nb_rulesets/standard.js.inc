@@ -314,9 +314,9 @@ const weaponStats = {
 			{ res: "R-Wpn-Bomb02", stat: "Bomb2-VTOL-HvHE", weight: WEIGHT.HEAVY },
 		],
 		defenses: [
-			{ res: "R-Defense-MortarPit", stat: "Emplacement-MortarPit01", defrole: DEFROLE.ARTY },
-			{ res: "R-Defense-HvyMor", stat: "Emplacement-MortarPit02", defrole: DEFROLE.ARTY },
-			{ res: "R-Defense-RotMor", stat: "Emplacement-RotMor", defrole: DEFROLE.ARTY },
+			{ res: "R-Defense-MortarPit", stat: "Emplacement-MortarPit01", defrole: DEFROLE.STANDALONE },
+			{ res: "R-Defense-HvyMor", stat: "Emplacement-MortarPit02", defrole: DEFROLE.STANDALONE },
+			{ res: "R-Defense-RotMor", stat: "Emplacement-RotMor", defrole: DEFROLE.STANDALONE },
 			{ res: "R-Defense-Howitzer", stat: "Emplacement-Howitzer105", defrole: DEFROLE.ARTY },
 			{ res: "R-Defense-RotHow", stat: "Emplacement-RotHow", defrole: DEFROLE.ARTY },
 			{ res: "R-Defense-HvyHowitzer", stat: "Emplacement-Howitzer150", defrole: DEFROLE.ARTY },
@@ -345,7 +345,7 @@ const weaponStats = {
 			{ res: "R-Wpn-Bomb05", stat: "Bomb5-VTOL-Plasmite", weight: WEIGHT.HEAVY },
 		],
 		defenses: [
-			{ res: "R-Defense-MortarPit-Incenediary", stat: "Emplacement-MortarPit-Incenediary", defrole: DEFROLE.ARTY },
+			{ res: "R-Defense-MortarPit-Incenediary", stat: "Emplacement-MortarPit-Incenediary", defrole: DEFROLE.STANDALONE },
 			{ res: "R-Defense-Howitzer-Incenediary", stat: "Emplacement-Howitzer-Incenediary", defrole: DEFROLE.ARTY },
 		],
 		templates: [],
