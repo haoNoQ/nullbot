@@ -52,7 +52,7 @@ function doResearch(lab) {
 			return true;
 	}
 	var objType = chooseObjectType();
-	if (withChance(60)) { // TODO: make a more thoughtful decision here
+	if (withChance(65)) { // TODO: make a more thoughtful decision here
 		if (chooseBodyClass() === BODYCLASS.KINETIC) {
 			if (withChance(40)) {
 				switch (objType) {
