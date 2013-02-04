@@ -7,20 +7,6 @@
 (function(_global) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-_global.baseLocation = startPositions[me];
-
-_global.setBaseLocation = function(loc) {
-	baseLocation = loc;
-}
-
-_global.enumTrucks = function() {
-	return enumDroid(me, DROID_CONSTRUCT);
-}
-
-_global.distanceToBase = function(loc) {
-	return distBetweenTwoPoints(loc.x, loc.y, baseLocation.x, baseLocation.y);
-}
-
 function randomLocation() {
 	var x = baseLocation.x + random(baseScale) - baseScale / 2;
 	var y = baseLocation.y + random(baseScale) - baseScale / 2;

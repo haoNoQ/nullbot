@@ -11,6 +11,7 @@ var personality;
 
 include(NB_INCLUDES + "math.js.inc");
 include(NB_INCLUDES + "intensity.js.inc");
+include(NB_INCLUDES + "misc.js.inc");
 include(NB_INCLUDES + "stats.js.inc");
 
 include(NB_INCLUDES + "adapt.js.inc");

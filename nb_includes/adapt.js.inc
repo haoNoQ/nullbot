@@ -118,35 +118,6 @@ var myStatsTemp = new MyStat;
 var stack = [];
 var MAX_PER_CYCLE = 20;
 
-_global.enumLivingPlayers = function() {
-	function uncached() {
-		var ret = [];
-		for (var i = 0; i < maxPlayers; ++i) {
-			if (countStructList(targets, i) > 0) {
-				ret.push(i);
-				continue;
-			}
-			if (enumDroid(i).length > 0)
-				ret.push(i);
-		}
-		return ret;
-	};
-	return cached(uncached, 30000);
-}
-
-_global.isAlly = function(player) {
-	return allianceExistsBetween(me, player);
-}
-
-_global.isEnemy = function(player) {
-	return !isAlly(player);
-}
-
-function canReachFromBase(propulsion, location) {
-	if (defined(propulsion))
-		return propulsionCanReach(propulsion, baseLocation.x, baseLocation.y, location.x, location.y);
-}
-
 function canReachBy(scope, location) {
 	switch (scope) {
 		case "land":
