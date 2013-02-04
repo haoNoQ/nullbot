@@ -265,18 +265,7 @@ _global.buildMinimumDerricks = function(count) {
 	return false;
 }
 
-_global.checkConstruction = function() {
-	if (enumTrucks().filter(truckFree).length === 0)
-		return;
-	if (finishStructures())
-		return;
-	queue("checkConstructionOne");
-}
-
-// global only to use with timers
-_global.checkConstructionOne = function() {
-	if (buildOrder())
-		return;
+function buildExpand() {
 	if (myPower() > personality.maxPower) {
 		switch (chooseObjectType()) {
 			case 0:
@@ -287,38 +276,49 @@ _global.checkConstructionOne = function() {
 				if (buildMinimum(structures.vtolFactories, Infinity)) return true;
 		}
 	}
-	queue("checkConstructionTwo");
+	return false;
 }
 
-_global.checkConstructionTwo = function() {
+function buildEnergy() {
 	var oils = countFinishedStructList(structures.derricks);
 	var gens = countStructList(structures.gens);
 	if (oils > 4 * gens)
 		if (buildBasicStructure(structures.gens) !== BUILDRET.UNAVAILABLE)
-			return;
+			return true;
 	if (withChance(50))
 		if (captureSomeOil())
-			return;
-	queue("checkConstructionThree");
+			return true;
+	return false;
 }
 
-_global.checkConstructionThree = function() {
+function buildModules() {
 	var str = [];
 	for (var i = 0; i < modules.length; ++i) {
 		str = enumStruct(me, modules[i].base);
 		for (var j = 0; j < str.length; ++j)
 			if (buildModule(str[j]) !== BUILDRET.UNAVAILABLE)
-				return;
+				return true;
 	}
-	if (buildMinimum(structures.vtolPads, enumDroid(me, DROID_WEAPON).filter(isVTOL).length / 2))
-		return;
-	if (!throttled(180000) && buildBasicStructure(structures.extras) !== BUILDRET.UNAVAILABLE)
-		return;
-	if (chooseObjectType() === 2)
-		queue("buildDefenses");
+	return false;
 }
 
-_global.buildDefenses = function() {
+function buildVtols() {
+	if (buildMinimum(structures.vtolPads, enumDroid(me, DROID_WEAPON).filter(isVTOL).length / 2))
+		return true;
+	return false;
+}
+
+function buildExtras() {
+	if (throttled(180000))
+		return false;
+	if (buildBasicStructure(structures.extras) !== BUILDRET.UNAVAILABLE)
+		return true;
+	return false;
+}
+
+function buildDefenses() {
+	if (chooseObjectType() !== 2)
+		return false;
 	if (withChance(33)) {
 		if (buildTowers()) // includes sensor towers and forts
 			return true;
@@ -328,6 +328,23 @@ _global.buildDefenses = function() {
 	} else
 		if (buildArty())
 			return true;
+	return false;
+}
+
+_global.checkConstruction = function() {
+	if (enumTrucks().filter(truckFree).length === 0)
+		return;
+	if (functionSeries("construction", [
+		finishStructures,
+		buildOrder,
+		buildExpand,
+		buildEnergy,
+		buildModules,
+		buildVtols,
+		buildExtras,
+		buildDefenses,
+	]))
+		queue("checkConstruction");
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
