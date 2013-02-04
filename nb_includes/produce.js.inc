@@ -22,7 +22,7 @@ function produceTruck(factory) {
 function chooseWeapon(forVtol) {
 	if (!defined(forVtol))
 		forVtol = false;
-	var role = chooseWeaponRole();
+	var role = chooseAttackWeaponRole();
 	var weaponPaths = personality.weaponPaths.filterProperty("role", role);
 	var list = [];
 	weaponPaths.forEach(function(statlist) {
@@ -139,7 +139,7 @@ function produceTemplateFromList(factory, list) {
 
 function produceTemplate(factory) {
 	var list = [];
-	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRole());
+	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseAttackWeaponRole());
 	weaponPaths.forEach(function(statlist) {
 		var ret = statlist.templates;
 		ret.reverse();
