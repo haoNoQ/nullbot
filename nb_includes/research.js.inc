@@ -52,9 +52,9 @@ function doResearch(lab) {
 			return true;
 	}
 	var objType = chooseObjectType();
-	if (withChance(50)) { // TODO: make a more thoughtful decision here
+	if (withChance(60)) { // TODO: make a more thoughtful decision here
 		if (chooseBodyClass() === BODYCLASS.KINETIC) {
-			if (withChance(50)) {
+			if (withChance(40)) {
 				switch (objType) {
 					case 2:
 						if (pursueResearch(lab, classResearch.kinetic.defs))
@@ -74,7 +74,7 @@ function doResearch(lab) {
 				if (pursueResearch(lab, bodyStatsToResList(bodyStats.kinetic)))
 					return true;
 		} else {
-			if (withChance(50))
+			if (withChance(40))
 				switch (objType) {
 					case 2:
 						if (pursueResearch(lab, classResearch.thermal.defs))
