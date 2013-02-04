@@ -18,6 +18,8 @@ _global.setTimers = function() {
 	setTimer("checkAttack", 100);
 	setTimer("adaptCycle", 100);
 	setTimer("rebalanceGroups", 10000 + 20 * rnd());
+	if (difficulty === EASY)
+		setTimer("goEasy", 30000);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

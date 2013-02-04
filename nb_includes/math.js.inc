@@ -83,6 +83,16 @@ Array.prototype.shuffle = function() {
 	return this.sort(function() { return 0.5 - Math.random(); })
 }
 
+// returns a random property of an object
+_global.randomItem = function(obj) {
+    var ret;
+    var count = 0;
+    for (var i in obj)
+        if (Math.random() < 1/++count)
+           ret = i;
+    return obj[ret];
+}
+
 // cluster analysis happens here
 _global.naiveFindClusters = function(list, size) {
 	var ret = { clusters: [], xav: [], yav: [], maxIdx: 0, maxCount: 0 };
