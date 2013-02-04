@@ -50,3 +50,7 @@ function enumLivingPlayers() {
 function enumTrucks() {
 	return enumDroid(me, DROID_CONSTRUCT);
 }
+
+function goEasy() {
+	personality = randomItem(subpersonalities);
+}
