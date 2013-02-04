@@ -390,22 +390,36 @@ function groupOurs(gr) {
 	function uncached() {
 		if (defined(gr))
 			return getMyGroupInfo(gr).collapse();
-		else 
+		else
 			return myStats.collapse();
 	}
 	return cached(uncached, 500, gr);
 }
 
+function groupAttackOurs(gr) {
+	function uncached() {
+		if (defined(gr))
+			return getMyGroupInfo(gr).collapse();
+		else
+			return myStats.offense.collapse();
+	}
+	return cached(uncached, 500, gr);
+}
+
+function enemyOffense() {
+	var theirs = new SimpleStat();
+	enumLivingPlayers().filter(isEnemy).forEach(function(p) {
+		addStat(theirs, enemyStats[p].offense);
+	});
+	return theirs;
+}
+
 function groupTheirs(gr) {
 	function uncached() {
 		if (defined(gr)) {
-			if (gr === miscGroup) {
-				var theirs = new SimpleStat();
-				enumLivingPlayers().filter(isEnemy).forEach(function(p) {
-					addStat(theirs, enemyStats[p].offense);
-				});
-				return theirs;
-			} else 
+			if (gr === miscGroup)
+				return enemyOffense();
+			else
 				return enemyStats[gr].collapse();
 		} else {
 			var theirs = new SimpleStat();
@@ -418,27 +432,52 @@ function groupTheirs(gr) {
 	return cached(uncached, 500, gr);
 }
 
+function voteForWeaponRole(our, their) {
+	return adaptVote(
+		[ our.at, our.ap, our.as, our.aa ],
+		[ their.tank, their.borg, their.defs, their.vtol ]
+	);
+}
+
 _global.chooseWeaponRole = function(gr) {
+	return cached(uncached, 5000, gr);
+}
+
+// use this for droids and long-range arty emplacements
+_global.chooseAttackWeaponRole = function(gr) {
 	function uncached() {
-		var our = groupOurs(gr), their = groupTheirs(gr);
-		return adaptVote(
-			[ our.at, our.ap, our.as, our.aa ],
-			[ their.tank, their.borg, their.defs, their.vtol ]
-		);
+		return voteForWeaponRole(groupAttackOurs(gr), groupTheirs(gr));
 	}
 	return cached(uncached, 5000, gr);
 }
 
-// returns a random wrong value with 15% probability
+// use this for defenses
+// note: returns wrong value with 15% probability, to make sure we have defenses for
+// stuff the enemy doesn't use yet (such as early AA against sudden VTOLs)
+_global.chooseDefendWeaponRole = function(gr) {
+	if (withChance(20))
+		return random(ROLE.LENGTH);
+	function uncached() {
+		return voteForWeaponRole(myStats.defense, enemyOffense());
+	}
+	return cached(uncached, 5000, gr);
+}
+
+// use this for research
+// note: returns wrong value with 15% probability, to make sure we are prepared for
+// stuff the enemy doesn't use yet (such as have early AA against sudden VTOLs)
 _global.chooseWeaponRoleSmooth = function(gr) {
 	if (withChance(20))
 		return random(ROLE.LENGTH);
-	return chooseWeaponRole(gr);
+	function uncached() {
+		return voteForWeaponRole(groupOurs(gr), groupTheirs(gr));
+	}
+	return cached(uncached, 5000, gr);
 }
 
 _global.chooseBodyClass = function(gr) {
 	function uncached() {
-		var our = groupOurs(gr), their = groupTheirs(gr);
+		var our = groupAttackOurs(gr), their = groupTheirs(gr);
 		return adaptVote(
 			[ our.kbody, our.tbody ],
 			[ their.kweapon, their.tweapon ]

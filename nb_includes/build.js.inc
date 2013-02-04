@@ -185,7 +185,7 @@ function captureOil(oil) {
 }
 
 function chooseDefense(defrole) {
-	weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRoleSmooth());
+	weaponPaths = personality.weaponPaths.filterProperty("role", chooseDefendWeaponRole());
 	var ret = weaponStatsListToAvailableDefenses(weaponPaths, defrole);
 	if (ret.length === 0) // TODO: think about outdated defenses here
 		ret = weaponStatsListToAvailableDefenses(personality.weaponPaths.shuffle(), defrole);
