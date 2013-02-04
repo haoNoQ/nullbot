@@ -71,6 +71,8 @@ const fundamentalResearch = [
 	"R-Struc-PowerModuleMk1",
 	"R-Struc-RprFac-Upgrade01",
 	"R-Sys-Sensor-Tower02",
+	"R-Vehicle-Body05",
+	"R-Vehicle-Body04",
 	"R-Vehicle-Prop-Halftracks",
 	"R-Struc-Power-Upgrade01c",
 	"R-Sys-CBSensor-Tower01",
