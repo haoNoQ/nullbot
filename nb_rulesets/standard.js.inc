@@ -179,6 +179,7 @@ const weaponStats = {
 	machineguns: {
 		role: ROLE.AP,
 		chatalias: "mg",
+		micro: MICRO.RANGED,
 		weapons: [
 			{ res: "R-Wpn-MG1Mk1", stat: "MG1Mk1", weight: WEIGHT.ULTRALIGHT }, // mg
 			{ res: "R-Wpn-MG2Mk1", stat: "MG2Mk1", weight: WEIGHT.LIGHT }, // tmg
@@ -211,6 +212,7 @@ const weaponStats = {
 	flamers: {
 		role: ROLE.AP,
 		chatalias: "fl",
+		micro: MICRO.MELEE,
 		weapons: [
 			{ res: "R-Wpn-Flamer01Mk1", stat: "Flame1Mk1", weight: WEIGHT.LIGHT }, // flamer
 			{ res: "R-Wpn-Flame2", stat: "Flame2", weight: WEIGHT.HEAVY }, // inferno
@@ -234,6 +236,7 @@ const weaponStats = {
 	cannons: {
 		role: ROLE.AT,
 		chatalias: "cn",
+		micro: MICRO.RANGED,
 		weapons: [
 			{ res: "R-Wpn-Cannon1Mk1", stat: "Cannon1Mk1", weight: WEIGHT.LIGHT }, // lc
 			{ res: "R-Wpn-Cannon2Mk1", stat: "Cannon2A-TMk1", weight: WEIGHT.HEAVY }, // mc
@@ -287,6 +290,7 @@ const weaponStats = {
 	cannons_AA: {
 		role: ROLE.AA,
 		chatalias: "ca",
+		micro: MICRO.RANGED,
 		weapons: [
 			{ res: "R-Wpn-AAGun02", stat: "AAGun2Mk1", weight: WEIGHT.HEAVY },
 		],
@@ -301,6 +305,7 @@ const weaponStats = {
 	mortars: {
 		role: ROLE.AS,
 		chatalias: "mo",
+		micro: MICRO.DUMB,
 		weapons: [
 			{ res: "R-Wpn-Mortar01Lt", stat: "Mortar1Mk1", weight: WEIGHT.HEAVY }, // duplicate stat!
 			{ res: "R-Wpn-Mortar02Hvy", stat: "Mortar2Mk1", weight: WEIGHT.HEAVY },
@@ -334,6 +339,7 @@ const weaponStats = {
 	fireMortars: {
 		role: ROLE.AS,
 		chatalias: "fm", 
+		micro: MICRO.DUMB,
 		weapons: [
 			{ res: "R-Wpn-Mortar01Lt", stat: "Mortar1Mk1", weight: WEIGHT.HEAVY }, // duplicate stat!
 			{ res: "R-Wpn-Mortar-Incenediary", stat: "Mortar-Incenediary", weight: WEIGHT.HEAVY },
@@ -359,6 +365,7 @@ const weaponStats = {
 	rockets_AT: {
 		role: ROLE.AT,
 		chatalias: "rx",
+		micro: MICRO.RANGED,
 		weapons: [
 			{ res: "R-Wpn-Rocket05-MiniPod", stat: "Rocket-Pod", weight: WEIGHT.LIGHT }, // pod
 			{ res: "R-Wpn-Rocket01-LtAT", stat: "Rocket-LtA-T", weight: WEIGHT.LIGHT }, // lancer
@@ -400,6 +407,7 @@ const weaponStats = {
 	rockets_AS: {
 		role: ROLE.AS,
 		chatalias: "rxas",
+		micro: MICRO.DUMB,
 		weapons: [
 			{ res: "R-Wpn-Rocket02-MRL", stat: "Rocket-MRL", weight: WEIGHT.LIGHT }, // mra
 			{ res: "R-Wpn-Rocket03-HvAT", stat: "Rocket-BB", weight: WEIGHT.MEDIUM }, // bb
@@ -420,6 +428,7 @@ const weaponStats = {
 	rockets_AA: {
 		role: ROLE.AA,
 		chatalias: "rxaa",
+		micro: MICRO.RANGED,
 		weapons: [
 			{ res: "R-Wpn-Sunburst", stat: "Rocket-Sunburst", weight: WEIGHT.LIGHT }, // sunburst
 			{ res: "R-Wpn-Missile-LtSAM", stat: "Missile-LtSAM", weight: WEIGHT.LIGHT }, // avenger
@@ -441,6 +450,7 @@ const weaponStats = {
 	rockets_late_AP: {
 		role: ROLE.AP,
 		chatalias: "sr",
+		micro: MICRO.RANGED,
 		weapons: [
 			{ res: "R-Wpn-MdArtMissile", stat: "Missile-MdArt", weight: WEIGHT.HEAVY }, // seraph
 		],
@@ -454,6 +464,7 @@ const weaponStats = {
 	lasers: {
 		role: ROLE.AP,
 		chatalias: "ls",
+		micro: MICRO.RANGED,
 		weapons: [
 			{ res: "R-Wpn-Laser01", stat: "Laser3BEAMMk1", weight: WEIGHT.ULTRALIGHT }, // flash
 			{ res: "R-Wpn-Laser02", stat: "Laser2PULSEMk1", weight: WEIGHT.HEAVY }, // pulse
