@@ -77,6 +77,24 @@ _global.guessWeaponRole = function(name) {
 	niceDebug("Ruleset warning: Couldn't guess weapon role of", name);
 }
 
+function guessWeaponMicro(name) {
+	function uncached() {
+		for (var stat in weaponStats)
+			if (weaponStats[stat].weapons.someProperty("stat", name))
+				return weaponStats[stat].micro;
+	}
+	return cached(uncached, Infinity, name);
+}
+
+_global.guessDroidMicro = function(droid) {
+	for (var i = 0; i < droid.weapons.length; ++i) {
+		var ret = guessWeaponMicro(droid.weapons[i].name);
+		if (ret !== MICRO.RANGED)
+			return ret;
+	}
+	return MICRO.RANGED;
+}
+
 _global.guessBodyClass = function(name) {
 	if (bodyStats.thermal.someProperty("stat", name))
 		return BODYCLASS.THERMAL;

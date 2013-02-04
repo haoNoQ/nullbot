@@ -83,3 +83,10 @@ const MODULECOST = {
 	CHEAP: 0,
 	EXPENSIVE: 1,
 }
+
+// how to micromanage tanks with this sort of weapon
+const MICRO = {
+	RANGED: 0, // normal weapons, such as cannons
+	MELEE: 1, // weapons that need to get very close to the enemy, such as flamers
+	DUMB: 2, // weapons that can't fire while moving
+}

@@ -343,6 +343,8 @@ _global.touchGroup = function(gr) {
 _global.fallBack = function(droid, threat) {
 	if (droid.order === DORDER_MOVE)
 		return;
+	if (guessDroidMicro(droid) === MICRO.MELEE)
+		return;
 	var x = droid.x - (baseScale / 7) * (threat.x - droid.x) / distBetweenTwoPoints(threat.x, threat.y, droid.x, droid.y);
 	var y = droid.y - (baseScale / 7) * (threat.y - droid.y) / distBetweenTwoPoints(threat.x, threat.y, droid.x, droid.y);
 	if (x < 1 || y < 1 || x > mapWidth - 2 || y > mapHeight - 2)
