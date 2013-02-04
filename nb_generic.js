@@ -49,8 +49,8 @@ var subpersonalities = {
 		minHoverTrucks: 4, // minimal number of hover trucks around
 		minMiscTanks: 1, // number of tanks to start harassing enemy
 		maxMiscTanks: 2, // number of tanks used for defense and harass
-		vtolness: 70, // the chance % of not making droids when adaptation mechanism chooses vtols
-		defensiveness: 70, // same thing for defenses; set this to 100 to enable turtle AI specific code
+		vtolness: 65, // the chance % of not making droids when adaptation mechanism chooses vtols
+		defensiveness: 65, // same thing for defenses; set this to 100 to enable turtle AI specific code
 		maxPower: 700, // build expensive things if we have more than that
 		repairAt: 50, // how much % healthy should droid be to join the attack group instead of repairing
 	},
@@ -72,7 +72,7 @@ var subpersonalities = {
 		minTanks: 1, becomeHarder: 3, maxTanks: 16,
 		minTrucks: 3, minHoverTrucks: 4,
 		minMiscTanks: 1, maxMiscTanks: 2,
-		vtolness: 70, defensiveness: 70,
+		vtolness: 65, defensiveness: 65,
 		maxPower: 700,
 		repairAt: 50,
 	},
@@ -93,7 +93,7 @@ var subpersonalities = {
 		minTanks: 1, becomeHarder: 3, maxTanks: 16,
 		minTrucks: 3, minHoverTrucks: 4,
 		minMiscTanks: 1, maxMiscTanks: 2,
-		vtolness: 70, defensiveness: 70,
+		vtolness: 65, defensiveness: 65,
 		maxPower: 700,
 		repairAt: 50,
 	},
@@ -115,7 +115,7 @@ var subpersonalities = {
 		minTanks: 1, becomeHarder: 3, maxTanks: 16,
 		minTrucks: 3, minHoverTrucks: 4,
 		minMiscTanks: 1, maxMiscTanks: 2,
-		vtolness: 70, defensiveness: 70,
+		vtolness: 65, defensiveness: 65,
 		maxPower: 700,
 		repairAt: 50,
 	},
