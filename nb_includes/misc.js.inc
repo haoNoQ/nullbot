@@ -7,7 +7,7 @@
 var baseLocation = startPositions[me];
 
 function distanceToBase(loc) {
-	return distBetweenTwoPoints(loc.x, loc.y, baseLocation.x, baseLocation.y);
+	return distance(loc, baseLocation);
 }
 
 function canReachFromBase(propulsion, location) {

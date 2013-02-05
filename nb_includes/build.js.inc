@@ -50,7 +50,7 @@ function getFreeTruckAround(x, y) {
 	var list = enumTrucks().filter(truckFree).filter(function(droid) { 
 		return droidCanReach(droid, x, y); 
 	}).sort(function(one, two) {
-		return distBetweenTwoPoints(one.x, one.y, x, y) - distBetweenTwoPoints(two.x, two.y, x, y);
+		return distance(one, x, y) - distance(two, x, y);
 	});
 	if (list.length > 0)
 		return list[0];
