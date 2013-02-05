@@ -16,17 +16,11 @@ _global.isVtolPropulsion = function(str) {
 }
 
 _global.iHaveHover = function() {
-	for (var i = 0; i < propulsionStats.hover.length; ++i)
-		if (componentAvailable(propulsionStats.hover[i].stat))
-			return true;
-	return false;
+	return propulsionStats.hover.some(function(val ){return componentAvailable(val.stat)});
 }
 
 _global.iHaveVtol = function() {
-	for (var i = 0; i < propulsionStats.vtol.length; ++i)
-		if (componentAvailable(propulsionStats.vtol[i].stat))
-			return true;
-	return false;
+    return propulsionStats.vtol.some(function(val ){return componentAvailable(val.stat)});
 }
 
 // works with stored droid objects too!
@@ -59,23 +53,21 @@ _global.enumIdleStructList = function(list, player) {
 }
 
 _global.structListLimit = function(list) {
-	var ret = 0;
-	for (var i = 0; i < list.length; ++i)
-		ret += getStructureLimit(list[i]);
-	return ret;
+	return list.reduce(function (summ, val) {return summ + getStructureLimit(val)}, 0)
 }
 
-_global.guessWeaponRole = function(name) {
-	for (var stat in weaponStats) {
-		if (weaponStats[stat].weapons.someProperty("stat", name))
-			return weaponStats[stat].role;
-		if (weaponStats[stat].vtols.someProperty("stat", name))
-			return weaponStats[stat].role;
-		if (weaponStats[stat].templates.some(function(i) { return i.weapons.indexOf(name) > -1; }))
-			return weaponStats[stat].role;
-	}
-	niceDebug("Ruleset warning: Couldn't guess weapon role of", name);
-}
+    _global.guessWeaponRole = function (name) {
+        for (var stat in weaponStats) {
+            if (
+                weaponStats[stat].weapons.someProperty("stat", name) ||
+                weaponStats[stat].vtols.someProperty("stat", name) ||
+                weaponStats[stat].templates.some(function (i) {return i.weapons.indexOf(name) > -1;})
+                )
+                return weaponStats[stat].role;
+
+        }
+        niceDebug("Ruleset warning: Couldn't guess weapon role of", name);
+    }
 
 function guessWeaponMicro(name) {
 	function uncached() {
@@ -133,10 +125,7 @@ _global.guessWeaponWeight = function(name) {
 //
 
 function statsToResList(path) {
-	var ret = [];
-	for (var i = 0; i < path.length; ++i) 
-		ret.push(path[i].res);
-	return ret;
+	return path.map(function (val) {return val.res})
 }
 
 _global.bodyStatsToResList = function(path) {
@@ -150,19 +139,14 @@ _global.propulsionStatsToResList = function(path) {
 _global.weaponStatsToResList = function(path, aspect) {
 	var ret = [];
 	if (!defined(aspect) || aspect === RESASPECTS.WEAPONS) {
-		for (var i = 0; i < path.weapons.length; ++i)
-			ret.push(path.weapons[i].res);
-		for (var i = 0; i < path.vtols.length; ++i)
-			ret.push(path.vtols[i].res);
-		for (var i = 0; i < path.templates.length; ++i)
-			ret.push(path.templates[i].res);
+		ret.concat(statsToResList(path.weapons), statsToResList(path.vtols), statsToResList(path.templates))
 	}
-	if (!defined(aspect) || aspect === RESASPECTS.DEFENSES) {
-		for (var i = 0; i < path.defenses.length; ++i)
-			ret.push(path.defenses[i].res);
+
+    if (!defined(aspect) || aspect === RESASPECTS.DEFENSES) {
+        ret.concat(statsToResList(path.defenses))
 	}
 	if (!defined(aspect) || aspect === RESASPECTS.EXTRAS)
-		ret = ret.concat(path.extras);
+		ret = ret.concat(path.extras);  // don`t find EXTRAS usage
 	return ret;
 }
 
@@ -171,7 +155,7 @@ _global.weaponStatsToResList = function(path, aspect) {
 //
 
 _global.bodyStatsToComponents = function(stats, usage, weight) {
-	var ret = [];
+    var ret = [];
 	for (var i = 0; i < stats.length; ++i)
 		if (!defined(weight) || stats[i].weight === weight)
 			if (stats[i].usage & usage)
