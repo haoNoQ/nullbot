@@ -30,6 +30,8 @@ function truckFree(truck) {
 		return false;
 	if (truck.order === DORDER_LINEBUILD)
 		return false;
+	if (truck.order === DORDER_DEMOLISH)
+		return false;
 	return true;
 }
 
@@ -320,6 +322,33 @@ function buildDefenses() {
 	return false;
 }
 
+function listOutdatedDefenses() {
+	var ret = [];
+	personality.weaponPaths.forEach(function(path) {
+		for (var role in DEFROLE) {
+			var list = weaponStatsToDefenses(path, role);
+			for (var i = 0; i < list.length - 2; ++i)
+				if (isAvailable(list[i+2]))
+					ret = ret.concat(enumStruct(me, list[i]));
+		}
+	});
+	return ret;
+}
+
+function recycleDefenses() {
+	var trucks = enumTrucks().filter(truckFree);
+	if (trucks.length <= 0)
+		return false;
+	var list = listOutdatedDefenses();
+	for (var i = 0; i < list.length; ++i)
+		for (var j = 0; j < trucks.length; ++j)
+			if (droidCanReach(trucks[j], list[i].x, list[i].y)) {
+				orderDroidObj(trucks[j], DORDER_DEMOLISH, list[i]);
+				return true;
+			}
+	return false;
+}
+
 _global.checkConstruction = function() {
 	if (enumTrucks().filter(truckFree).length === 0)
 		return;
@@ -331,6 +360,7 @@ _global.checkConstruction = function() {
 		buildModules,
 		buildVtols,
 		buildExtras,
+		recycleDefenses,
 		buildDefenses,
 	]))
 		queue("checkConstruction");
