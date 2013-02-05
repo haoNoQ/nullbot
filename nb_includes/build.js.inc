@@ -145,10 +145,13 @@ function buildStructureAround(statlist, loc, unique) {
 	}).last();
 	if (!defined(stat))
 		return BUILDRET.UNAVAILABLE;
-	loc = pickStructLocation(truck, stat, loc.x, loc.y);
-	if (!defined(loc))
+	var loc2 = pickStructLocation(truck, stat, loc.x, loc.y);
+	if (!defined(loc2))
 		return BUILDRET.FAILURE;
-	if (orderDroidBuild(truck, DORDER_BUILD, stat, loc.x, loc.y)) 
+	// if we're not into turtling, don't build too many towers
+	if (personality.defensiveness < 100 && distance(loc2, loc) > baseScale / 5)
+		return BUILDRET.FAILURE;
+	if (orderDroidBuild(truck, DORDER_BUILD, stat, loc2.x, loc2.y)) 
 		return BUILDRET.SUCCESS;
 	return BUILDRET.FAILURE;
 
