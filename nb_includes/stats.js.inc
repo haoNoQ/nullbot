@@ -225,6 +225,5 @@ _global.weaponStatsListToAvailableDefenses = function(list, defrole) {
 	return list.reduce(function(one, two) { return one.concat(weaponStatsToDefenses(two, defrole).filter(isAvailable)); }, []);
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////
 })(this);
