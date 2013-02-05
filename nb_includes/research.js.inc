@@ -65,12 +65,13 @@ function doResearch(lab) {
 							return true;
 						break;
 					case 0:
+					case 3:
 						if (pursueResearch(lab, classResearch.kinetic.tank))
 							return true;
 						break;
 				}
 			}
-			if (objType === 0 || objType === 3)
+			if (objType === 0 || objType === 3 || (objType === 2 && personality.defensiveness < 100))
 				if (pursueResearch(lab, bodyStatsToResList(bodyStats.kinetic)))
 					return true;
 		} else {
@@ -85,11 +86,12 @@ function doResearch(lab) {
 							return true;
 						break;
 					case 0:
+					case 3:
 						if (pursueResearch(lab, classResearch.thermal.tank))
 							return true;
 						break;
 				}
-			if (objType === 0 || objType === 3)
+			if (objType === 0 || objType === 3 || (objType === 2 && personality.defensiveness < 100))
 				if (pursueResearch(lab, bodyStatsToResList(bodyStats.thermal)))
 					return true;
 		}
