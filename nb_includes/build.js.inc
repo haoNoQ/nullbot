@@ -323,16 +323,17 @@ function buildDefenses() {
 }
 
 function listOutdatedDefenses() {
-	var ret = [];
-	personality.weaponPaths.forEach(function(path) {
+	for (var path in weaponStats) {
 		for (var role in DEFROLE) {
-			var list = weaponStatsToDefenses(path, role);
+			var list = weaponStatsToDefenses(weaponStats[path], DEFROLE[role]);
 			for (var i = 0; i < list.length - 2; ++i)
-				if (isAvailable(list[i+2]))
-					ret = ret.concat(enumStruct(me, list[i]));
+				if (isAvailable(list[i + 2])) {
+					if (countStruct(list[i]) > 0)
+						return enumStruct(me, list[i]);
+				}
 		}
-	});
-	return ret;
+	};
+	return [];
 }
 
 function recycleDefenses() {
