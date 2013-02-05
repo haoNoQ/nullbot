@@ -61,7 +61,7 @@ function findNearestGroup(x, y) {
 	for (var i = 0; i < ret.clusters.length; ++i) {
 		gr[i] = findLargestGroupIn(ret.clusters[i]);
 		if (groupSize(gr[i]) > attackGroupSize()) {
-			var dist = distBetweenTwoPoints(ret.xav[i], ret.yav[i], x, y);
+			var dist = distance(ret.xav[i], ret.yav[i], x, y);
 			if (dist < minDist) {
 				minDist = dist;
 				minIdx = i;
@@ -345,8 +345,8 @@ _global.fallBack = function(droid, threat) {
 		return;
 	if (guessDroidMicro(droid) === MICRO.MELEE)
 		return;
-	var x = droid.x - (baseScale / 7) * (threat.x - droid.x) / distBetweenTwoPoints(threat.x, threat.y, droid.x, droid.y);
-	var y = droid.y - (baseScale / 7) * (threat.y - droid.y) / distBetweenTwoPoints(threat.x, threat.y, droid.x, droid.y);
+	var x = droid.x - (baseScale / 7) * (threat.x - droid.x) / distance(threat, droid);
+	var y = droid.y - (baseScale / 7) * (threat.y - droid.y) / distance(threat, droid);
 	if (x < 1 || y < 1 || x > mapWidth - 2 || y > mapHeight - 2)
 		return;
 	orderDroidLoc(droid, DORDER_MOVE, x, y);
