@@ -22,82 +22,65 @@ function produceTruck(factory) {
 function chooseWeapon(forVtol) {
 	if (!defined(forVtol))
 		forVtol = false;
-	var role = chooseAttackWeaponRole();
-	var weaponPaths = personality.weaponPaths.filterProperty("role", role);
-	var list = [];
-	weaponPaths.forEach(function(statlist) {
-		if (forVtol)
-			list = list.concat(weaponStatsToVtolComponents(statlist));
-		else
-			list = list.concat(weaponStatsToComponents(statlist));
-	});
-	for (var i = 0; i < list.length; ++i)
-		if (componentAvailable(list[i])) 
-			return list;
-	if (forVtol)
-		return weaponStatsToVtolComponents(personality.weaponPaths.random());
-	else
-		return weaponStatsToComponents(personality.weaponPaths.random());
-}
-
-// HACK: this wrapper is necessary to use componentAvailable in functions like Array.filter
-// because componentAvailable acts weirdly when it receives more than one argument
-// (backward compatibility problems, see API documentation on componentAvailable);
-function myComponentAvailable(comp) {
-	return componentAvailable(comp);
+	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseAttackWeaponRole());
+	if (forVtol) {
+		for (var i = weaponPaths.length - 1; i >= 0; --i)
+			for (var j = 0; j < weaponPaths[i].vtols.length; ++j)
+				if (componentAvailable(weaponPaths[i].vtols[j].stat))
+					return weaponPaths[i].vtols.concat().reverse();
+		return personality.weaponPaths.random().vtols.concat().reverse();
+	} else {
+		for (var i = weaponPaths.length - 1; i >= 0; --i)
+			for (var j = 0; j < weaponPaths[i].weapons.length; ++j)
+				if (componentAvailable(weaponPaths[i].weapons[j].stat))
+					return weaponPaths[i].weapons.concat().reverse();
+		return personality.weaponPaths.random().weapons.concat().reverse();
+	}
 }
 
 function chooseBodyWeaponPair(bodies, weapons) {
-	var success = false;
-	var body, weapon;
-	weapons.filter(myComponentAvailable).forEach(function(w) {
-		if (success) 
-			return;
-		var ww = guessWeaponWeight(w);
-		bodies.filter(myComponentAvailable).forEach(function(b) {
-			if (success) 
-				return;
-			var bw = guessBodyWeight(b);
+	for (var i = 0; i < weapons.length; ++i) {
+		var w = weapons[i].stat, ww = weapons[i].weight;
+		if (!componentAvailable(w))
+			continue;
+		for (var j = 0; j < bodies.length; ++j) {
+			var b = bodies[j].stat, bw = bodies[j].weight;
+			if (!componentAvailable(b))
+				continue;
 			switch(ww) {
-				case WEIGHT.ULTRALIGHT: 
+				case WEIGHT.ULTRALIGHT:
 					if (bw <= WEIGHT.LIGHT)
-						success = true;
+						return {b: b, w: w};
 					break;
 				case WEIGHT.LIGHT:
 					if (bw <= WEIGHT.MEDIUM)
-						success = true;
+						return {b: b, w: w};
 					break;
 				case WEIGHT.MEDIUM:
-					success = true;
+						return {b: b, w: w};
 					break;
 				case WEIGHT.HEAVY:
 					if (bw >= WEIGHT.MEDIUM)
-						success = true;
+						return {b: b, w: w};
 					break;
 				case WEIGHT.ULTRAHEAVY:
 					if (bw >= WEIGHT.HEAVY)
-						success = true;
+						return {b: b, w: w};
 					break;
 			}
-			if (success) {
-				body = b;
-				weapon = w;
-			}
-		});
-	});
-	if (success)
-		return {b: body, w: weapon};
+		}
+	}
 }
 
 function produceTank(factory) {
 	var cls = chooseBodyClass();
 	var bodies = [];
 	if (cls === BODYCLASS.KINETIC) {
-		bodies = bodies.concat(bodyStatsToComponents(bodyStats.kinetic, BODYUSAGE.GROUND));
-		bodies = bodies.concat(bodyStatsToComponents(bodyStats.thermal, BODYUSAGE.GROUND));
+		bodies = bodies.concat(filterBodyStats(bodyStats.kinetic, BODYUSAGE.GROUND));
+		bodies = bodies.concat(filterBodyStats(bodyStats.thermal, BODYUSAGE.GROUND));
 	} else {
-		bodies = bodies.concat(bodyStatsToComponents(bodyStats.thermal, BODYUSAGE.GROUND));
-		bodies = bodies.concat(bodyStatsToComponents(bodyStats.kinetic, BODYUSAGE.GROUND));
+		bodies = bodies.concat(filterBodyStats(bodyStats.thermal, BODYUSAGE.GROUND));
+		bodies = bodies.concat(filterBodyStats(bodyStats.kinetic, BODYUSAGE.GROUND));
 	}
 	var propulsions;
 	var ret = scopeRatings();
@@ -116,7 +99,7 @@ function produceTank(factory) {
 
 function produceVtol(factory) {
 	// TODO: consider thermal bodies
-	var bodies = bodyStatsToComponents(bodyStats.kinetic, BODYUSAGE.AIR);
+	var bodies = filterBodyStats(bodyStats.kinetic, BODYUSAGE.AIR);
 	var propulsions = propulsionStatsToComponents(propulsionStats.vtol);
 	var bwPair = chooseBodyWeaponPair(bodies, chooseWeapon(true));
 	if (!defined(bwPair))

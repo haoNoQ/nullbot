@@ -118,29 +118,6 @@ _global.guessBodyClass = function(name) {
 	niceDebug("Ruleset warning: Couldn't guess body class of", name);
 }
 
-_global.guessBodyWeight = function(name) {
-	var ret;
-	for (var stat in bodyStats) {
-		ret = bodyStats[stat].filterProperty("stat", name).last();
-		if (defined(ret))
-			return ret.weight;
-	}
-	niceDebug("Ruleset warning: Couldn't guess body weight of", name);
-}
-
-_global.guessWeaponWeight = function(name) {
-	var ret;
-	for (var stat in weaponStats) {
-		ret = weaponStats[stat].weapons.filterProperty("stat", name).last();
-		if (defined(ret))
-			return ret.weight;
-		ret = weaponStats[stat].vtols.filterProperty("stat", name).last();
-		if (defined(ret))
-			return ret.weight;
-	}
-	niceDebug("Ruleset warning: Couldn't guess weapon weight of", name);
-}
-
 //
 // here be functions for querying out research paths 
 //
@@ -175,6 +152,10 @@ _global.weaponStatsToResList = function(path, aspect) {
 // here be functions for querying out component lists
 //
 
+_global.filterBodyStats = function(stats, usage) {
+	return stats.filter(function(line) { return line.usage & usage; }).concat().reverse();
+}
+
 _global.bodyStatsToComponents = function(stats, usage, weight) {
     var ret = [];
 	for (var i = 0; i < stats.length; ++i)
@@ -189,26 +170,6 @@ _global.propulsionStatsToComponents = function(stats) {
 	var ret = [];
 	for (var i = 0; i < stats.length; ++i)
 		ret.push(stats[i].stat);
-	ret.reverse();
-	return ret;
-}
-
-_global.weaponStatsToComponents = function(stats, weight) {
-	var ret = [];
-	for (var i = 0; i < stats.weapons.length; ++i) {
-		if (!defined(weight) || stats.weapons[i].weight === weight)
-			ret.push(stats.weapons[i].stat);
-	}
-	ret.reverse();
-	return ret;
-}
-
-_global.weaponStatsToVtolComponents = function(stats, weight) {
-	var ret = [];
-	for (var i = 0; i < stats.vtols.length; ++i) {
-		if (!defined(weight) || stats.vtols[i].weight === weight)
-			ret.push(stats.vtols[i].stat);
-	}
 	ret.reverse();
 	return ret;
 }
