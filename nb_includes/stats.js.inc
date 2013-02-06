@@ -56,26 +56,27 @@ _global.structListLimit = function(list) {
 	return list.reduce(function (summ, val) {return summ + getStructureLimit(val)}, 0)
 }
 
-    _global.guessWeaponRole = function (name) {
-        for (var stat in weaponStats) {
-            if (
-                weaponStats[stat].weapons.someProperty("stat", name) ||
-                weaponStats[stat].vtols.someProperty("stat", name) ||
-                weaponStats[stat].templates.some(function (i) {return i.weapons.indexOf(name) > -1;})
-                )
-                return weaponStats[stat].role;
-
-        }
-        niceDebug("Ruleset warning: Couldn't guess weapon role of", name);
-    }
+_global.guessWeaponRole = function (name) {
+	for (var stat in weaponStats) {
+		if (
+			weaponStats[stat].weapons.someProperty("stat", name) ||
+			weaponStats[stat].vtols.someProperty("stat", name) ||
+			weaponStats[stat].templates.some(function (i) {return i.weapons.indexOf(name) > -1;})
+		)
+		return weaponStats[stat].role;
+	}
+	niceDebug("Ruleset warning: Couldn't guess weapon role of", name);
+}
 
 function guessWeaponMicro(name) {
 	function uncached() {
-		for (var stat in weaponStats)
+		for (var stat in weaponStats) {
 			if (weaponStats[stat].weapons.someProperty("stat", name))
 				return weaponStats[stat].micro;
 			if (weaponStats[stat].templates.some(function(i) { return i.weapons.indexOf(name) > -1; }))
 				return weaponStats[stat].micro;
+		}
+		niceDebug("Ruleset warning: Couldn't guess weapon micro of", name);
 	}
 	return cached(uncached, Infinity, name);
 }
@@ -166,7 +167,7 @@ _global.weaponStatsToResList = function(path, aspect) {
         ret.concat(statsToResList(path.defenses))
 	}
 	if (!defined(aspect) || aspect === RESASPECTS.EXTRAS)
-		ret = ret.concat(path.extras);  // don`t find EXTRAS usage
+		ret = ret.concat(path.extras);
 	return ret;
 }
 
