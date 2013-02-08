@@ -171,23 +171,29 @@ function checkTruckProduction() {
 function checkTankProduction() {
 	if (!iCanDesign())
 		return false; // don't cheat by producing tanks before design is available (also saves money for early generators)
+	var success = false;
 	enumIdleStructList(structures.factories).forEach(function(factory) {
-		return produceTank(factory);
+		success = success || produceTank(factory);
 	});
+	return success;
 }
 
 function checkTemplateProduction() {
+	var success = false;
 	enumIdleStructList(structures.templateFactories).forEach(function(factory) {
-		return produceTemplate(factory);
+		success = success || produceTemplate(factory);
 	});
+	return success;
 }
 
 function checkVtolProduction() {
+	var success = false;
 	if (!iCanDesign())
 		return false; // don't cheat by producing vtols before design is available
 	enumIdleStructList(structures.vtolFactories).forEach(function(factory) {
-		return produceVtol(factory);
+		success = success || produceVtol(factory);
 	});
+	return success;
 }
 
 _global.checkProduction = function() {
