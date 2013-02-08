@@ -217,14 +217,23 @@ function attackTarget(droid) {
 		}
 	if (defined(target))
 		switch (target.type) {
-			case STRUCTURE:
-				orderDroidLoc(droid, DORDER_SCOUT, target.x, target.y);
-				break;
 			case DROID:
-				orderDroidObj(droid, DORDER_ATTACK, target);
+				if (droid.droidType !== DROID_SENSOR)
+					orderDroidObj(droid, DORDER_ATTACK, target);
+				else
+					orderDroidObj(droid, DORDER_OBSERVE, target);
 				break;
 			case FEATURE:
 				orderDroidObj(droid, DORDER_RECOVER, target);
+				break;
+			case STRUCTURE:
+				if (droid.droidType !== DROID_SENSOR)
+					orderDroidLoc(droid, DORDER_SCOUT, target.x, target.y);
+				else
+					orderDroidObj(droid, DORDER_OBSERVE, target);
+				break;
+			default:
+				orderDroidLoc(droid, DORDER_SCOUT, target.x, target.y);
 				break;
 		}
 }
@@ -312,6 +321,8 @@ _global.groupDroid = function(droid) {
 			ret = [ miscGroup ];
 		groupAdd(ret[0], droid);
 	}
+	if (droid.droidType === DROID_SENSOR)
+		groupAdd(miscGroup, droid);
 }
 
 _global.rebalanceGroups = function() {

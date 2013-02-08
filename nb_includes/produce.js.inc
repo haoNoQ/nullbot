@@ -11,12 +11,16 @@ function ourBuildDroid(factory, name, bodies, propulsions, weapons1, weapons2, w
 	return buildDroid(factory, name, bodies, propulsions, "", "", weapons1, weapons2, weapons3);
 }
 
-function produceTruck(factory) {
+function produceTruck(factory, turrets) {
+	var turret = truckTurrets.concat();
+	if (defined(turrets))
+		turret = turrets.concat();
+	turret.reverse();
 	var bodies = bodyStatsToComponents(bodyStats.kinetic, BODYUSAGE.TRUCK);
 	var propulsions = []
 		.concat(propulsionStatsToComponents(propulsionStats.hover))
 		.concat(propulsionStatsToComponents(propulsionStats.ground));
-	return ourBuildDroid(factory, "Fancy Truck", bodies, propulsions, truckTurrets);
+	return ourBuildDroid(factory, "Fancy Truck", bodies, propulsions, turret);
 }
 
 function chooseWeapon(forVtol) {
@@ -164,6 +168,16 @@ function checkTruckProduction() {
 			if (structureIdle(f))
 				if (produceTemplateFromList(f, truckTemplates))
 					return true;
+	}
+	if (!iHaveArty())
+		return false;
+	var sensors = enumDroid(me, DROID_SENSOR).length;
+	if (withChance(100 - 100 * sensors / personality.maxSensors)) {
+		f = enumFinishedStructList(structures.factories)[0];
+		if (defined(f))
+			if (structureIdle(f))
+				if (produceTruck(f, sensorTurrets))
+					return true;	
 	}
 	return false;
 }

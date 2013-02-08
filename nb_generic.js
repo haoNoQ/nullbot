@@ -47,6 +47,7 @@ var subpersonalities = {
 		maxTanks: 16, // maximum for the minTanks value (since it grows at becomeHarder rate)
 		minTrucks: 3, // minimal number of trucks around
 		minHoverTrucks: 4, // minimal number of hover trucks around
+		maxSensors: 1, // number of mobile sensor cars to produce
 		minMiscTanks: 1, // number of tanks to start harassing enemy
 		maxMiscTanks: 2, // number of tanks used for defense and harass
 		vtolness: 65, // the chance % of not making droids when adaptation mechanism chooses vtols
@@ -70,7 +71,7 @@ var subpersonalities = {
 			"R-Wpn-MG-Damage03",
 		],
 		minTanks: 1, becomeHarder: 3, maxTanks: 16,
-		minTrucks: 3, minHoverTrucks: 4,
+		minTrucks: 3, minHoverTrucks: 4, maxSensors: 1,
 		minMiscTanks: 1, maxMiscTanks: 2,
 		vtolness: 65, defensiveness: 65,
 		maxPower: 700,
@@ -91,7 +92,7 @@ var subpersonalities = {
 			"R-Struc-PowerModuleMk1",
 		],
 		minTanks: 1, becomeHarder: 3, maxTanks: 16,
-		minTrucks: 3, minHoverTrucks: 4,
+		minTrucks: 3, minHoverTrucks: 4, maxSensors: 1,
 		minMiscTanks: 1, maxMiscTanks: 2,
 		vtolness: 65, defensiveness: 65,
 		maxPower: 700,
@@ -113,7 +114,7 @@ var subpersonalities = {
 			"R-Struc-PowerModuleMk1",
 		],
 		minTanks: 1, becomeHarder: 3, maxTanks: 16,
-		minTrucks: 3, minHoverTrucks: 4,
+		minTrucks: 3, minHoverTrucks: 4, maxSensors: 1,
 		minMiscTanks: 1, maxMiscTanks: 2,
 		vtolness: 65, defensiveness: 65,
 		maxPower: 700,

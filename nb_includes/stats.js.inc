@@ -23,6 +23,15 @@ _global.iHaveVtol = function() {
     return propulsionStats.vtol.some(function(val ){return componentAvailable(val.stat)});
 }
 
+_global.iHaveArty = function() {
+	for (var stat in weaponStats)
+		for (var i = 0; i < weaponStats[stat].defenses.length; ++i)
+			if (weaponStats[stat].defenses[i].defrole === DEFROLE.ARTY)
+				if (countStruct(weaponStats[stat].defenses[i].stat) > 0)
+					return true;
+	return false;
+}
+
 // works with stored droid objects too!
 _global.safeIsVtol = function(droid) {
 	return isVtolPropulsion(droid.propulsion);

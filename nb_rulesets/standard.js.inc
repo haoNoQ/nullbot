@@ -67,6 +67,11 @@ const miscTargets = []
 	.concat(structures.derricks)
 ;
 
+const sensorTurrets = [
+	"SensorTurret1Mk1", // sensor
+	"Sensor-WideSpec", // wide spectrum sensor
+];
+
 const fundamentalResearch = [
 	"R-Struc-PowerModuleMk1",
 	"R-Struc-RprFac-Upgrade01",

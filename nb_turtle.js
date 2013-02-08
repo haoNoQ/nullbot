@@ -42,7 +42,7 @@ var subpersonalities = {
 			"R-Defense-MRL",
 		],
 		minTanks: 3, becomeHarder: 3, maxTanks: 21,
-		minTrucks: 5, minHoverTrucks: 4,
+		minTrucks: 5, minHoverTrucks: 4, maxSensors: 6,
 		minMiscTanks: 1, maxMiscTanks: 6,
 		vtolness: 100,
 		defensiveness: 100, // this enables turtle AI specific code
@@ -65,7 +65,7 @@ var subpersonalities = {
 			"R-Defense-MortarPit",
 		],
 		minTanks: 3, becomeHarder: 3, maxTanks: 21,
-		minTrucks: 5, minHoverTrucks: 4,
+		minTrucks: 5, minHoverTrucks: 4, maxSensors: 6,
 		minMiscTanks: 1, maxMiscTanks: 6,
 		vtolness: 100, defensiveness: 100,
 		maxPower: 300,
