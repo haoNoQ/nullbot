@@ -86,3 +86,11 @@ function eventObjectTransfer(object, from) {
 	if (object.type === DROID)
 		groupDroid(object);
 }
+
+function eventBeacon(x, y, from, to) {
+	noticeBeacon(x, y, from);
+}
+
+function eventBeaconRemoved(from, to) {
+	unnoticeBeacon(from);
+}

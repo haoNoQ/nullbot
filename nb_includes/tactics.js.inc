@@ -94,13 +94,22 @@ function groupTargetLabel(gr) {
 	return "NullBot_" + me + "_GroupTarget_" + gr;
 }
 
+function groupMicroTargetLabel(gr) {
+	return "NullBot_" + me + "_GroupMicroTarget_" + gr;
+}
+
 function vtolTargetLabel() {
 	return "NullBot_" + me + "_VtolTarget";
 }
 
 function findTarget(gr) {
-	getGroupInfo(gr); // make sure everything is defined
-	var obj = safeGetObject(groupTargetLabel(gr));
+	var obj = safeGetObject(groupMicroTargetLabel(gr));
+	var obj2 = safeGetObject(groupTargetLabel(gr));
+	getGroupInfo(gr);
+	if (gameTime > groupInfo[gr].lastAttacked + 10000 && defined(obj2) && obj2.type === POSITION)
+		removeLabel(groupMicroTargetLabel(gr));
+	if (!defined(obj))
+		obj = obj2;
 	if (defined(obj)) {
 		if (gr === miscGroup) {
 			// harass group should switch targets when its target gets protected, otherwise targets are permanent
@@ -282,15 +291,27 @@ _global.attackGroupSize = function() {
 _global.setTarget = function(object, group) {
 	if (!defined(group)) {
 		group = findNearestGroup(object.x, object.y);
-		addLabel(object, vtolTargetLabel());
+		if (object.type === STRUCTURE || object.type === DROID)
+			addLabel(object, vtolTargetLabel());
 	}
 	if (!defined(group))
 		return false;
 	if (defined(safeGetObject(groupTargetLabel(group))))
 		if (throttled(10000, group)) // don't switch targets too often
 			return false;
-	addLabel(object, groupTargetLabel(group));
+	if (object.type === DROID || (object.type === STRUCTURE && object.stattype === DEFENSE))
+		addLabel(object, groupMicroTargetLabel(group));
+	else
+		addLabel(object, groupTargetLabel(group));
 	return true;
+}
+
+_global.unsetTarget = function(player) {
+	for (var i = 0; i <= MAX_GROUPS; ++i) {
+		var obj = safeGetObject(groupTargetLabel(i));
+		if (defined(obj) && obj.type === POSITION && findBeaconPlayer(obj.x, obj.y) === player)
+			removeLabel(groupTargetLabel(i));
+	}
 }
 
 _global.groupDroid = function(droid) {

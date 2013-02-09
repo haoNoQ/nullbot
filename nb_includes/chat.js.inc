@@ -20,7 +20,30 @@ var commandMap = {
     truck: chatTruck,
     power: chatMoney,
     money: chatMoney, // alias for "power"
-};
+	help: chatHelp,
+	go: chatHelp, // alias for "help"
+	tx: chatUnhelp, 
+}
+
+var beaconInfo = [];
+
+_global.noticeBeacon = function(x, y, from) {
+	beaconInfo[from] = {
+		x: x,
+		y: y,
+		exists: 1,
+	};
+}
+
+_global.unnoticeBeacon = function(from) {
+	beaconInfo[from].exists = 0;
+}
+
+_global.findBeaconPlayer = function(x, y) {
+	for (var i = 0; i < beaconInfo.length; ++i)
+		if (defined(beaconInfo[i]) && beaconInfo[i].x === x && beaconInfo[i].y === y)
+			return i;
+}
 
 _global.handleChatMessage = function(sender, receiver, message) {
 	// don't reply on any other message coming sender enemies
@@ -30,6 +53,10 @@ _global.handleChatMessage = function(sender, receiver, message) {
 	}
 	if (!isAlly(sender))
 		return;
+	if (message === "help me!!") { // Try to understand Nexus AI's way of calling for help
+		chatHelp(sender);
+		return;
+	}
 	var result = message.split(/ +/);
 	if (result[0] !== prefix)
 		return;
@@ -104,6 +131,20 @@ function chatMoney(sender, argument) {
 	var power = Math.round(myPower()/3);
 	donatePower(power, sender);
 	return _("Power transferred.");
+}
+
+function chatHelp(sender, argument) {
+	if (!defined(beaconInfo[sender]) || !beaconInfo[sender].exists)
+		return _("Please put a beacon!");
+	if (setTarget({ x: beaconInfo[sender].x, y: beaconInfo[sender].y, type: POSITION }))
+		return _("Coming!");
+	else
+		return _("Sorry, I don't have any free forces to send for help!");
+}
+
+function chatUnhelp(sender, argument) {
+	unsetTarget(sender);
+	return _("Any time, big boss!");
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
