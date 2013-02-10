@@ -16,7 +16,7 @@ function produceTruck(factory, turrets) {
 	if (defined(turrets))
 		turret = turrets.concat();
 	turret.reverse();
-	var bodies = filterBodyStatsByUsage(BODYUSAGE.TRUCK, KINETIC);
+	var bodies = filterBodyStatsByUsage(BODYUSAGE.TRUCK, BODYCLASS.KINETIC);
 	var propulsions = []
 		.concat(propulsionStatsToComponents(propulsionStats.hover))
 		.concat(propulsionStatsToComponents(propulsionStats.ground));
@@ -81,7 +81,7 @@ function produceTank(factory) {
 
     var bodies = []
     if (chooseBodyClass() === BODYCLASS.KINETIC) {
-        bodies = bodies.concat(filterBodyStatsByUsage(BODYUSAGE.GROUND, KINETIC),
+        bodies = bodies.concat(filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.KINETIC),
                      filterBodyStatsByUsage(BODYUSAGE.GROUND, THERMAL));
     }
     else {
@@ -106,7 +106,7 @@ function produceTank(factory) {
 
 function produceVtol(factory) {
 	// TODO: consider thermal bodies
-	var bodies = filterBodyStatsByUsage(BODYUSAGE.AIR, KINETIC)
+	var bodies = filterBodyStatsByUsage(BODYUSAGE.AIR, BODYCLASS.KINETIC)
 	var propulsions = propulsionStatsToComponents(propulsionStats.vtol);
 	var bwPair = chooseBodyWeaponPair(bodies, chooseWeapon(true));
 	if (!defined(bwPair))
