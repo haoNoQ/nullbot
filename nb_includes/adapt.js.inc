@@ -231,7 +231,7 @@ function classifyObject(obj) {
 	else if (obj.type === DROID && obj.droidType === DROID_CYBORG)
 		ret.kbody += 1;
 	else {
-		switch (guessBodyClass(obj.body)) {
+		switch (guessBodyArmor(obj.body)) {
 			case BODYCLASS.KINETIC:
 				ret.kbody += 1;
 				break;
