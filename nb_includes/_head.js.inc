@@ -74,8 +74,8 @@ const BODYUSAGE = {
 
 // what sort of weapons this body is resistant to?
 const BODYCLASS = {
-	KINETIC: 0,
-	THERMAL: 1,
+	KINETIC: 1,
+	THERMAL: 2,
 }
 
 // should this module be prioritized when not having enough power?
