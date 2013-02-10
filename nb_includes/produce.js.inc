@@ -17,9 +17,7 @@ function produceTruck(factory, turrets) {
 		turret = turrets.concat();
 	turret.reverse();
 	var bodies = filterBodyStatsByUsage(BODYUSAGE.TRUCK, BODYCLASS.KINETIC);
-	var propulsions = []
-		.concat(propulsionStatsToComponents(propulsionStats.hover))
-		.concat(propulsionStatsToComponents(propulsionStats.ground));
+	var propulsions = getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND|PROPULSIONUSAGE.HOVER)
 	return ourBuildDroid(factory, "Fancy Truck", bodies, propulsions, turret);
 }
 
@@ -95,9 +93,9 @@ function produceTank(factory) {
 	if (!defined(rnd)) // we need only vtols?
 		return false;
 	if (rnd < ret.land)
-		propulsions = propulsionStatsToComponents(propulsionStats.ground);
+		propulsions = getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND);
 	else 
-		propulsions = propulsionStatsToComponents(propulsionStats.hover);
+		propulsions = getPropulsionStatsComponents(PROPULSIONUSAGE.HOVER);
 	var bwPair = chooseBodyWeaponPair(bodies, chooseWeapon());
 	if (!defined(bwPair))
 		return false;
@@ -107,7 +105,7 @@ function produceTank(factory) {
 function produceVtol(factory) {
 	// TODO: consider thermal bodies
 	var bodies = filterBodyStatsByUsage(BODYUSAGE.AIR, BODYCLASS.KINETIC)
-	var propulsions = propulsionStatsToComponents(propulsionStats.vtol);
+	var propulsions = getPropulsionStatsComponents(PROPULSIONUSAGE.VTOL);
 	var bwPair = chooseBodyWeaponPair(bodies, chooseWeapon(true));
 	if (!defined(bwPair))
 		return false;

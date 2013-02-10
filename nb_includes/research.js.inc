@@ -24,14 +24,14 @@ function doResearch(lab) {
 	var ret = scopeRatings();
 	if (ret.land === 0 && ret.sea === 0 && !iHaveVtol())
 		if (pursueResearch(lab, [
-			propulsionStatsToResList(propulsionStats.vtol),
+			propulsionStatsToResList(PROPULSIONUSAGE.VTOL),
 			fastestResearch,
 		].random())) 
 			return true;
 	if (ret.land === 0 && ret.sea !== 0 && !iHaveHover() && !iHaveVtol())
 		if (pursueResearch(lab, [
-			propulsionStatsToResList(propulsionStats.hover),
-			propulsionStatsToResList(propulsionStats.vtol),
+			propulsionStatsToResList(PROPULSIONUSAGE.HOVER),
+			propulsionStatsToResList(PROPULSIONUSAGE.VTOL),
 			fastestResearch,
 		].random()))
 			return true;

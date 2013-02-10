@@ -8,19 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 _global.isHoverPropulsion = function(str) {
-	return propulsionStats.hover.someProperty("stat", str);
+	return propulsionStats.someProperty("stat", str);
 }
 
 _global.isVtolPropulsion = function(str) {
-	return propulsionStats.vtol.someProperty("stat", str);
+	return propulsionStats.someProperty("stat", str);
 }
 
 _global.iHaveHover = function() {
-	return propulsionStats.hover.some(function(val ){return componentAvailable(val.stat)});
+	return propulsionStats.some(function(val ){return componentAvailable(val.stat)});
 }
 
 _global.iHaveVtol = function() {
-    return propulsionStats.vtol.some(function(val ){return componentAvailable(val.stat)});
+    return propulsionStats.some(function(val ){return componentAvailable(val.stat)});
 }
 
 _global.iHaveArty = function() {
@@ -141,8 +141,8 @@ _global.bodyStatsToResList = function(armor) {
     return statsToResList(filterBodyStatsByUsage(armor));
 }
 
-_global.propulsionStatsToResList = function(path) {
-	return statsToResList(path);
+_global.propulsionStatsToResList = function(usage) {
+	return statsToResList(filterDataByFlag(propulsionStats, "usage", usage));
 }
 
 _global.weaponStatsToResList = function(path, aspect) {
@@ -179,12 +179,9 @@ _global.filterBodyStatsByUsage = function(usage, armor) {
 }
 
 
-_global.propulsionStatsToComponents = function(stats) {
-	var ret = [];
-	for (var i = 0; i < stats.length; ++i)
-		ret.push(stats[i].stat);
-	ret.reverse();
-	return ret;
+_global.getPropulsionStatsComponents = function(usage) {
+    var data = filterDataByFlag(propulsionStats, 'usage', usage)
+	return data.map(function(val) {return val.stats}).reverse()
 }
 
 //
