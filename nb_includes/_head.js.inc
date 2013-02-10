@@ -63,6 +63,12 @@ const RESASPECTS = {
 	LENGTH: 4, // number of items in this enum
 }
 
+const PROPULSIONUSAGE = {
+    GROUND : 1,
+    HOVER: 2,
+    VTOL: 4
+}
+
 // what to use this body for? (bit field)
 const BODYUSAGE = {
 	GROUND: 1, // for tanks
