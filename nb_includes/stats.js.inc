@@ -119,12 +119,13 @@ _global.guessDroidMicro = function(droid) {
 	return MICRO.RANGED;
 }
 
-_global.guessBodyClass = function(name) {
-	if (bodyStats.thermal.someProperty("stat", name))
-		return BODYCLASS.THERMAL;
-	if (bodyStats.kinetic.someProperty("stat", name))
-		return BODYCLASS.KINETIC;
-	niceDebug("Ruleset warning: Couldn't guess body class of", name);
+_global.guessBodyArmor = function(name) {
+    var body =  bodyStats.filterProperty("stat", name).last()
+    if (defined(body))
+        {return body.armor}
+    else
+        {niceDebug("Ruleset warning: Couldn't guess body class of", name);}
+
 }
 
 //
@@ -135,8 +136,9 @@ function statsToResList(path) {
 	return path.map(function (val) {return val.res})
 }
 
-_global.bodyStatsToResList = function(path) {
-	return statsToResList(path);
+// todo make one StatsToResList and do filtering for path outside
+_global.bodyStatsToResList = function(armor) {
+    return statsToResList(filterBodyStatsByUsage(armor));
 }
 
 _global.propulsionStatsToResList = function(path) {
@@ -161,19 +163,21 @@ _global.weaponStatsToResList = function(path, aspect) {
 // here be functions for querying out component lists
 //
 
-_global.filterBodyStats = function(stats, usage) {
-	return stats.filter(function(line) { return line.usage & usage; }).concat().reverse();
+// todo move this to math. If we have same structure of data <list of objects> we can use it all around.
+_global.filterDataByFlag = function (data, attr_name, flag) {
+     return data.filter(function(obj) { return obj[attr_name] & flag; });
 }
 
-_global.bodyStatsToComponents = function(stats, usage, weight) {
-    var ret = [];
-	for (var i = 0; i < stats.length; ++i)
-		if (!defined(weight) || stats[i].weight === weight)
-			if (stats[i].usage & usage)
-				ret.push(stats[i].stat);
-	ret.reverse();
-	return ret;
+
+_global.filterBodyStatsByUsage = function(usage, armor) {
+    if (defined(armor))
+        {var data = filterDataByFlag(bodyStats, 'armor', armor)
+        }
+    else
+        {var data = bodyStats}
+    return filterDataByFlag(data, 'usage', usage).reverse();
 }
+
 
 _global.propulsionStatsToComponents = function(stats) {
 	var ret = [];
