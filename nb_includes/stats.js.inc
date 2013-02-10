@@ -119,12 +119,13 @@ _global.guessDroidMicro = function(droid) {
 	return MICRO.RANGED;
 }
 
-_global.guessBodyClass = function(name) {
-	if (bodyStats.someProperty("stat", name))
-		return BODYCLASS.THERMAL;
-	if (bodyStats.someProperty("stat", name))
-		return BODYCLASS.KINETIC;
-	niceDebug("Ruleset warning: Couldn't guess body class of", name);
+_global.guessBodyArmor = function(name) {
+    var body =  bodyStats.filterProperty("stat", name).last()
+    if (defined(body))
+        {return body.armor}
+    else
+        {niceDebug("Ruleset warning: Couldn't guess body class of", name);}
+
 }
 
 //
