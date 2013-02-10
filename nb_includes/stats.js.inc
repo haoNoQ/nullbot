@@ -135,8 +135,9 @@ function statsToResList(path) {
 	return path.map(function (val) {return val.res})
 }
 
-_global.bodyStatsToResList = function(path) {
-	return statsToResList(path);
+// todo make one StatsToResList and do filtering for path outside
+_global.bodyStatsToResList = function(armor) {
+    return statsToResList(filterBodyStatsByUsage(armor));
 }
 
 _global.propulsionStatsToResList = function(path) {
