@@ -94,27 +94,27 @@ const fastestResearch = [
 	"R-Struc-Research-Upgrade09",
 ];
 
+
+const KINETIC = 1, THERMAL=2
+
 // body and propulsion arrays don't affect fixed template droids
-const bodyStats = {
-	kinetic: [
-		{ res: "R-Vehicle-Body01", stat: "Body1REC", weight: WEIGHT.LIGHT, usage: BODYUSAGE.UNIVERSAL }, // viper
-		{ res: "R-Vehicle-Body05", stat: "Body5REC", weight: WEIGHT.MEDIUM, usage: BODYUSAGE.COMBAT }, // cobra
-		{ res: "R-Vehicle-Body11", stat: "Body11ABT", weight: WEIGHT.HEAVY, usage: BODYUSAGE.GROUND }, // python
-		{ res: "R-Vehicle-Body02", stat: "Body2SUP", weight: WEIGHT.LIGHT, usage: BODYUSAGE.UNIVERSAL }, // leopard
-		{ res: "R-Vehicle-Body06", stat: "Body6SUPP", weight: WEIGHT.MEDIUM, usage: BODYUSAGE.COMBAT }, // panther
-		{ res: "R-Vehicle-Body09", stat: "Body9REC", weight: WEIGHT.HEAVY, usage: BODYUSAGE.GROUND }, // tiger
-		{ res: "R-Vehicle-Body13", stat: "Body13SUP", weight: WEIGHT.HEAVY, usage: BODYUSAGE.GROUND }, // wyvern
-		{ res: "R-Vehicle-Body14", stat: "Body14SUP", weight: WEIGHT.HEAVY, usage: BODYUSAGE.GROUND }, // dragon
-	],
-	thermal: [
-		{ res: "R-Vehicle-Body04", stat: "Body4ABT", weight: WEIGHT.LIGHT, usage: BODYUSAGE.UNIVERSAL }, // bug
-		{ res: "R-Vehicle-Body08", stat: "Body8MBT", weight: WEIGHT.HEAVY, usage: BODYUSAGE.COMBAT }, // scorpion
-		{ res: "R-Vehicle-Body12", stat: "Body12SUP", weight: WEIGHT.HEAVY, usage: BODYUSAGE.GROUND }, // mantis
-		{ res: "R-Vehicle-Body03", stat: "Body3MBT", weight: WEIGHT.MEDIUM, usage: BODYUSAGE.UNIVERSAL }, // retaliation
-		{ res: "R-Vehicle-Body07", stat: "Body7ABT", weight: WEIGHT.HEAVY, usage: BODYUSAGE.COMBAT }, // retribution
-		{ res: "R-Vehicle-Body10", stat: "Body10MBT", weight: WEIGHT.HEAVY, usage: BODYUSAGE.GROUND }, // vengeance
-	],
-}
+const bodyStats = [
+		{ res: "R-Vehicle-Body01", stat: "Body1REC", weight: WEIGHT.LIGHT, usage: BODYUSAGE.UNIVERSAL, armor: KINETIC }, // viper
+		{ res: "R-Vehicle-Body05", stat: "Body5REC", weight: WEIGHT.MEDIUM, usage: BODYUSAGE.COMBAT, armor: KINETIC }, // cobra
+		{ res: "R-Vehicle-Body11", stat: "Body11ABT", weight: WEIGHT.HEAVY, usage: BODYUSAGE.GROUND, armor: KINETIC }, // python
+		{ res: "R-Vehicle-Body02", stat: "Body2SUP", weight: WEIGHT.LIGHT, usage: BODYUSAGE.UNIVERSAL, armor: KINETIC }, // leopard
+		{ res: "R-Vehicle-Body06", stat: "Body6SUPP", weight: WEIGHT.MEDIUM, usage: BODYUSAGE.COMBAT, armor: KINETIC }, // panther
+		{ res: "R-Vehicle-Body09", stat: "Body9REC", weight: WEIGHT.HEAVY, usage: BODYUSAGE.GROUND, armor: KINETIC }, // tiger
+		{ res: "R-Vehicle-Body13", stat: "Body13SUP", weight: WEIGHT.HEAVY, usage: BODYUSAGE.GROUND, armor: KINETIC }, // wyvern
+		{ res: "R-Vehicle-Body14", stat: "Body14SUP", weight: WEIGHT.HEAVY, usage: BODYUSAGE.GROUND, armor: KINETIC }, // dragon
+
+		{ res: "R-Vehicle-Body04", stat: "Body4ABT", weight: WEIGHT.LIGHT, usage: BODYUSAGE.UNIVERSAL, armor: THERMAL }, // bug
+		{ res: "R-Vehicle-Body08", stat: "Body8MBT", weight: WEIGHT.HEAVY, usage: BODYUSAGE.COMBAT, armor: THERMAL }, // scorpion
+		{ res: "R-Vehicle-Body12", stat: "Body12SUP", weight: WEIGHT.HEAVY, usage: BODYUSAGE.GROUND, armor: THERMAL }, // mantis
+		{ res: "R-Vehicle-Body03", stat: "Body3MBT", weight: WEIGHT.MEDIUM, usage: BODYUSAGE.UNIVERSAL, armor: THERMAL }, // retaliation
+		{ res: "R-Vehicle-Body07", stat: "Body7ABT", weight: WEIGHT.HEAVY, usage: BODYUSAGE.COMBAT, armor: THERMAL }, // retribution
+		{ res: "R-Vehicle-Body10", stat: "Body10MBT", weight: WEIGHT.HEAVY, usage: BODYUSAGE.GROUND, armor: THERMAL }, // vengeance
+]
 
 const classResearch = {
 	kinetic: {
