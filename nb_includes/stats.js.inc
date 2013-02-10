@@ -171,9 +171,10 @@ _global.filterDataByFlag = function (data, attr_name, flag) {
 
 _global.filterBodyStatsByUsage = function(usage, armor) {
     if (defined(armor))
-        {data = filterDataByFlag(bodyStats, 'armor', armor)}
+        {var data = filterDataByFlag(bodyStats, 'armor', armor)
+        }
     else
-        {data = bodyStats}
+        {var data = bodyStats}
     return filterDataByFlag(data, 'usage', usage).reverse();
 }
 
