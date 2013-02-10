@@ -120,9 +120,9 @@ _global.guessDroidMicro = function(droid) {
 }
 
 _global.guessBodyClass = function(name) {
-	if (bodyStats.thermal.someProperty("stat", name))
+	if (bodyStats.someProperty("stat", name))
 		return BODYCLASS.THERMAL;
-	if (bodyStats.kinetic.someProperty("stat", name))
+	if (bodyStats.someProperty("stat", name))
 		return BODYCLASS.KINETIC;
 	niceDebug("Ruleset warning: Couldn't guess body class of", name);
 }
