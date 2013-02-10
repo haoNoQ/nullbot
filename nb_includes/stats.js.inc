@@ -161,9 +161,20 @@ _global.weaponStatsToResList = function(path, aspect) {
 // here be functions for querying out component lists
 //
 
-_global.filterBodyStats = function(stats, usage) {
-	return stats.filter(function(line) { return line.usage & usage; }).concat().reverse();
+// todo move this to math. If we have same structure of data <list of objects> we can use it all around.
+_global.filterDataByFlag = function (data, attr_name, flag) {
+     return data.filter(function(obj) { return obj[attr_name] & flag; });
 }
+
+
+_global.filterBodyStatsByUsage = function(usage, armor) {
+    if (defined(armor))
+        {data = filterDataByFlag(bodyStats, 'armor', armor)}
+    else
+        {data = bodyStats}
+    return filterDataByFlag(data, 'usage', usage).reverse();
+}
+
 
 _global.bodyStatsToComponents = function(stats, usage, weight) {
     var ret = [];
