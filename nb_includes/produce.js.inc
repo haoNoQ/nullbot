@@ -78,13 +78,15 @@ function chooseBodyWeaponPair(bodies, weapons) {
 
 function produceTank(factory) {
     // todo need refactoring. Make some more clever sorting.
+
+    var bodies = []
     if (chooseBodyClass() === BODYCLASS.KINETIC) {
-        var bodies = filterBodyStatsByUsage(BODYUSAGE.GROUND, KINETIC) +
-                     filterBodyStatsByUsage(BODYUSAGE.GROUND, THERMAL);
+        bodies = bodies.concat(filterBodyStatsByUsage(BODYUSAGE.GROUND, KINETIC),
+                     filterBodyStatsByUsage(BODYUSAGE.GROUND, THERMAL));
     }
     else {
-        var bodies = filterBodyStatsByUsage(BODYUSAGE.GROUND, THERMAL) +
-                     filterBodyStatsByUsage(BODYUSAGE.GROUND, KINETIC);
+        bodies = bodies.concat(filterBodyStatsByUsage(BODYUSAGE.GROUND, THERMAL),
+            filterBodyStatsByUsage(BODYUSAGE.GROUND, THERMAL));
     }
 
     var propulsions;
