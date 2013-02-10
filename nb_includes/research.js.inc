@@ -72,7 +72,7 @@ function doResearch(lab) {
 				}
 			}
 			if (objType === 0 || objType === 3 || (objType === 2 && personality.defensiveness < 100))
-				if (pursueResearch(lab, bodyStatsToResList(KINETIC)))
+				if (pursueResearch(lab, bodyStatsToResList(BODYCLASS.KINETIC)))
 					return true;
 		} else {
 			if (withChance(40))
@@ -92,7 +92,7 @@ function doResearch(lab) {
 						break;
 				}
 			if (objType === 0 || objType === 3 || (objType === 2 && personality.defensiveness < 100))
-				if (pursueResearch(lab, bodyStatsToResList(THERMAL)))
+				if (pursueResearch(lab, bodyStatsToResList(BODYCLASS.THERMAL)))
 					return true;
 		}
 	}

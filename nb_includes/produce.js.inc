@@ -16,7 +16,8 @@ function produceTruck(factory, turrets) {
 	if (defined(turrets))
 		turret = turrets.concat();
 	turret.reverse();
-	var bodies = filterBodyStatsByUsage(BODYUSAGE.TRUCK, KINETIC);
+	// TODO: switch to using chooseBodyWeaponPair() here
+	var bodies = filterBodyStatsByUsage(BODYUSAGE.TRUCK, BODYCLASS.KINETIC).map(function(val) { return val.stat; });
 	var propulsions = []
 		.concat(propulsionStatsToComponents(propulsionStats.hover))
 		.concat(propulsionStatsToComponents(propulsionStats.ground));
@@ -77,18 +78,19 @@ function chooseBodyWeaponPair(bodies, weapons) {
 }
 
 function produceTank(factory) {
-    // todo need refactoring. Make some more clever sorting.
-
+    // TODO: needs refactoring. Make some more clever sorting.
     var bodies = []
     if (chooseBodyClass() === BODYCLASS.KINETIC) {
-        bodies = bodies.concat(filterBodyStatsByUsage(BODYUSAGE.GROUND, KINETIC),
-                     filterBodyStatsByUsage(BODYUSAGE.GROUND, THERMAL));
+        bodies = bodies.concat(
+			filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.KINETIC),
+			filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.THERMAL)
+		);
+    } else {
+        bodies = bodies.concat(
+			filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.THERMAL),
+            filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.KINETIC)
+		);
     }
-    else {
-        bodies = bodies.concat(filterBodyStatsByUsage(BODYUSAGE.GROUND, THERMAL),
-            filterBodyStatsByUsage(BODYUSAGE.GROUND, THERMAL));
-    }
-
     var propulsions;
 	var ret = scopeRatings();
 	var rnd = random(ret.land + ret.sea);
@@ -106,7 +108,7 @@ function produceTank(factory) {
 
 function produceVtol(factory) {
 	// TODO: consider thermal bodies
-	var bodies = filterBodyStatsByUsage(BODYUSAGE.AIR, KINETIC)
+	var bodies = filterBodyStatsByUsage(BODYUSAGE.AIR, BODYCLASS.KINETIC)
 	var propulsions = propulsionStatsToComponents(propulsionStats.vtol);
 	var bwPair = chooseBodyWeaponPair(bodies, chooseWeapon(true));
 	if (!defined(bwPair))

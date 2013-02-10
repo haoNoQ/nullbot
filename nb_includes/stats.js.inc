@@ -99,33 +99,12 @@ _global.guessDroidMicro = function(droid) {
 	return MICRO.RANGED;
 }
 
-function guessWeaponMicro(name) {
-	function uncached() {
-		for (var stat in weaponStats)
-			if (weaponStats[stat].weapons.someProperty("stat", name))
-				return weaponStats[stat].micro;
-			if (weaponStats[stat].templates.some(function(i) { return i.weapons.indexOf(name) > -1; }))
-				return weaponStats[stat].micro;
-	}
-	return cached(uncached, Infinity, name);
-}
-
-_global.guessDroidMicro = function(droid) {
-	for (var i = 0; i < droid.weapons.length; ++i) {
-		var ret = guessWeaponMicro(droid.weapons[i].name);
-		if (ret !== MICRO.RANGED)
-			return ret;
-	}
-	return MICRO.RANGED;
-}
-
 _global.guessBodyArmor = function(name) {
     var body =  bodyStats.filterProperty("stat", name).last()
     if (defined(body))
-        {return body.armor}
+        return body.armor;
     else
-        {niceDebug("Ruleset warning: Couldn't guess body class of", name);}
-
+        niceDebug("Ruleset warning: Couldn't guess body class of", name);
 }
 
 //
@@ -133,7 +112,7 @@ _global.guessBodyArmor = function(name) {
 //
 
 function statsToResList(path) {
-	return path.map(function (val) {return val.res})
+	return path.map(function (val) {return val.res}).reverse();
 }
 
 // todo make one StatsToResList and do filtering for path outside
@@ -156,6 +135,7 @@ _global.weaponStatsToResList = function(path, aspect) {
 	}
 	if (!defined(aspect) || aspect === RESASPECTS.EXTRAS)
 		ret = ret.concat(path.extras);
+	ret.reverse();
 	return ret;
 }
 
@@ -163,21 +143,19 @@ _global.weaponStatsToResList = function(path, aspect) {
 // here be functions for querying out component lists
 //
 
-// todo move this to math. If we have same structure of data <list of objects> we can use it all around.
-_global.filterDataByFlag = function (data, attr_name, flag) {
+// TODO: move this to math. If we have same structure of data <list of objects> we can use it all around.
+_global.filterDataByFlag = function(data, attr_name, flag) {
      return data.filter(function(obj) { return obj[attr_name] & flag; });
 }
 
-
 _global.filterBodyStatsByUsage = function(usage, armor) {
+	var data;
     if (defined(armor))
-        {var data = filterDataByFlag(bodyStats, 'armor', armor)
-        }
+        data = filterDataByFlag(bodyStats, 'armor', armor);
     else
-        {var data = bodyStats}
+        data = bodyStats;
     return filterDataByFlag(data, 'usage', usage).reverse();
 }
-
 
 _global.propulsionStatsToComponents = function(stats) {
 	var ret = [];
