@@ -176,16 +176,6 @@ _global.filterBodyStatsByUsage = function(usage, armor) {
 }
 
 
-_global.bodyStatsToComponents = function(stats, usage, weight) {
-    var ret = [];
-	for (var i = 0; i < stats.length; ++i)
-		if (!defined(weight) || stats[i].weight === weight)
-			if (stats[i].usage & usage)
-				ret.push(stats[i].stat);
-	ret.reverse();
-	return ret;
-}
-
 _global.propulsionStatsToComponents = function(stats) {
 	var ret = [];
 	for (var i = 0; i < stats.length; ++i)

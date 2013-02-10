@@ -16,7 +16,7 @@ function produceTruck(factory, turrets) {
 	if (defined(turrets))
 		turret = turrets.concat();
 	turret.reverse();
-	var bodies = bodyStatsToComponents(bodyStats.kinetic, BODYUSAGE.TRUCK);
+	var bodies = filterBodyStatsByUsage(BODYUSAGE.TRUCK, KINETIC);
 	var propulsions = []
 		.concat(propulsionStatsToComponents(propulsionStats.hover))
 		.concat(propulsionStatsToComponents(propulsionStats.ground));
