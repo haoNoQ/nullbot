@@ -181,7 +181,7 @@ _global.filterBodyStatsByUsage = function(usage, armor) {
 
 _global.getPropulsionStatsComponents = function(usage) {
     var data = filterDataByFlag(propulsionStats, 'usage', usage)
-	return data.map(function(val) {return val.stats}).reverse()
+	return data.map(function(val) {return val.stat}).reverse()
 }
 
 //
