@@ -409,6 +409,9 @@ function voteForWeaponRole(our, their) {
 }
 
 _global.chooseWeaponRole = function(gr) {
+	function uncached() {
+		return voteForWeaponRole(groupOurs(gr), groupTheirs(gr));
+	}
 	return cached(uncached, 5000, gr);
 }
 
@@ -438,10 +441,7 @@ _global.chooseDefendWeaponRole = function(gr) {
 _global.chooseWeaponRoleSmooth = function(gr) {
 	if (withChance(20))
 		return random(ROLE.LENGTH);
-	function uncached() {
-		return voteForWeaponRole(groupOurs(gr), groupTheirs(gr));
-	}
-	return cached(uncached, 5000, gr);
+	return chooseWeaponRole();
 }
 
 _global.chooseBodyClass = function(gr) {
@@ -450,7 +450,7 @@ _global.chooseBodyClass = function(gr) {
 		return adaptVote(
 			[ our.kbody, our.tbody ],
 			[ their.kweapon, their.tweapon ]
-		);
+		) ? BODYCLASS.KINETIC : BODYCLASS.THERMAL;
 	}
 	return cached(uncached, 5000, gr);
 }

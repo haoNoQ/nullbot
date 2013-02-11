@@ -16,8 +16,9 @@ function produceTruck(factory, turrets) {
 	if (defined(turrets))
 		turret = turrets.concat();
 	turret.reverse();
-	var bodies = filterBodyStatsByUsage(BODYUSAGE.TRUCK, BODYCLASS.KINETIC);
-	var propulsions = getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND|PROPULSIONUSAGE.HOVER)
+	// TODO: switch to using chooseBodyWeaponPair() here
+	var bodies = filterBodyStatsByUsage(BODYUSAGE.TRUCK, BODYCLASS.KINETIC).map(function(val) { return val.stat; });
+	var propulsions = getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND|PROPULSIONUSAGE.HOVER);
 	return ourBuildDroid(factory, "Fancy Truck", bodies, propulsions, turret);
 }
 
@@ -75,18 +76,19 @@ function chooseBodyWeaponPair(bodies, weapons) {
 }
 
 function produceTank(factory) {
-    // todo need refactoring. Make some more clever sorting.
-
+    // TODO: needs refactoring. Make some more clever sorting.
     var bodies = []
     if (chooseBodyClass() === BODYCLASS.KINETIC) {
-        bodies = bodies.concat(filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.KINETIC),
-                     filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.THERMAL));
+        bodies = bodies.concat(
+			filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.KINETIC),
+			filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.THERMAL)
+		);
+    } else {
+        bodies = bodies.concat(
+			filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.THERMAL),
+            filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.KINETIC)
+		);
     }
-    else {
-        bodies = bodies.concat(filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.THERMAL),
-            filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.THERMAL));
-    }
-
     var propulsions;
 	var ret = scopeRatings();
 	var rnd = random(ret.land + ret.sea);

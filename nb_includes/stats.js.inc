@@ -141,8 +141,8 @@ _global.bodyStatsToResList = function(armor) {
     return statsToResList(filterBodyStatsByUsage(armor));
 }
 
-_global.propulsionStatsToResList = function(usage) {
-	return statsToResList(filterDataByFlag(propulsionStats, "usage", usage));
+_global.propulsionStatsToResList = function(path) {
+	return statsToResList(path);
 }
 
 _global.weaponStatsToResList = function(path, aspect) {
@@ -163,8 +163,8 @@ _global.weaponStatsToResList = function(path, aspect) {
 // here be functions for querying out component lists
 //
 
-// todo move this to math. If we have same structure of data <list of objects> we can use it all around.
-_global.filterDataByFlag = function (data, attr_name, flag) {
+// TODO: move this to math. If we have same structure of data <list of objects> we can use it all around.
+_global.filterDataByFlag = function(data, attr_name, flag) {
      return data.filter(function(obj) { return obj[attr_name] & flag; });
 }
 
@@ -174,7 +174,7 @@ _global.filterBodyStatsByUsage = function(usage, armor) {
         {var data = filterDataByFlag(bodyStats, 'armor', armor)
         }
     else
-        {var data = bodyStats}
+        data = bodyStats;
     return filterDataByFlag(data, 'usage', usage).reverse();
 }
 
