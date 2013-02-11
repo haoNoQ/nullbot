@@ -80,11 +80,11 @@ function produceTank(factory) {
     var bodies = []
     if (chooseBodyClass() === BODYCLASS.KINETIC) {
         bodies = bodies.concat(filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.KINETIC),
-                     filterBodyStatsByUsage(BODYUSAGE.GROUND, THERMAL));
+                     filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.THERMAL));
     }
     else {
-        bodies = bodies.concat(filterBodyStatsByUsage(BODYUSAGE.GROUND, THERMAL),
-            filterBodyStatsByUsage(BODYUSAGE.GROUND, THERMAL));
+        bodies = bodies.concat(filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.THERMAL),
+            filterBodyStatsByUsage(BODYUSAGE.GROUND, BODYCLASS.THERMAL));
     }
 
     var propulsions;
