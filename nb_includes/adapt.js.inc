@@ -118,14 +118,15 @@ var myStatsTemp = new MyStat;
 var stack = [];
 var MAX_PER_CYCLE = 20;
 
+//todo find out bug or feature all paths use same value
 function canReachBy(scope, location) {
 	switch (scope) {
 		case "land":
-			return canReachFromBase(propulsionStatsToComponents(propulsionStats.ground).last(), location);
+			return canReachFromBase(getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND).last(), location);
 		case "sea":
-			return canReachFromBase(propulsionStatsToComponents(propulsionStats.ground).last(), location);
+			return canReachFromBase(getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND).last(), location);
 		case "air":
-			return canReachFromBase(propulsionStatsToComponents(propulsionStats.ground).last(), location);
+			return canReachFromBase(getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND).last(), location);
 	}
 }
 
@@ -139,7 +140,7 @@ function threatensBase(droid) {
 // count target structures reachable by land
 function countLandTargets(player) {
 	function uncached() {
-		var currProp = propulsionStatsToComponents(propulsionStats.ground).last();
+		var currProp = getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND).last();
 		if (!defined(currProp)) 
 			return 0;
 		var list = enumStructList(targets, player);
@@ -153,10 +154,10 @@ function countLandTargets(player) {
 // count target structures reachable by sea but not by land
 function countSeaTargets(player) {
 	function uncached() {
-		var currProp = propulsionStatsToComponents(propulsionStats.hover).last();
+		var currProp = getPropulsionStatsComponents(PROPULSIONUSAGE.HOVER).last();
 		if (!defined(currProp)) 
 			return 0;
-		var prevProp = propulsionStatsToComponents(propulsionStats.ground).last();
+        var prevProp = getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND).last();
 		return enumStructList(targets, player).filter(function(struct) {
 			return (!defined(prevProp) || !canReachFromBase(prevProp, struct)) && canReachFromBase(currProp, struct);
 		}).length;
@@ -167,13 +168,10 @@ function countSeaTargets(player) {
 // count target structures reachable by air but not by land or by sea
 function countAirTargets(player) {
 	function uncached() {
-		var currProp = propulsionStatsToComponents(propulsionStats.vtol).last();
+		var currProp = getPropulsionStatsComponents(PROPULSIONUSAGE.VTOL).last();
 		if (!defined(currProp)) 
 			return 0;
-		var prevProp = []
-			.concat(propulsionStatsToComponents(propulsionStats.ground))
-			.concat(propulsionStatsToComponents(propulsionStats.hover))
-			.last();
+		var prevProp = getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND|PROPULSIONUSAGE.HOVER).last();
 		return enumStructList(targets, player).filter(function(struct) {
 			return (!defined(prevProp) || !canReachFromBase(prevProp, struct)) && canReachFromBase(currProp, struct);
 		}).length;
