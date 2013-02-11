@@ -92,7 +92,7 @@ function doResearch(lab) {
 						break;
 				}
 			if (objType === 0 || objType === 3 || (objType === 2 && personality.defensiveness < 100))
-				if (pursueResearch(lab, bodyStatsToResList(THERMAL)))
+				if (pursueResearch(lab, bodyStatsToResList(BODYCLASS.THERMAL)))
 					return true;
 		}
 	}
