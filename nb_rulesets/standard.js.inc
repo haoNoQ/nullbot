@@ -151,19 +151,14 @@ const classResearch = {
 // Adaptation code relies on that for discovering map topology.
 // Ground propulsions need to be ground only, hover propulsions shouldn't
 // be able to cross cliffs, but should be able to cross seas, etc. 
-const propulsionStats = {
-	ground: [
-		{ res: "R-Vehicle-Prop-Wheels", stat: "wheeled01" },
-		{ res: "R-Vehicle-Prop-Halftracks", stat: "HalfTrack" },
-		{ res: "R-Vehicle-Prop-Tracks", stat: "tracked01" },
-	],
-	hover: [
-		{ res: "R-Vehicle-Prop-Hover", stat: "hover01" },
-	],
-	vtol: [
-		{ res: "R-Vehicle-Prop-VTOL", stat: "V-Tol" },
-	],
-}
+const propulsionStats = [
+		{ res: "R-Vehicle-Prop-Wheels", stat: "wheeled01", usage:PROPULSIONUSAGE.GROUND},
+		{ res: "R-Vehicle-Prop-Halftracks", stat: "HalfTrack", usage:PROPULSIONUSAGE.GROUND },
+		{ res: "R-Vehicle-Prop-Tracks", stat: "tracked01", usage:PROPULSIONUSAGE.GROUND },
+		{ res: "R-Vehicle-Prop-Hover", stat: "hover01", usage:PROPULSIONUSAGE.HOVER },
+		{ res: "R-Vehicle-Prop-VTOL", stat: "V-Tol", usage:PROPULSIONUSAGE.VTOL },
+	]
+
 
 const truckTurrets = [
 	"Spade1Mk1",
