@@ -79,28 +79,6 @@ _global.guessWeaponRole = function (name) {
 
 function guessWeaponMicro(name) {
 	function uncached() {
-		for (var stat in weaponStats) {
-			if (weaponStats[stat].weapons.someProperty("stat", name))
-				return weaponStats[stat].micro;
-			if (weaponStats[stat].templates.some(function(i) { return i.weapons.indexOf(name) > -1; }))
-				return weaponStats[stat].micro;
-		}
-		niceDebug("Ruleset warning: Couldn't guess weapon micro of", name);
-	}
-	return cached(uncached, Infinity, name);
-}
-
-_global.guessDroidMicro = function(droid) {
-	for (var i = 0; i < droid.weapons.length; ++i) {
-		var ret = guessWeaponMicro(droid.weapons[i].name);
-		if (ret !== MICRO.RANGED)
-			return ret;
-	}
-	return MICRO.RANGED;
-}
-
-function guessWeaponMicro(name) {
-	function uncached() {
 		for (var stat in weaponStats)
 			if (weaponStats[stat].weapons.someProperty("stat", name))
 				return weaponStats[stat].micro;
