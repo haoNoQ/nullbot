@@ -173,9 +173,14 @@ const truckTemplates = [
 // You can make as many weapon lines as you want for your ruleset.
 const weaponStats = {
 	machineguns: {
-		role: ROLE.AP,
+		// How good weapons of this path are against tanks, borgs, defenses, vtols?
+		// The sum of the four should be equal to 1.
+		roles: [ 0.1, 0.7, 0.1, 0.1 ], 
+		// This explains how are human players supposed to call this weapon path in the chat.
 		chatalias: "mg",
+		// This controls micromanagement of units based on the weapons of this path.
 		micro: MICRO.RANGED,
+		// Weapons of the path, better weapons below.
 		weapons: [
 			{ res: "R-Wpn-MG1Mk1", stat: "MG1Mk1", weight: WEIGHT.ULTRALIGHT }, // mg
 			{ res: "R-Wpn-MG2Mk1", stat: "MG2Mk1", weight: WEIGHT.LIGHT }, // tmg
@@ -183,10 +188,14 @@ const weaponStats = {
 			{ res: "R-Wpn-MG4", stat: "MG4ROTARYMk1", weight: WEIGHT.MEDIUM }, // ag
 			{ res: "R-Wpn-MG5", stat: "MG5TWINROTARY", weight: WEIGHT.MEDIUM }, // tag
 		],
+		// VTOL weapons of the path, in the same order.
 		vtols: [
 			{ res: "R-Wpn-MG3Mk1", stat: "MG3-VTOL", weight: WEIGHT.ULTRALIGHT }, // vtol hmg
 			{ res: "R-Wpn-MG4", stat: "MG4ROTARY-VTOL", weight: WEIGHT.MEDIUM }, // vtol ag
 		],
+		// Defensive structures of the path, in the same order.
+		// NOTE: a defensive structure is recycled whenever there are at least two structures
+		// with the same role available down the list
 		defenses: [
 			// turtle AI needs early versatile towers, hence duplicate stat
 			{ res: "R-Defense-Tower01", stat: "GuardTower1", defrole: DEFROLE.GATEWAY }, // hmg tower
@@ -197,16 +206,18 @@ const weaponStats = {
 			{ res: "R-Defense-Wall-RotMg", stat: "Wall-RotMg", defrole: DEFROLE.GATEWAY }, // ag hardpoint
 			{ res: "R-Defense-WallTower-TwinAGun", stat: "WallTower-TwinAssaultGun", defrole: DEFROLE.GATEWAY }, // tag hardpoint
 		],
+		// Cyborg templates, better borgs below, as usual.
 		templates: [
 			{ res: "R-Wpn-MG1Mk1", body: "CyborgChain1Ground", prop: "CyborgLegs", weapons: [ "CyborgChaingun", ] }, // mg cyborg
 			{ res: "R-Wpn-MG4", body: "CybRotMgGrd", prop: "CyborgLegs", weapons: [ "CyborgRotMG", ] }, // ag cyborg
 		],
+		// Extra things to research on this path, even if they don't lead to any new stuff
 		extras: [
 			"R-Wpn-MG-Damage08",
 		],
 	},
 	flamers: {
-		role: ROLE.AP,
+		roles: [ 0.3, 0.7, 0.0, 0.0 ],
 		chatalias: "fl",
 		micro: MICRO.MELEE,
 		weapons: [
@@ -230,7 +241,7 @@ const weaponStats = {
 		],
 	},
 	cannons: {
-		role: ROLE.AT,
+		roles: [ 0.5, 0.2, 0.3, 0.0 ],
 		chatalias: "cn",
 		micro: MICRO.RANGED,
 		weapons: [
@@ -284,7 +295,7 @@ const weaponStats = {
 		],
 	},
 	cannons_AA: {
-		role: ROLE.AA,
+		roles: [ 0.0, 0.0, 0.0, 1.0 ],
 		chatalias: "ca",
 		micro: MICRO.RANGED,
 		weapons: [
@@ -299,7 +310,7 @@ const weaponStats = {
 		extras: [],
 	},
 	mortars: {
-		role: ROLE.AS,
+		roles: [ 0.2, 0.4, 0.4, 0.0 ],
 		chatalias: "mo",
 		micro: MICRO.DUMB,
 		weapons: [
@@ -333,7 +344,7 @@ const weaponStats = {
 		],
 	},
 	fireMortars: {
-		role: ROLE.AS,
+		roles: [ 0.3, 0.3, 0.4, 0.0 ],
 		chatalias: "fm", 
 		micro: MICRO.DUMB,
 		weapons: [
@@ -359,7 +370,7 @@ const weaponStats = {
 		],
 	},
 	rockets_AT: {
-		role: ROLE.AT,
+		roles: [ 1.0, 0.0, 0.0, 0.0 ],
 		chatalias: "rx",
 		micro: MICRO.RANGED,
 		weapons: [
@@ -400,14 +411,15 @@ const weaponStats = {
 			"R-Wpn-Missile-Accuracy02",
 		],
 	},
-	rockets_AS: {
-		role: ROLE.AS,
-		chatalias: "rxas",
+	rockets_Arty: {
+		roles: [ 0.2, 0.4, 0.4, 0.0 ],
+		chatalias: "rxarty",
 		micro: MICRO.DUMB,
 		weapons: [
 			{ res: "R-Wpn-Rocket02-MRL", stat: "Rocket-MRL", weight: WEIGHT.LIGHT }, // mra
 			{ res: "R-Wpn-Rocket03-HvAT", stat: "Rocket-BB", weight: WEIGHT.MEDIUM }, // bb
 			{ res: "R-Wpn-Rocket06-IDF", stat: "Rocket-IDF", weight: WEIGHT.ULTRAHEAVY }, // ripple
+			{ res: "R-Wpn-MdArtMissile", stat: "Missile-MdArt", weight: WEIGHT.HEAVY }, // seraph
 			{ res: "R-Wpn-HvArtMissile", stat: "Missile-HvyArt", weight: WEIGHT.ULTRAHEAVY }, // archie
 		],
 		vtols: [
@@ -416,13 +428,28 @@ const weaponStats = {
 		defenses: [
 			{ res: "R-Defense-MRL", stat: "Emplacement-MRL-pit", defrole: DEFROLE.STANDALONE }, // mra
 			{ res: "R-Defense-IDFRocket", stat: "Emplacement-Rocket06-IDF", defrole: DEFROLE.ARTY }, // ripple
+			{ res: "R-Defense-MdArtMissile", stat: "Emplacement-MdART-pit", defrole: DEFROLE.STANDALONE }, // seraph
 			{ res: "R-Defense-HvyArtMissile", stat: "Emplacement-HvART-pit", defrole: DEFROLE.ARTY }, // archie
 		],
 		templates: [],
 		extras: [],
 	},
+	rockets_AS: {
+		roles: [ 0.0, 0.0, 1.0, 0.0 ],
+		chatalias: "rxas",
+		micro: MICRO.RANGED,
+		weapons: [
+			{ res: "R-Wpn-Rocket03-HvAT", stat: "Rocket-BB", weight: WEIGHT.MEDIUM }, // bb
+		],
+		vtols: [
+			{ res: "R-Wpn-Rocket03-HvAT", stat: "Rocket-VTOL-BB", weight: WEIGHT.LIGHT }, // bb
+		],
+		defenses: [],
+		templates: [],
+		extras: [],
+	},
 	rockets_AA: {
-		role: ROLE.AA,
+		roles: [ 0.0, 0.0, 0.0, 1.0 ],
 		chatalias: "rxaa",
 		micro: MICRO.RANGED,
 		weapons: [
@@ -443,22 +470,8 @@ const weaponStats = {
 		templates: [],
 		extras: [],
 	},
-	rockets_late_AP: {
-		role: ROLE.AP,
-		chatalias: "sr",
-		micro: MICRO.RANGED,
-		weapons: [
-			{ res: "R-Wpn-MdArtMissile", stat: "Missile-MdArt", weight: WEIGHT.HEAVY }, // seraph
-		],
-		vtols: [],
-		defenses: [
-			{ res: "R-Defense-MdArtMissile", stat: "Emplacement-MdART-pit", defrole: DEFROLE.STANDALONE }, // seraph
-		],
-		templates: [],
-		extras: [],
-	},
 	lasers: {
-		role: ROLE.AP,
+		roles: [ 0.2, 0.6, 0.2, 0.0],
 		chatalias: "ls",
 		micro: MICRO.RANGED,
 		weapons: [
@@ -484,7 +497,7 @@ const weaponStats = {
 		extras: [],
 	},
 	useless_AT: {
-		role: ROLE.AT,
+		roles: [ 1.0, 0.0, 0.0, 0.0 ],
 		chatalias: "useless_AT",
 		weapons: [
 			{ stat: "CannonSuper" }, // cannon fort weapon
@@ -500,7 +513,7 @@ const weaponStats = {
 		extras: [],
 	},
 	useless_AP: {
-		role: ROLE.AP,
+		roles: [ 0.0, 1.0, 0.0, 0.0 ],
 		chatalias: "useless_AP",
 		weapons: [
 			{ stat: "MG1-Pillbox" }, // imaginary invisible single mg, may be found on some maps
@@ -515,7 +528,7 @@ const weaponStats = {
 		extras: [],
 	},
 	useless_AS: {
-		role: ROLE.AS,
+		roles: [ 0.0, 0.0, 1.0, 0.0 ],
 		chatalias: "useless_AS",
 		weapons: [
 			{ stat: "PlasmaHeavy" }, // plasma cannon (still unused)
@@ -526,7 +539,7 @@ const weaponStats = {
 		extras: [],
 	},
 	useless_AA: {
-		role: ROLE.AA,
+		roles: [ 0.0, 0.0, 0.0, 1.0 ],
 		chatalias: "useless_AA",
 		weapons: [
 			{ stat: "QuadMg1AAGun" }, // hurricane (still unused)

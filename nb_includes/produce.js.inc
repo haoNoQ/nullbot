@@ -25,23 +25,22 @@ function produceTruck(factory, turrets) {
 function chooseWeapon(forVtol) {
 	if (!defined(forVtol))
 		forVtol = false;
-	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseAttackWeaponRole());
 	if (forVtol) {
-		for (var i = weaponPaths.length - 1; i >= 0; --i)
-			for (var j = 0; j < weaponPaths[i].vtols.length; ++j)
-				if (componentAvailable(weaponPaths[i].vtols[j].stat))
-					return weaponPaths[i].vtols.concat().reverse();
-		return personality.weaponPaths.random().vtols.concat().reverse();
+		var ret = chooseAvailableWeaponPathByRoleRatings(personality.weaponPaths, chooseAttackWeaponRole(), 3);
+		if (defined(ret))
+			return ret.vtols.concat().reverse();
 	} else {
-		for (var i = weaponPaths.length - 1; i >= 0; --i)
-			for (var j = 0; j < weaponPaths[i].weapons.length; ++j)
-				if (componentAvailable(weaponPaths[i].weapons[j].stat))
-					return weaponPaths[i].weapons.concat().reverse();
-		return personality.weaponPaths.random().weapons.concat().reverse();
+		var ret = chooseAvailableWeaponPathByRoleRatings(personality.weaponPaths, chooseAttackWeaponRole(), 0);
+		if (defined(ret))
+			return ret.weapons.concat().reverse();
 	}
 }
 
 function chooseBodyWeaponPair(bodies, weapons) {
+	if (!defined(bodies))
+		return undefined;
+	if (!defined(weapons))
+		return undefined;
 	for (var i = 0; i < weapons.length; ++i) {
 		var w = weapons[i].stat, ww = weapons[i].weight;
 		if (!componentAvailable(w))
@@ -132,18 +131,10 @@ function produceTemplateFromList(factory, list) {
 }
 
 function produceTemplate(factory) {
-	var list = [];
-	var weaponPaths = personality.weaponPaths.filterProperty("role", chooseAttackWeaponRole());
-	weaponPaths.forEach(function(statlist) {
-		var ret = statlist.templates;
-		ret.reverse();
-		list = list.concat(ret);
-	});
-	if (produceTemplateFromList(factory, list))
-		return;
-	// if didn't find a template of correct class, still produce templates;
-	// TODO: it shouldn't work when some weapon paths become outdated
-	return produceTemplateFromList(factory, personality.weaponPaths.random().templates);
+	var path = chooseAvailableWeaponPathByRoleRatings(personality.weaponPaths, chooseAttackWeaponRole(), 1);
+	if (defined(path))
+		return produceTemplateFromList(factory, path.templates);
+	return false;
 }
 
 function checkTruckProduction() {

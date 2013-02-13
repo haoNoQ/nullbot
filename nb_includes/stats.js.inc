@@ -100,18 +100,53 @@ _global.guessDroidMicro = function(droid) {
 _global.guessBodyArmor = function(name) {
     var body =  bodyStats.filterProperty("stat", name).last()
     if (defined(body))
-        {return body.armor}
+        return body.armor;
     else
-        {niceDebug("Ruleset warning: Couldn't guess body class of", name);}
+        niceDebug("Ruleset warning: Couldn't guess body class of", name);
+}
 
+function weaponPathIsAvailable(path, objectType, defrole) {
+	switch(objectType) {
+		case 0:
+			return path.weapons.some(function(val) { return componentAvailable(val.stat); })
+		case 1:
+			return path.templates.some(function(val) {
+				for (var i = 0; i < val.weapons.length; ++i)
+					if (!componentAvailable(val.weapons[i]))
+						return false;
+				return componentAvailable(val.body) && componentAvailable(val.prop);
+			});
+		case 2:
+			return path.defenses.some(function(val) { return val.defrole === defrole && isAvailable(val.stat); });
+		case 3:
+			return path.vtols.some(function(val) { return componentAvailable(val.stat); });
+		default: // research
+			return true;
+	}
+}
+
+_global.chooseAvailableWeaponPathByRoleRatings = function(paths, rating, objectType, defrole) {
+	var minDist = Infinity, minPath;
+	paths.forEach(function(path) {
+		if (!weaponPathIsAvailable(path, objectType, defrole))
+			return;
+		var dist = 0;
+		for (var i = 0; i < ROLE.LENGTH; ++i) 
+			dist += Math.abs(rating[i] - path.roles[i]);
+		if (dist < minDist) {
+			minDist = dist;
+			minPath = path;
+		}
+	});
+	return minPath;
 }
 
 //
-// here be functions for querying out research paths 
+// here be functions for querying out research paths
 //
 
 function statsToResList(path) {
-	return path.map(function (val) {return val.res})
+	return path.map(function (val) { return val.res; });
 }
 
 // todo make one StatsToResList and do filtering for path outside
@@ -119,22 +154,30 @@ _global.bodyStatsToResList = function(armor) {
     return statsToResList(filterBodyStatsByUsage(armor));
 }
 
-_global.propulsionStatsToResList = function(path) {
-	return statsToResList(path);
+_global.propulsionStatsToResList = function(usage) {
+	return statsToResList(filterDataByFlag(propulsionStats, 'usage', usage));
 }
 
-_global.weaponStatsToResList = function(path, aspect) {
-	var ret = [];
-	if (!defined(aspect) || aspect === RESASPECTS.WEAPONS) {
-		ret.concat(statsToResList(path.weapons), statsToResList(path.vtols), statsToResList(path.templates))
+_global.weaponStatsToResList = function(path, objType) {
+	if (!defined(path))
+		return [];
+	switch(objType) {
+		case 0:
+			return statsToResList(path.weapons);
+		case 1:
+			return statsToResList(path.templates);
+		case 2:
+			return statsToResList(path.defenses);
+		case 3:
+			return statsToResList(path.vtols);
+		default:
+			return [].concat(
+				statsToResList(path.weapons),
+				statsToResList(path.templates),
+				statsToResList(path.defenses),
+				statsToResList(path.vtols)
+			);
 	}
-
-    if (!defined(aspect) || aspect === RESASPECTS.DEFENSES) {
-        ret.concat(statsToResList(path.defenses))
-	}
-	if (!defined(aspect) || aspect === RESASPECTS.EXTRAS)
-		ret = ret.concat(path.extras);
-	return ret;
 }
 
 //
@@ -146,16 +189,14 @@ _global.filterDataByFlag = function(data, attr_name, flag) {
      return data.filter(function(obj) { return obj[attr_name] & flag; });
 }
 
-
 _global.filterBodyStatsByUsage = function(usage, armor) {
+	var data;
     if (defined(armor))
-        {var data = filterDataByFlag(bodyStats, 'armor', armor)
-        }
+        data = filterDataByFlag(bodyStats, 'armor', armor)
     else
         data = bodyStats;
     return filterDataByFlag(data, 'usage', usage).reverse();
 }
-
 
 _global.getPropulsionStatsComponents = function(usage) {
     var data = filterDataByFlag(propulsionStats, 'usage', usage)
@@ -167,16 +208,14 @@ _global.getPropulsionStatsComponents = function(usage) {
 //
 
 _global.weaponStatsToDefenses = function(stats, defrole) {
+	if (!defined(stats))
+		return [];
 	var ret = [];
 	for (var i = 0; i < stats.defenses.length; ++i)
 		if (!defined(defrole) || stats.defenses[i].defrole === defrole)
 			ret.push(stats.defenses[i].stat);
 	// reverse not needed here
 	return ret;
-}
-
-_global.weaponStatsListToAvailableDefenses = function(list, defrole) {
-	return list.reduce(function(one, two) { return one.concat(weaponStatsToDefenses(two, defrole).filter(isAvailable)); }, []);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

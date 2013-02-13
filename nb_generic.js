@@ -33,7 +33,7 @@ var subpersonalities = {
 			weaponStats.machineguns, 
 			weaponStats.rockets_AS, 
 			weaponStats.rockets_AA, 
-			weaponStats.rockets_late_AP,
+			weaponStats.rockets_Arty,
 		],
 		earlyResearch: [ // fixed research path for the early game
 			"R-Wpn-MG-Damage01",
@@ -84,7 +84,7 @@ var subpersonalities = {
 			weaponStats.flamers,
 			weaponStats.fireMortars,
 			weaponStats.rockets_AA,
-			weaponStats.rockets_late_AP,
+			weaponStats.lasers,
 		],
 		earlyResearch: [
 			"R-Wpn-Flamer-ROF01",

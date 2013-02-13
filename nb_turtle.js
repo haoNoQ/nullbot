@@ -33,7 +33,7 @@ var subpersonalities = {
 			weaponStats.machineguns,
 			weaponStats.rockets_AS,
 			weaponStats.rockets_AA,
-			weaponStats.rockets_late_AP,
+			weaponStats.rockets_Arty,
 		],
 		earlyResearch: [
 			"R-Defense-Tower01",

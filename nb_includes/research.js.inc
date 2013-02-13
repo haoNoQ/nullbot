@@ -40,18 +40,12 @@ function doResearch(lab) {
 		if (pursueResearch(lab, personality.earlyResearch))
 			return true;
 	// then, see if we want to research some weapons
+	var objType = chooseObjectType();
 	if (withChance(70)) { // TODO: make a more thoughtful decision here
-		var weaponPaths = personality.weaponPaths.filterProperty("role", chooseWeaponRoleSmooth());
-		var list = [];
-		var aspect = random(5); // TODO: make a more thoughtful desicion here
-		if (aspect > 3) aspect = 0;
-		weaponPaths.forEach(function(statlist) {
-			list = list.concat(weaponStatsToResList(statlist, aspect));
-		});
+		var list = weaponStatsToResList(chooseAvailableWeaponPathByRoleRatings(personality.weaponPaths, chooseWeaponRole()), objType);
 		if (pursueResearch(lab, list))
 			return true;
 	}
-	var objType = chooseObjectType();
 	if (withChance(65)) { // TODO: make a more thoughtful decision here
 		if (chooseBodyClass() === BODYCLASS.KINETIC) {
 			if (withChance(40)) {

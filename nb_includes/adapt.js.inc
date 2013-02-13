@@ -8,18 +8,22 @@
 (function(_global) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-function adaptVote(our, their) {
+function adaptVote(our, their, verbose) {
+	if (!defined(verbose))
+		verbose = false;
 	var l = our.length;
 	var ourTotal = our.reduce(function(prev, curr) { return prev + curr; });
 	var theirTotal = their.reduce(function(prev, curr) { return prev + curr; });
 	if (theirTotal === 0)
-		return random(l);
+		return verbose ? [0,0,0,0] : random(l);
 	var rating = [];
 	for (var i = 0; i < l; ++i)
 		rating[i] = their[i] / theirTotal;
 	if (ourTotal > 0)
 		for (var i = 0; i < l; ++i)
 			rating[i] -= our[i] / ourTotal;
+	if (verbose)
+		return rating.map(function(val) { return (val + 1) / 2; });
 	var maxRating = -Infinity;
 	var maxIdx = 0;
 	for (var i = 0; i < l; ++i) 
@@ -400,10 +404,12 @@ function groupTheirs(gr) {
 	return cached(uncached, 500, gr);
 }
 
-function voteForWeaponRole(our, their) {
+
+function voteForWeaponRole(our, their, verbose) {
 	return adaptVote(
 		[ our.at, our.ap, our.as, our.aa ],
-		[ their.tank, their.borg, their.defs, their.vtol ]
+		[ their.tank, their.borg, their.defs, their.vtol ],
+		true
 	);
 }
 
@@ -423,24 +429,11 @@ _global.chooseAttackWeaponRole = function(gr) {
 }
 
 // use this for defenses
-// note: returns wrong value with 15% probability, to make sure we have defenses for
-// stuff the enemy doesn't use yet (such as early AA against sudden VTOLs)
-_global.chooseDefendWeaponRole = function(gr) {
-	if (withChance(20))
-		return random(ROLE.LENGTH);
+_global.chooseDefendWeaponRole = function() {
 	function uncached() {
 		return voteForWeaponRole(myStats.defense, enemyOffense());
 	}
-	return cached(uncached, 5000, gr);
-}
-
-// use this for research
-// note: returns wrong value with 15% probability, to make sure we are prepared for
-// stuff the enemy doesn't use yet (such as have early AA against sudden VTOLs)
-_global.chooseWeaponRoleSmooth = function(gr) {
-	if (withChance(20))
-		return random(ROLE.LENGTH);
-	return chooseWeaponRole();
+	return cached(uncached, 5000);
 }
 
 _global.chooseBodyClass = function(gr) {

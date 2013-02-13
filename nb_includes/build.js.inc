@@ -133,6 +133,8 @@ function finishStructures() {
 }
 
 function buildStructureAround(statlist, loc, unique) {
+	if (!defined(statlist))
+		return BUILDRET.UNAVAILABLE;
 	var truck = getFreeTruckAround(loc.x, loc.y);
 	if (!defined(truck))
 		return BUILDRET.FAILURE;
@@ -156,7 +158,6 @@ function buildStructureAround(statlist, loc, unique) {
 	if (orderDroidBuild(truck, DORDER_BUILD, stat, loc2.x, loc2.y)) 
 		return BUILDRET.SUCCESS;
 	return BUILDRET.FAILURE;
-
 }
 
 function captureOil(oil) {
@@ -176,11 +177,7 @@ function captureOil(oil) {
 }
 
 function chooseDefense(defrole) {
-	weaponPaths = personality.weaponPaths.filterProperty("role", chooseDefendWeaponRole());
-	var ret = weaponStatsListToAvailableDefenses(weaponPaths, defrole);
-	if (ret.length === 0) // TODO: think about outdated defenses here
-		ret = weaponStatsListToAvailableDefenses(personality.weaponPaths.shuffle(), defrole);
-	return ret;
+	return weaponStatsToDefenses(chooseAvailableWeaponPathByRoleRatings(personality.weaponPaths, chooseDefendWeaponRole(), 2, defrole), defrole);
 }
 
 function buildTowers() {
