@@ -126,9 +126,9 @@ function findTarget(gr) {
 		});
 		list = list.filter(targetSuitableForHarass).filter(function(feature) {
 			if (iHaveHover())
-				if (canReachFromBase(getPropulsionStatsComponents(PROPULSIONUSAGE.HOVER)[0].stat, feature))
+				if (canReachFromBase(getPropulsionStatsComponents(PROPULSIONUSAGE.HOVER)[0], feature))
 					return true;
-			return canReachFromBase(getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND)[0].stat, feature);
+			return canReachFromBase(getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND)[0], feature);
 		}).sort(function(one, two) {
 			return distanceToBase(one) - distanceToBase(two);
 		});

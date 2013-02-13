@@ -118,15 +118,14 @@ var myStatsTemp = new MyStat;
 var stack = [];
 var MAX_PER_CYCLE = 20;
 
-//todo find out bug or feature all paths use same value
 function canReachBy(scope, location) {
 	switch (scope) {
 		case "land":
 			return canReachFromBase(getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND).last(), location);
 		case "sea":
-			return canReachFromBase(getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND).last(), location);
+			return canReachFromBase(getPropulsionStatsComponents(PROPULSIONUSAGE.HOVER).last(), location);
 		case "air":
-			return canReachFromBase(getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND).last(), location);
+			return canReachFromBase(getPropulsionStatsComponents(PROPULSIONUSAGE.AIR).last(), location);
 	}
 }
 
