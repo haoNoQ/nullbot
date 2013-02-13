@@ -147,7 +147,8 @@ const classResearch = {
 	},
 }
 
-// NOTE: Please don't put hover propulsion into the ground list, etc.! 
+// NOTE: Please don't put hover propulsion into the ground list, etc.!
+// NOTE: Hover propulsion should be placed AFTER ground propulsion!
 // Adaptation code relies on that for discovering map topology.
 // Ground propulsions need to be ground only, hover propulsions shouldn't
 // be able to cross cliffs, but should be able to cross seas, etc. 
