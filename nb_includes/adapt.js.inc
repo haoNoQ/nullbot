@@ -40,15 +40,9 @@ function adaptVote(our, their, verbose) {
 
 function SimpleStat() {
 	// propulsion classes used by the player
-	this.tank = 0;
-	this.borg = 0;
-	this.defs = 0;
-	this.vtol = 0;
+	this.obj = zeroArray(ROLE.LENGTH);
 	// weapon-propulsion classes used by the player
-	this.at = 0;
-	this.ap = 0;
-	this.as = 0;
-	this.aa = 0;
+	this.role = zeroArray(ROLE.LENGTH);
 	// armor used by the player
 	this.kbody = 0;
 	this.tbody = 0;
@@ -60,8 +54,13 @@ function SimpleStat() {
 function addStat(to, what, weight) {
 	if (!defined(weight))
 		weight = 1;
-	for (var prop in to) 
-		to[prop] += what[prop] * weight;
+	for (var prop in to) {
+		if (to[prop].constructor === Array)
+			for (var i = 0; i < to[prop].length; ++i) 
+				to[prop][i] += what[prop][i] * weight;
+		else
+			to[prop] += what[prop] * weight;
+	}
 }
 
 const SCOPES = {
@@ -195,24 +194,14 @@ function classifyObject(obj) {
 	for (var i = 0; i < obj.weapons.length; ++i) {
 		var roles = guessWeaponRole(obj.weapons[i].name); {
 			if (!defined(roles)) {
-				if (obj.canHitAir && obj.canHitGround) {
-					ret.at += 1 / 4;
-					ret.ap += 1 / 4;
-					ret.as += 1 / 4;
-					ret.aa += 1 / 4;
-				} else if (obj.canHitAir && !obj.canHitGround) {
-					ret.aa += 1;
-				} else {
-					ret.at += 1 / 3;
-					ret.ap += 1 / 3;
-					ret.as += 1 / 3;
-				}
-			} else {
-				ret.at += roles[ROLE.AT];
-				ret.ap += roles[ROLE.AP];
-				ret.as += roles[ROLE.AS];
-				ret.aa += roles[ROLE.AA];
-			}
+				if (obj.canHitAir && obj.canHitGround)
+					ret.role.addArray([1/4, 1/4, 1/4, 1/4]);
+				else if (obj.canHitAir && !obj.canHitGround)
+					ret.role.addArray([0, 0, 0, 1]);
+				else
+					ret.role.addArray([1/3, 1/3, 1/3, 0]);
+			} else
+				ret.role.addArray(roles);
 		}
 	}
 	for (var i = 0; i < obj.weapons.length; ++i) {
@@ -239,14 +228,14 @@ function classifyObject(obj) {
 		}
 	}
 	if (obj.type === STRUCTURE)
-		ret.defs += 1;
+		ret.obj[OBJTYPE.DEFS] += 1;
 	if (obj.type === DROID) {
 		if (safeIsVtol(obj))
-			ret.vtol += 1;
+			ret.obj[OBJTYPE.VTOL] += 1;
 		else if (obj.droidType === DROID_CYBORG)
-			ret.borg += 1;
+			ret.obj[OBJTYPE.BORG] += 1;
 		else 
-			ret.tank += 1;
+			ret.obj[OBJTYPE.TANK] += 1;
 	}
 	return ret;
 }
@@ -398,18 +387,10 @@ function groupTheirs(gr) {
 	return cached(uncached, 500, gr);
 }
 
-
-function voteForWeaponRole(our, their, verbose) {
-	return adaptVote(
-		[ our.at, our.ap, our.as, our.aa ],
-		[ their.tank, their.borg, their.defs, their.vtol ],
-		true
-	);
-}
-
+// use this for research
 _global.chooseWeaponRole = function(gr) {
 	function uncached() {
-		return voteForWeaponRole(groupOurs(gr), groupTheirs(gr));
+		return adaptVote(groupOurs(gr).role, groupTheirs(gr).obj, true);
 	}
 	return cached(uncached, 5000, gr);
 }
@@ -417,7 +398,7 @@ _global.chooseWeaponRole = function(gr) {
 // use this for droids and long-range arty emplacements
 _global.chooseAttackWeaponRole = function(gr) {
 	function uncached() {
-		return voteForWeaponRole(groupAttackOurs(gr), groupTheirs(gr));
+		return adaptVote(groupAttackOurs(gr).role, groupTheirs(gr).obj, true);
 	}
 	return cached(uncached, 5000, gr);
 }
@@ -425,7 +406,7 @@ _global.chooseAttackWeaponRole = function(gr) {
 // use this for defenses
 _global.chooseDefendWeaponRole = function() {
 	function uncached() {
-		return voteForWeaponRole(myStats.defense, enemyOffense());
+		return adaptVote(myStats.defense.role, enemyOffense().obj, true);
 	}
 	return cached(uncached, 5000);
 }
@@ -447,27 +428,27 @@ _global.chooseObjectType = function() {
 		// behaviour specific for a turtle AI
 		if (personality.defensiveness === 100)
 			if (iHaveVtol() && withChance(personality.vtolness) && adaptVote(
-				[ our.defs, our.vtol ],
-				[ their.aa, their.at + their.ap + 2 * their.as ]
+				[ our.obj[OBJTYPE.DEFS], our.obj[OBJTYPE.VTOL] ],
+				[ their.role[ROLE.AA], their.role[ROLE.AT] + their.role[ROLE.AP] + 2 * their.role[ROLE.AS] ]
 			) === 1)
-			return 3;
+			return OBJTYPE.VTOL;
 		else
-			return 2;
+			return OBJTYPE.DEFS;
 		// behaviour of a generic AI
 		if (withChance(personality.defensiveness) && adaptVote(
-				[ our.tank + our.borg + our.vtol, our.defs ],
-				[ their.as, their.at + their.ap + their.aa ]
+				[ our.obj[OBJTYPE.TANK] + our.obj[OBJTYPE.BORG] + our.obj[OBJTYPE.VTOL], our.obj[OBJTYPE.DEFS] ],
+				[ their.role[ROLE.AS], their.role[ROLE.AT] + their.role[ROLE.AP] + their.role[ROLE.AA] ]
 			) === 1)
-			return 2;
+			return OBJTYPE.DEFS;
 		if (iHaveVtol() && withChance(personality.vtolness) && adaptVote(
-				[ our.tank + our.borg + our.defs, our.vtol ],
-				[ their.aa, their.at + their.ap + their.as ]
+				[ our.obj[OBJTYPE.TANK] + our.obj[OBJTYPE.BORG] + our.obj[OBJTYPE.DEFS], our.obj[OBJTYPE.VTOL] ],
+				[ their.role[ROLE.AA], their.role[ROLE.AT] + their.role[ROLE.AP] + their.role[ROLE.AS] ]
 			) === 1)
-			return 3;
+			return OBJTYPE.VTOL;
 		return adaptVote(
-			[ our.tank, our.borg ],
-			[ their.ap, their.at ]
-		);
+			[ our.obj[OBJTYPE.TANK], our.obj[OBJTYPE.BORG] ],
+			[ their.role[ROLE.AP], their.role[ROLE.AT] ]
+		) ? OBJTYPE.BORG : OBJTYPE.TANK;
 	}
 	return cached(uncached, 5000);
 }

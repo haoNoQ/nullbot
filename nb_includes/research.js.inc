@@ -48,44 +48,17 @@ function doResearch(lab) {
 	}
 	if (withChance(65)) { // TODO: make a more thoughtful decision here
 		if (chooseBodyClass() === BODYCLASS.KINETIC) {
-			if (withChance(40)) {
-				switch (objType) {
-					case 2:
-						if (pursueResearch(lab, classResearch.kinetic.defs))
-							return true;
-						break;
-					case 1:
-						if (pursueResearch(lab, classResearch.kinetic.borg))
-							return true;
-						break;
-					case 0:
-					case 3:
-						if (pursueResearch(lab, classResearch.kinetic.tank))
-							return true;
-						break;
-				}
-			}
-			if (objType === 0 || objType === 3 || (objType === 2 && personality.defensiveness < 100))
+			if (withChance(40))
+				if (pursueResearch(lab, classResearch.kinetic[objType]))
+					return true;
+			if (objType === OBJTYPE.TANK || objType === OBJTYPE.VTOL || (objType === OBJTYPE.DEFS && personality.defensiveness < 100))
 				if (pursueResearch(lab, bodyStatsToResList(BODYCLASS.KINETIC)))
 					return true;
 		} else {
 			if (withChance(40))
-				switch (objType) {
-					case 2:
-						if (pursueResearch(lab, classResearch.thermal.defs))
-							return true;
-						break;
-					case 1:
-						if (pursueResearch(lab, classResearch.thermal.borg))
-							return true;
-						break;
-					case 0:
-					case 3:
-						if (pursueResearch(lab, classResearch.thermal.tank))
-							return true;
-						break;
-				}
-			if (objType === 0 || objType === 3 || (objType === 2 && personality.defensiveness < 100))
+				if (pursueResearch(lab, classResearch.thermal[objType]))
+					return true;
+			if (objType === OBJTYPE.TANK || objType === OBJTYPE.VTOL || (objType === OBJTYPE.DEFS && personality.defensiveness < 100))
 				if (pursueResearch(lab, bodyStatsToResList(BODYCLASS.THERMAL)))
 					return true;
 		}

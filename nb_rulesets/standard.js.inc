@@ -113,14 +113,14 @@ const bodyStats = [
 ];
 
 const classResearch = {
-	kinetic: {
-		tank: [
+	kinetic: [
+		[ // OBJTYPE.TANK
 			"R-Vehicle-Metals09",
 		],
-		borg: [
+		[ // OBJTYPE.BORG
 			"R-Cyborg-Metals09",
 		],
-		defs: [
+		[ // OBJTYPE.DEFS
 			"R-Defense-WallUpgrade03",
 			"R-Struc-Materials03",
 			"R-Defense-WallUpgrade06",
@@ -128,15 +128,18 @@ const classResearch = {
 			"R-Defense-WallUpgrade12",
 			"R-Struc-Materials09",
 		],
-	},
-	thermal: {
-		tank: [
+		[ // OBJTYPE.VTOL
+			"R-Vehicle-Metals09",
+		],
+	],
+	thermal: [
+		[
 			"R-Vehicle-Armor-Heat09",
 		],
-		borg: [
+		[
 			"R-Cyborg-Armor-Heat09",
 		],
-		defs: [
+		[
 			"R-Defense-WallUpgrade03",
 			"R-Struc-Materials03",
 			"R-Defense-WallUpgrade06",
@@ -144,7 +147,10 @@ const classResearch = {
 			"R-Defense-WallUpgrade12",
 			"R-Struc-Materials09",
 		],
-	},
+		[
+			"R-Vehicle-Armor-Heat09",
+		],
+	],
 }
 
 // NOTE: Please don't put hover propulsion into the ground list, etc.!

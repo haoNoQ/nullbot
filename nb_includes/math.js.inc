@@ -83,6 +83,18 @@ Array.prototype.shuffle = function() {
 	return this.sort(function() { return 0.5 - Math.random(); })
 }
 
+_global.zeroArray = function(l) {
+	var ret = [];
+	for (var i = 0; i < l; ++i)
+		ret[i] = 0;
+	return ret;
+}
+
+Array.prototype.addArray = function(arr) {
+	for (var i = 0; i < this.length; ++i)
+		this[i] += arr[i];
+}
+
 // returns a random property of an object
 _global.randomItem = function(obj) {
     var ret;

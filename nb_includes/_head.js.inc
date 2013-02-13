@@ -16,6 +16,15 @@ const ROLE = {
 	LENGTH: 4, // number of items in this enum
 }
 
+// something dual to the previous enum
+const OBJTYPE = {
+	TANK: 0,
+	BORG: 1,
+	DEFS: 2,
+	VTOL: 3,
+	LENGTH: 4, // number of items in this enum; should be equal to ROLE.LENGTH
+}
+
 // this controls body and weapon compatibility.
 // A little explanation:
 // w \ b | L | M | H  bodies can't be "ultra-", 
