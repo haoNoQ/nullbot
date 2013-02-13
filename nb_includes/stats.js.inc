@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 _global.isHoverPropulsion = function(str) {
-	return propulsionStats.someProperty("stat", str);
+	return propulsionStats.some(function(val) { return val.usage === PROPULSIONUSAGE.HOVER && val.stat === str; });
 }
 
 _global.isVtolPropulsion = function(str) {
-	return propulsionStats.someProperty("stat", str);
+	return propulsionStats.some(function(val) { return val.usage === PROPULSIONUSAGE.VTOL && val.stat === str; });
 }
 
 _global.iHaveHover = function() {
@@ -98,7 +98,7 @@ _global.guessDroidMicro = function(droid) {
 }
 
 _global.guessBodyArmor = function(name) {
-    var body =  bodyStats.filterProperty("stat", name).last()
+    var body = bodyStats.filterProperty("stat", name).last()
     if (defined(body))
         return body.armor;
     else
