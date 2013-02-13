@@ -436,7 +436,7 @@ _global.chooseBodyClass = function(gr) {
 		return adaptVote(
 			[ our.kbody, our.tbody ],
 			[ their.kweapon, their.tweapon ]
-		) ? BODYCLASS.KINETIC : BODYCLASS.THERMAL;
+		) ? BODYCLASS.THERMAL : BODYCLASS.KINETIC;
 	}
 	return cached(uncached, 5000, gr);
 }
