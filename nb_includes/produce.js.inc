@@ -94,10 +94,14 @@ function produceTank(factory) {
 	var rnd = random(ret.land + ret.sea);
 	if (!defined(rnd)) // we need only vtols?
 		return false;
-	if (rnd < ret.land)
-		propulsions = getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND);
-	else 
-		propulsions = getPropulsionStatsComponents(PROPULSIONUSAGE.HOVER);
+	propulsions = getPropulsionStatsComponents(PROPULSIONUSAGE.GROUND);
+	if (iHaveHover()) {
+		if (rnd >= ret.land)
+			propulsions = getPropulsionStatsComponents(PROPULSIONUSAGE.HOVER);
+	} else {
+		if (ret.land === 0)
+			return false;
+	}
 	var bwPair = chooseBodyWeaponPair(bodies, chooseWeapon());
 	if (!defined(bwPair))
 		return false;

@@ -16,11 +16,11 @@ _global.isVtolPropulsion = function(str) {
 }
 
 _global.iHaveHover = function() {
-	return propulsionStats.some(function(val ){return componentAvailable(val.stat)});
+	return propulsionStats.some(function(val) { return val.usage === PROPULSIONUSAGE.HOVER && componentAvailable(val.stat);} );
 }
 
 _global.iHaveVtol = function() {
-    return propulsionStats.some(function(val ){return componentAvailable(val.stat)});
+    return propulsionStats.some(function(val) { return val.usage === PROPULSIONUSAGE.VTOL && componentAvailable(val.stat);} );
 }
 
 _global.iHaveArty = function() {
