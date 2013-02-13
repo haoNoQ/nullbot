@@ -131,8 +131,11 @@ _global.chooseAvailableWeaponPathByRoleRatings = function(paths, rating, objectT
 		if (!weaponPathIsAvailable(path, objectType, defrole))
 			return;
 		var dist = 0;
-		for (var i = 0; i < ROLE.LENGTH; ++i) 
-			dist += Math.abs(rating[i] - path.roles[i]);
+		for (var i = 0; i < ROLE.LENGTH; ++i) {
+			var newDist = Math.abs(rating[i] - path.roles[i])
+			if (newDist > dist)
+				dist = newDist;
+		}
 		if (dist < minDist) {
 			minDist = dist;
 			minPath = path;
@@ -161,23 +164,25 @@ _global.propulsionStatsToResList = function(usage) {
 _global.weaponStatsToResList = function(path, objType) {
 	if (!defined(path))
 		return [];
+	var ret = [];
 	switch(objType) {
 		case 0:
-			return statsToResList(path.weapons);
+			ret = statsToResList(path.weapons); break;
 		case 1:
-			return statsToResList(path.templates);
+			ret = statsToResList(path.templates); break;
 		case 2:
-			return statsToResList(path.defenses);
+			ret = statsToResList(path.defenses); break;
 		case 3:
-			return statsToResList(path.vtols);
-		default:
-			return [].concat(
-				statsToResList(path.weapons),
-				statsToResList(path.templates),
-				statsToResList(path.defenses),
-				statsToResList(path.vtols)
-			);
+			ret = statsToResList(path.vtols); break;
 	}
+	if (ret.length === 0)
+		ret = ret.concat(
+			statsToResList(path.weapons),
+			statsToResList(path.templates),
+			statsToResList(path.defenses),
+			statsToResList(path.vtols)
+		);
+	return ret;
 }
 
 //
