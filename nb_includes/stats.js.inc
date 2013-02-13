@@ -72,7 +72,7 @@ _global.guessWeaponRole = function (name) {
 			weaponStats[stat].vtols.someProperty("stat", name) ||
 			weaponStats[stat].templates.some(function (i) {return i.weapons.indexOf(name) > -1;})
 		)
-		return weaponStats[stat].role;
+		return weaponStats[stat].roles;
 	}
 	niceDebug("Ruleset warning: Couldn't guess weapon role of", name);
 }

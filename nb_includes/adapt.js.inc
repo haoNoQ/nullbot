@@ -193,20 +193,8 @@ function classifyObject(obj) {
 	if (obj.type === FEATURE)
 		return ret;
 	for (var i = 0; i < obj.weapons.length; ++i) {
-		switch(guessWeaponRole(obj.weapons[i].name)) {
-			case ROLE.AT:
-				ret.at += 1;
-				break;
-			case ROLE.AP:
-				ret.ap += 1;
-				break;
-			case ROLE.AS:
-				ret.as += 1;
-				break;
-			case ROLE.AA:
-				ret.aa += 1;
-				break;
-			default: 
+		var roles = guessWeaponRole(obj.weapons[i].name); {
+			if (!defined(roles)) {
 				if (obj.canHitAir && obj.canHitGround) {
 					ret.at += 1 / 4;
 					ret.ap += 1 / 4;
@@ -219,6 +207,12 @@ function classifyObject(obj) {
 					ret.ap += 1 / 3;
 					ret.as += 1 / 3;
 				}
+			} else {
+				ret.at += roles[ROLE.AT];
+				ret.ap += roles[ROLE.AP];
+				ret.as += roles[ROLE.AS];
+				ret.aa += roles[ROLE.AA];
+			}
 		}
 	}
 	for (var i = 0; i < obj.weapons.length; ++i) {
