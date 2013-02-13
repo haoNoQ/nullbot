@@ -154,7 +154,7 @@ function statsToResList(path) {
 
 // todo make one StatsToResList and do filtering for path outside
 _global.bodyStatsToResList = function(armor) {
-    return statsToResList(filterBodyStatsByUsage(armor));
+    return statsToResList(filterBodyStatsByUsage(armor)).reverse();
 }
 
 _global.propulsionStatsToResList = function(usage) {
@@ -205,7 +205,7 @@ _global.filterBodyStatsByUsage = function(usage, armor) {
 
 _global.getPropulsionStatsComponents = function(usage) {
     var data = filterDataByFlag(propulsionStats, 'usage', usage)
-	return data.map(function(val) {return val.stat}).reverse()
+	return data.map(function(val) { return val.stat; }).reverse()
 }
 
 //
