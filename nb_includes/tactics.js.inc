@@ -247,31 +247,30 @@ function attackTarget(droid) {
 		}
 }
 
-function pickVtolTarget() {
+function pickVtolTarget(droid) {
 	function uncached() {
+		function canHit(obj) {
+			if (typeof(obj) === DROID && isVTOL(obj))
+				return droid.canHitAir;
+			else
+				return droid.canHitGround;
+		}
 		var enemy = enumLivingPlayers().filter(isEnemy).random();
 		var list;
-		list = enumDroid(enemy, DROID_WEAPON).filterProperty("canHitAir", true);
+		list = enumDroid(enemy, DROID_WEAPON).filterProperty("canHitAir", true).filter(canHit);
 		if (list.length > 0) return list.random();
-		list = enumDroid(enemy, DROID_CYBORG).filterProperty("canHitAir", true);
+		list = enumDroid(enemy, DROID_CYBORG).filterProperty("canHitAir", true).filter(canHit);
 		if (list.length > 0) return list.random();
-		list = enumStruct(enemy, DEFENSE).filterProperty("canHitAir", true);
+		list = enumStruct(enemy, DEFENSE).filterProperty("canHitAir", true).filter(canHit);
 		if (list.length > 0) return list.random();
-		list = enumStructList(miscTargets, enemy);
+		list = enumStructList(miscTargets, enemy).filter(canHit);
 		if (list.length > 0) return list.random();
 		list = enumStructList(targets, enemy);
-		if (list.length > 0) return list.random();
+		if (list.length > 0) return list.random().filter(canHit);
 		list = enumDroid(enemy);
-		if (list.length > 0) return list.random();
+		if (list.length > 0) return list.random().filter(canHit);
 	}
-	var obj = safeGetObject(vtolTargetLabel());
-	if (defined(obj))
-		return obj;
-	obj = uncached();
-	if (defined(obj)) {
-		addLabel(obj, vtolTargetLabel());
-		return obj;
-	}
+	return cached(uncached, 100, droid.canHitAir + 2 * droid.canHitGround);
 }
 
 function vtolReady(droid) {
@@ -394,19 +393,17 @@ _global.checkAttack = function() {
 			regroup(i).forEach(attackTarget);
 			break;
 		}
-	if (throttled(1000))
+	if (throttled(1000, "misc"))
 		return;
 	enumGroup(miscGroup).filter(checkRepaired).forEach(attackTarget);
-	var droids = enumGroup(vtolGroup).filter(vtolReady);
-	var target = pickVtolTarget();
-	if (!defined(target))
+	if (throttled(5000, "vtols"))
 		return;
-	var size = dangerLevel(target);
-	if (size > attackGroupSize())
-		size = attackGroupSize();
-	if (droids.length > size)
+	var droids = enumGroup(vtolGroup).filter(vtolReady);
+	if (droids.length > attackGroupSize() / 3.)
 		droids.forEach(function(droid) {
-			orderDroidObj(droid, DORDER_ATTACK, target);
+			var target = pickVtolTarget(droid);
+			if (defined(target))
+				orderDroidObj(droid, DORDER_ATTACK, target);
 		});
 }
 
