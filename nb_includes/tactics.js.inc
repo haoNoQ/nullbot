@@ -346,13 +346,13 @@ _global.groupDroid = function(droid) {
 }
 
 _global.rebalanceGroups = function() {
-	if (groupSize(miscGroup) > personality.maxMiscTanks && !throttled(5000)) {
+	if (throttled(5000))
+		return;
+	if (groupSize(miscGroup) > personality.maxMiscTanks) {
 		var list = enumGroup(miscGroup).shuffle();
 		for (var i = personality.maxMiscTanks; i < personality.maxMiscTanks + 5 && i < list.length; ++i)
 			groupDroid(list[i]);
 	}
-	if (throttled(5000))
-		return;
 	var ret = groupsBySize();
 	if (ret.length > 0)
 		if (ret[0] > 0 && ret[0] < attackGroupSize())
