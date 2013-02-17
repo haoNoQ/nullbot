@@ -265,10 +265,10 @@ function pickVtolTarget(droid) {
 		if (list.length > 0) return list.random();
 		list = enumStructList(miscTargets, enemy).filter(canHit);
 		if (list.length > 0) return list.random();
-		list = enumStructList(targets, enemy);
-		if (list.length > 0) return list.random().filter(canHit);
-		list = enumDroid(enemy);
-		if (list.length > 0) return list.random().filter(canHit);
+		list = enumStructList(targets, enemy).filter(canHit);
+		if (list.length > 0) return list.random();
+		list = enumDroid(enemy).filter(canHit);
+		if (list.length > 0) return list.random();
 	}
 	return cached(uncached, 100, droid.canHitAir + 2 * droid.canHitGround);
 }
