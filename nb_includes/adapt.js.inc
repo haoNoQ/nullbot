@@ -15,7 +15,7 @@ function adaptVote(our, their, verbose) {
 	var ourTotal = our.reduce(function(prev, curr) { return prev + curr; });
 	var theirTotal = their.reduce(function(prev, curr) { return prev + curr; });
 	if (theirTotal === 0)
-		return verbose ? zeroArray(l) : random(l);
+		return verbose ? randomUnitArray(l) : random(l);
 	var rating = [];
 	for (var i = 0; i < l; ++i)
 		rating[i] = their[i] / theirTotal;
@@ -387,9 +387,11 @@ function groupTheirs(gr) {
 	return cached(uncached, 500, gr);
 }
 
-// use this for research
+// use this for research; 15% smooth
 _global.chooseWeaponRole = function(gr) {
 	function uncached() {
+		if (withChance(20))
+			return randomUnitArray(4);
 		return adaptVote(groupOurs(gr).role, groupTheirs(gr).obj, true);
 	}
 	return cached(uncached, 5000, gr);
@@ -403,9 +405,11 @@ _global.chooseAttackWeaponRole = function(gr) {
 	return cached(uncached, 5000, gr);
 }
 
-// use this for defenses
+// use this for defenses; 15% smooth
 _global.chooseDefendWeaponRole = function() {
 	function uncached() {
+		if (withChance(20))
+			return randomUnitArray(4);
 		return adaptVote(myStats.defense.role, enemyOffense().obj, true);
 	}
 	return cached(uncached, 5000);

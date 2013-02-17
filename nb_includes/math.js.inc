@@ -90,6 +90,12 @@ _global.zeroArray = function(l) {
 	return ret;
 }
 
+_global.randomUnitArray = function(l) {
+	var ret = zeroArray(l);
+	ret[random(l)] = 1;
+	return ret;
+}
+
 Array.prototype.addArray = function(arr) {
 	for (var i = 0; i < this.length; ++i)
 		this[i] += arr[i];
