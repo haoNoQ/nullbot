@@ -15,7 +15,7 @@ function adaptVote(our, their, verbose) {
 	var ourTotal = our.reduce(function(prev, curr) { return prev + curr; });
 	var theirTotal = their.reduce(function(prev, curr) { return prev + curr; });
 	if (theirTotal === 0)
-		return verbose ? [0,0,0,0] : random(l);
+		return verbose ? zeroArray(l) : random(l);
 	var rating = [];
 	for (var i = 0; i < l; ++i)
 		rating[i] = their[i] / theirTotal;
