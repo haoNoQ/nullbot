@@ -1,4 +1,4 @@
 [AI]
-	name = "NullBot v3-beta2"
+	name = "NullBot v3-git"
 	js = nb_generic.js
 	tip = "NullBot - an adaptive skirmish AI."
