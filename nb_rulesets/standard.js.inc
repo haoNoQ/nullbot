@@ -22,6 +22,9 @@ const baseScale = 20;
 // for use in lassat.js.inc
 const lassatSplash = 4; 
 
+// set this to 1 to choose templates randomly, instead of later=>better.
+const randomTemplates = 0;
+
 // this function is used for avoiding AI cheats that appear due to 
 // being able to build droids before designing them
 function iCanDesign() {

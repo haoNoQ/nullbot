@@ -119,13 +119,14 @@ function produceVtol(factory) {
 
 function produceTemplateFromList(factory, list) {
 	var ret = scopeRatings();
-	for (var i = 0; i < list.length; ++i) {
+	for (var i = list.length - 1; i >= 0; --i) {
 		if (ret.land === 0 && !isHoverPropulsion(list[i].prop) && !isVtolPropulsion(list[i].prop))
 			continue;
 		if (ret.land === 0 && ret.sea === 0 && !isVtolPropulsion(list[i].prop))
 			continue;
-		if (ourBuildDroid(factory, "Template Droid", list[i].body, list[i].prop, list[i].weapons[0], list[i].weapons[1], list[i].weapons[2]))
-			return true;
+		if ((!randomTemplates) || withChance(100 / (i + 1)))
+			if (ourBuildDroid(factory, "Template Droid", list[i].body, list[i].prop, list[i].weapons[0], list[i].weapons[1], list[i].weapons[2]))
+				return true;
 	}
 	return false;
 }

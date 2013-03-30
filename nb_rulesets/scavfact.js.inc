@@ -48,6 +48,9 @@ const baseScale = 10;
 
 const lassatSplash = 4;
 
+// a special flag to choose templates randomly, instead of later=>better.
+const randomTemplates = 1;
+
 function iCanDesign() {
 	return true;
 }
@@ -137,19 +140,14 @@ const truckTemplates = [
 
 const weaponStats = {
 	scavengers: {
-		roles: [ 0.25, 0.25, 0.25, 0.25 ],
-		chatalias: "uhm",
-		micro: MICRO.MELEE, // treat all weapons as flamers
-		weapons: [
-		],
-		vtols: [
-		],
-		defenses: [
-		],
-		templates: [
-			{ res: "", body: "B4body-sml-trike01", prop: "BaBaProp", weapons: [ "bTrikeMG", ] }
-		],
-		extras: [
+		roles: [ 0.25, 0.25, 0.25, 0.25 ], chatalias: "uhm", micro: MICRO.MELEE, 
+		extras: [], weapons: [], vtols: [], defenses: [], templates: [
+			{ res: "", body: "B4body-sml-trike01", prop: "BaBaProp", weapons: [ "bTrikeMG", ] },
+			{ res: "", body: "B3body-sml-buggy01", prop: "BaBaProp", weapons: [ "BuggyMG", ] },
+			{ res: "", body: "B2JeepBody", prop: "BaBaProp", weapons: [ "BJeepMG", ] },
+			{ res: "", body: "BusBody", prop: "BaBaProp", weapons: [ "BusCannon", ] },
+			{ res: "", body: "FireBody", prop: "BaBaProp", weapons: [ "BabaFlame", ] },
+			{ res: "", body: "B1BaBaPerson01", prop: "BaBaLegs", weapons: [ "BaBaMG", ] },
 		],
 	},
 };
