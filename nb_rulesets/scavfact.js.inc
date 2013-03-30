@@ -44,7 +44,7 @@ function eventGameInit()
 	baseLocation = startPositions[me];
 }
 
-const baseScale = 10;
+const baseScale = 15;
 
 const lassatSplash = 4;
 
@@ -147,7 +147,6 @@ const weaponStats = {
 			{ res: "", body: "B2JeepBody", prop: "BaBaProp", weapons: [ "BJeepMG", ] },
 			{ res: "", body: "BusBody", prop: "BaBaProp", weapons: [ "BusCannon", ] },
 			{ res: "", body: "FireBody", prop: "BaBaProp", weapons: [ "BabaFlame", ] },
-			{ res: "", body: "B1BaBaPerson01", prop: "BaBaLegs", weapons: [ "BaBaMG", ] },
 		],
 	},
 };
