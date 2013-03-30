@@ -4,11 +4,8 @@
  * 
  */
 
-function eventGameInit() {
-	queue("setTimers", me * 100);
-}
-
 function eventStartLevel() {
+	queue("setTimers", me * 100);
 	// initialize pseudo-random subpersonality here
 	var j = 1, s = 0;
 	for (var i = 0; i < maxPlayers; ++i) {
