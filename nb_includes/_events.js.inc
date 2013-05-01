@@ -6,23 +6,31 @@
 
 function eventStartLevel() {
 	queue("setTimers", me * 100);
-	// initialize pseudo-random subpersonality here
-	var j = 1, s = 0;
-	for (var i = 0; i < maxPlayers; ++i) {
-		if (allianceExistsBetween(me, i))
-			s += j;
-		j *= 2;
-	}
-	var s = s + (new Date()).getMinutes(); // the random "s" number obtained here is the same for all players in any team
-	j = 0;
-	for (var i in subpersonalities) // count the amount of subpersonalities
-		++j;
-	s = s % j;
-	j = 0;
-	for (var i in subpersonalities) {
-		if (j === s)
-			personality = subpersonalities[i];
-		++j;
+	if (alliancesType === ALLIANCES_TEAMS) {
+		// initialize subpersonality pseudo-randomly here
+		// to make sure teammates have the same personality
+		var j = 1, s = 0;
+		for (var i = 0; i < maxPlayers; ++i) {
+			if (allianceExistsBetween(me, i))
+				s += j;
+			j *= 2;
+		}
+		// the random "s" number obtained here is the same for all players in any team
+		var s = s + (new Date()).getMinutes();
+		j = 0;
+		for (var i in subpersonalities) // count the amount of subpersonalities
+			++j;
+		s = s % j;
+		j = 0;
+		for (var i in subpersonalities) {
+			if (j === s)
+				personality = subpersonalities[i];
+			++j;
+		}
+	} else {
+		// if teams are not sharing research, or there are no teams at all,
+		// initialize the subpersonality randomly and don't care
+		personality = randomItem(subpersonalities);
 	}
 	// the following code is necessary to avoid some strange game bug when droids that 
 	// are initially buried into the ground fail to move out of the way when a building 
