@@ -78,7 +78,10 @@ function findNearestGroup(x, y) {
 
 function targetSuitableForHarass(object) {
 	function uncached() {
-		return enumRange(object.x, object.y, baseScale / 2, ENEMIES, false).length <= groupSize(miscGroup);
+		var ret = enumRange(object.x, object.y, baseScale / 2, ENEMIES, false).filter(function(obj) {
+			return !(obj.type == STRUCTURE && obj.stattype != DEFENSE);
+		}).length;
+		return ret <= groupSize(miscGroup);
 	}
 	return cached(uncached, 60000, object.id);
 }
