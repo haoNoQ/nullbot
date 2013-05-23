@@ -217,8 +217,8 @@ const weaponStats = {
 		],
 		// Cyborg templates, better borgs below, as usual.
 		templates: [
-			{ res: "R-Wpn-MG1Mk1", body: "CyborgChain1Ground", prop: "CyborgLegs", weapons: [ "CyborgChaingun", ] }, // mg cyborg
-			{ res: "R-Wpn-MG4", body: "CybRotMgGrd", prop: "CyborgLegs", weapons: [ "CyborgRotMG", ] }, // ag cyborg
+			{ res: "R-Wpn-MG1Mk1", body: "CyborgLightBody", prop: "CyborgLegs", weapons: [ "CyborgChaingun", ] }, // mg cyborg
+			{ res: "R-Wpn-MG4", body: "CyborgLightBody", prop: "CyborgLegs", weapons: [ "CyborgRotMG", ] }, // ag cyborg
 		],
 		// Extra things to research on this path, even if they don't lead to any new stuff
 		extras: [
@@ -241,8 +241,8 @@ const weaponStats = {
 			{ res: "R-Defense-PlasmiteFlamer", stat: "Plasmite-flamer-bunker", defrole: DEFROLE.GATEWAY }, // plasmite bunker
 		],
 		templates: [
-			{ res: "R-Wpn-Flamer01Mk1", body: "CyborgFlamerGrd", prop: "CyborgLegs", weapons: [ "CyborgFlamer01", ] }, // flamer cyborg
-			{ res: "R-Wpn-Flame2", body: "Cyb-Bod-Thermite", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Thermite", ] }, // flamer cyborg
+			{ res: "R-Wpn-Flamer01Mk1", body: "CyborgLightBody", prop: "CyborgLegs", weapons: [ "CyborgFlamer01", ] }, // flamer cyborg
+			{ res: "R-Wpn-Flame2", body: "CyborgLightBody", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Thermite", ] }, // flamer cyborg
 		],
 		extras: [
 			"R-Wpn-Flamer-ROF03",
@@ -289,12 +289,12 @@ const weaponStats = {
 			{ res: "R-Defense-MassDriver", stat: "X-Super-MassDriver", defrole: DEFROLE.FORTRESS }, // mass driver fort
 		],
 		templates: [
-			{ res: "R-Wpn-Cannon1Mk1", body: "CyborgCannonGrd", prop: "CyborgLegs", weapons: [ "CyborgCannon", ] }, // lc borg
-			{ res: "R-Cyborg-Hvywpn-Mcannon", body: "Cyb-Hvybod-Mcannon", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-Mcannon", ] }, // mc super
-			{ res: "R-Cyborg-Hvywpn-HPV", body: "Cyb-Hvybod-HPV", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-HPV", ] }, // hpv super
-			{ res: "R-Cyborg-Hvywpn-Acannon", body: "Cyb-Hvybod-Acannon", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-Acannon", ] }, // ac super
-			{ res: "R-Wpn-RailGun01", body: "Cyb-Bod-Rail1", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Rail1", ] }, // needle borg
-			{ res: "R-Cyborg-Hvywpn-RailGunner", body: "Cyb-Hvybod-RailGunner", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-RailGunner", ] }, // rail super
+			{ res: "R-Wpn-Cannon1Mk1", body: "CyborgLightBody", prop: "CyborgLegs", weapons: [ "CyborgCannon", ] }, // lc borg
+			{ res: "R-Cyborg-Hvywpn-Mcannon", body: "CyborgHeavyBody", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-Mcannon", ] }, // mc super
+			{ res: "R-Cyborg-Hvywpn-HPV", body: "CyborgHeavyBody", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-HPV", ] }, // hpv super
+			{ res: "R-Cyborg-Hvywpn-Acannon", body: "CyborgHeavyBody", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-Acannon", ] }, // ac super
+			{ res: "R-Wpn-RailGun01", body: "CyborgLightBody", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Rail1", ] }, // needle borg
+			{ res: "R-Cyborg-Hvywpn-RailGunner", body: "CyborgHeavyBody", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-RailGunner", ] }, // rail super
 		],
 		extras: [
 			"R-Wpn-Cannon-ROF06",
@@ -343,7 +343,7 @@ const weaponStats = {
 			{ res: "R-Defense-HvyHowitzer", stat: "Emplacement-Howitzer150", defrole: DEFROLE.ARTY },
 		],
 		templates: [
-			{ res: "R-Wpn-Mortar01Lt", body: "Cyb-Bod-Grenade", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Grenade", ] },
+			{ res: "R-Wpn-Mortar01Lt", body: "CyborgLightBody", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Grenade", ] },
 		],
 		extras: [
 			"R-Wpn-Bomb-Accuracy03",
@@ -408,10 +408,10 @@ const weaponStats = {
 			{ res: "R-Defense-Super-Missile", stat: "X-Super-Missile", defrole: DEFROLE.FORTRESS }, // missile fortress
 		],
 		templates: [
-			{ res: "R-Wpn-Rocket01-LtAT", body: "CyborgRkt1Ground", prop: "CyborgLegs", weapons: [ "CyborgRocket", ] }, // lancer borg
-			{ res: "R-Cyborg-Hvywpn-TK", body: "Cyb-Hvybod-TK", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-TK", ] }, // tk super
-			{ res: "R-Wpn-Missile2A-T", body: "Cyb-Bod-Atmiss", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Atmiss", ] }, // scourge borg
-			{ res: "R-Cyborg-Hvywpn-A-T", body: "Cyb-Hvybod-A-T", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-A-T", ] }, // scourge super
+			{ res: "R-Wpn-Rocket01-LtAT", body: "CyborgLightBody", prop: "CyborgLegs", weapons: [ "CyborgRocket", ] }, // lancer borg
+			{ res: "R-Cyborg-Hvywpn-TK", body: "CyborgHeavyBody", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-TK", ] }, // tk super
+			{ res: "R-Wpn-Missile2A-T", body: "CyborgLightBody", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Atmiss", ] }, // scourge borg
+			{ res: "R-Cyborg-Hvywpn-A-T", body: "CyborgHeavyBody", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-A-T", ] }, // scourge super
 		],
 		extras: [
 			"R-Wpn-Rocket-ROF03",
@@ -500,8 +500,8 @@ const weaponStats = {
 			{ res: "R-Defense-HeavyLas", stat: "Emplacement-HeavyLaser", defrole: DEFROLE.STANDALONE }, // hvy empl
 		],
 		templates: [
-			{ res: "R-Wpn-Laser01", body: "Cyb-Bod-Las1", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Laser", ] }, // flash borg
-			{ res: "Cyb-Hvy-PulseLsr", body: "Cyb-Hvybod-PulseLsr", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-PulseLsr", ] }, // pulse super
+			{ res: "R-Wpn-Laser01", body: "CyborgLightBody", prop: "CyborgLegs", weapons: [ "Cyb-Wpn-Laser", ] }, // flash borg
+			{ res: "Cyb-Hvy-PulseLsr", body: "CyborgHeavyBody", prop: "CyborgLegs", weapons: [ "Cyb-Hvywpn-PulseLsr", ] }, // pulse super
 		],
 		extras: [],
 	},
