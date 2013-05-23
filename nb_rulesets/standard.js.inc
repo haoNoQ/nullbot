@@ -175,7 +175,7 @@ const truckTurrets = [
 ];
 
 const truckTemplates = [
-	{ body: "Cyb-Bod-ComEng", prop: "CyborgLegs", weapons: [ "CyborgSpade", ] } // engineer
+	{ body: "CyborgLightBody", prop: "CyborgLegs", weapons: [ "CyborgSpade", ] } // engineer
 ];
 
 // Unlike bodies and propulsions, weapon lines don't have any specific meaning.
