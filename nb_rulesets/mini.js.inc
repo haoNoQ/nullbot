@@ -50,7 +50,7 @@ const sensorTurrets = [
 
 const fundamentalResearch = [
 	"R-MiniRepairFacility",
-	"R-MiniZenithTower",
+	"R-MiniRearmPad",
 ];
 
 const fastestResearch = [
@@ -126,7 +126,7 @@ const truckTemplates = [
 
 const weaponStats = {
 	mg: {
-		roles: [ 0.25, 0.25, 0.25, 0.25 ], chatalias: "mg", micro: MICRO.RANGED,
+		roles: [ 0.3, 0.3, 0.2, 0.2 ], chatalias: "mg", micro: MICRO.RANGED,
 		weapons: [], vtols: [],
 		defenses: [
 			{ res: "R-MiniMGBunker", stat: "MiniMGBunker", defrole: DEFROLE.STANDALONE },
