@@ -1,4 +1,4 @@
 [AI]
-	name = "NullBot Turtle v3.02"
+	name = "NullBot Turtle v3-git"
 	js = nb_turtle.js
 	tip = "NullBot - a turtle wars personality."
