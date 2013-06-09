@@ -61,7 +61,7 @@ function buildOrder() {
 	if (derrickCount > 0) 
 		if (buildMinimum(structures.gens, 1)) return true;
 	if (buildMinimum(structures.labs, 1)) return true;
-	if (buildMinimum(structures.templateFactories, 1)) return true;
+	if (buildMinimum(structures.templateFactories, 2)) return true;
 	if (buildMinimum(structures.gens, 1)) return true;
 	if (buildMinimumDerricks(2)) return true;
 	if (buildMinimum(structures.gens, 2)) return true;
