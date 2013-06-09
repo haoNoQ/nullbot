@@ -124,6 +124,8 @@ function produceTemplateFromList(factory, list) {
 			continue;
 		if (ret.land === 0 && ret.sea === 0 && !isVtolPropulsion(list[i].prop))
 			continue;
+		if (isVtolPropulsion(list[i].prop) !== (factory.stattype === VTOL_FACTORY))
+			continue;
 		if ((!randomTemplates) || withChance(100 / (i + 1)))
 			if (ourBuildDroid(factory, "Template Droid", list[i].body, list[i].prop, list[i].weapons[0], list[i].weapons[1], list[i].weapons[2]))
 				return true;
@@ -193,7 +195,10 @@ function checkTankProduction() {
 
 function checkTemplateProduction() {
 	var success = false;
-	enumIdleStructList(structures.templateFactories).forEach(function(factory) {
+	enumIdleStructList(structures.templateFactories)
+		.concat(enumIdleStructList(structures.vtolFactories))
+		.forEach(function(factory)
+	{
 		success = success || produceTemplate(factory);
 	});
 	return success;
