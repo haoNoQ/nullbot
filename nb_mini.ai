@@ -1,0 +1,4 @@
+[AI]
+	name = "NullBot ~Mini~ v3-git"
+	js = nb_mini.js
+	tip = "NullBot - tweaked for WZ Mini mod."
