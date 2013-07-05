@@ -3,7 +3,7 @@
  * This file defines generic things that should be defined
  * prior to defining a ruleset. 
  * 
- * NOTE: This file is not included from main.js.inc .
+ * NOTE: This file is not included from main.js .
  * 
  */
 

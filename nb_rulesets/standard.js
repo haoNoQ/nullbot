@@ -10,7 +10,7 @@
  * how nb_generic.[js|ai] is provided for this ruleset.
  * 
  * You may find some useful functions for working with these stats
- * in stats.js.inc .
+ * in stats.js .
  * 
  */
 
@@ -19,7 +19,7 @@
 const baseScale = 20; 
 
 // diameter of laser satellite splash/incendiary damage 
-// for use in lassat.js.inc
+// for use in lassat.js
 const lassatSplash = 4; 
 
 // set this to 1 to choose templates randomly, instead of later=>better.

@@ -16,13 +16,13 @@ NB_INCLUDES = NB_PATH + "nb_includes/";
 NB_RULESETS = NB_PATH + "nb_rulesets/";
 
 // please don't touch this line
-include(NB_INCLUDES + "_head.js.inc");
+include(NB_INCLUDES + "_head.js");
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // Start the actual personality definition
 
 // the rules in which this personality plays
-include(NB_RULESETS + "mini.js.inc");
+include(NB_RULESETS + "mini.js");
 
 // variables defining the personality
 var subpersonalities = {
@@ -73,4 +73,4 @@ function buildOrder() {
 ////////////////////////////////////////////////////////////////////////////////////////////
 // Proceed with the main code
 
-include(NB_INCLUDES + "_main.js.inc");
+include(NB_INCLUDES + "_main.js");
