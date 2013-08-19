@@ -361,11 +361,14 @@ _global.rebalanceGroups = function() {
 		if (ret[0] > 0 && ret[0] < attackGroupSize())
 			for (var i = 1; i < ret.length; ++i) {
 				var list = enumGroup(ret[i]);
-				for (var j = 0; j < list.length; ++j)
-					if (droidCanReach(list[j], findTarget(ret[0]).x, findTarget(ret[0]).y)) {
-						groupAdd(ret[0], list[j]);
-						return;
-					}
+				for (var j = 0; j < list.length; ++j) {
+					target = findTarget(ret[0]);
+					if (defined(target))
+						if (droidCanReach(list[j], target.x, target.y)) {
+							groupAdd(ret[0], list[j]);
+							return;
+						}
+				}
 			}
 }
 
