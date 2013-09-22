@@ -11,6 +11,7 @@ _global.MAX_GROUPS = maxPlayers;
 _global.miscGroup = MAX_GROUPS;
 _global.vtolGroup = miscGroup + 1;
 var groupInfo = [];
+var firstTimeHarass = true;
 
 function GroupInfo() {
 	this.lastAttacked = undefined; // gameTime at the moment of the last combat
@@ -317,12 +318,14 @@ _global.unsetTarget = function(player) {
 }
 
 _global.groupDroid = function(droid) {
+	
 	if (droid.droidType === DROID_WEAPON || droid.droidType === DROID_CYBORG) {
 		if (isVTOL(droid)) {
 			groupAdd(vtolGroup, droid);
 			return;
 		}
-		if (withChance(100 - groupSize(miscGroup) * 100 / personality.maxMiscTanks)) {
+		if (withChance(100 - groupSize(miscGroup) * 50 / personality.maxMiscTanks) || firstTimeHarass) {
+			firstTimeHarass = false;
 			groupAdd(miscGroup, droid);
 			return;
 		}
