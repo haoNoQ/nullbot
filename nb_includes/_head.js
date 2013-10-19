@@ -16,7 +16,7 @@ const ROLE = {
 }
 
 // something dual to the previous enum
-// should have the same number of items
+// should have the same number of items in the same order
 const OBJTYPE = {
 	TANK: 0,
 	BORG: 1,
@@ -72,9 +72,15 @@ const RESASPECTS = {
 }
 
 const PROPULSIONUSAGE = {
-    GROUND : 1,
-    HOVER: 2,
-    VTOL: 4
+	GROUND : 1,
+	HOVER: 2,
+	VTOL: 4
+}
+
+const SCOPES = {
+	land: 0,
+	sea: 1,
+	air: 2,
 }
 
 // what to use this body for? (bit field)
@@ -88,8 +94,8 @@ const BODYUSAGE = {
 
 // what sort of weapons this body is resistant to?
 const BODYCLASS = {
-	KINETIC: 1,
-	THERMAL: 2,
+	KINETIC: 0,
+	THERMAL: 1,
 }
 
 // should this module be prioritized when not having enough power?

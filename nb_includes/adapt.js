@@ -63,12 +63,6 @@ function addStat(to, what, weight) {
 	}
 }
 
-const SCOPES = {
-	land: 0,
-	sea: 0,
-	air: 0,
-}
-
 function ScopeStat() {
 	// simple stats by scopes
 	this.land = new SimpleStat();
@@ -387,6 +381,19 @@ function groupTheirs(gr) {
 	return cached(uncached, 500, gr);
 }
 
+_global.scopeRatings = function() {
+	function uncached() {
+		var ret = { land: 0, sea: 0, air: 0 };
+		enumLivingPlayers().filter(isEnemy).forEach(function(player) {
+			ret.land += countLandTargets(player);
+			ret.sea += countSeaTargets(player);
+			ret.air += countAirTargets(player);
+		});
+		return ret;
+	}
+	return cached(uncached, 5000);
+}
+
 // use this for research; 15% smooth
 _global.chooseWeaponRole = function(gr) {
 	function uncached() {
@@ -430,14 +437,15 @@ _global.chooseObjectType = function() {
 	function uncached() {
 		var our = groupOurs(), their = groupTheirs();
 		// behaviour specific for a turtle AI
-		if (personality.defensiveness === 100)
+		if (personality.defensiveness === 100) {
 			if (iHaveVtol() && withChance(personality.vtolness) && adaptVote(
 				[ our.obj[OBJTYPE.DEFS], our.obj[OBJTYPE.VTOL] ],
 				[ their.role[ROLE.AA], their.role[ROLE.AT] + their.role[ROLE.AP] + 2 * their.role[ROLE.AS] ]
 			) === 1)
-			return OBJTYPE.VTOL;
-		else
-			return OBJTYPE.DEFS;
+				return OBJTYPE.VTOL;
+			else
+				return OBJTYPE.DEFS;
+		}
 		// behaviour of a generic AI
 		if (withChance(personality.defensiveness) && adaptVote(
 				[ our.obj[OBJTYPE.TANK] + our.obj[OBJTYPE.BORG] + our.obj[OBJTYPE.VTOL], our.obj[OBJTYPE.DEFS] ],
@@ -453,19 +461,6 @@ _global.chooseObjectType = function() {
 			[ our.obj[OBJTYPE.TANK], our.obj[OBJTYPE.BORG] ],
 			[ their.role[ROLE.AP], their.role[ROLE.AT] ]
 		) ? OBJTYPE.BORG : OBJTYPE.TANK;
-	}
-	return cached(uncached, 5000);
-}
-
-_global.scopeRatings = function() {
-	function uncached() {
-		var ret = { land: 0, sea: 0, air: 0 };
-		enumLivingPlayers().filter(isEnemy).forEach(function(player) {
-			ret.land += countLandTargets(player);
-			ret.sea += countSeaTargets(player);
-			ret.air += countAirTargets(player);
-		});
-		return ret;
 	}
 	return cached(uncached, 5000);
 }

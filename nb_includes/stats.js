@@ -98,11 +98,11 @@ _global.guessDroidMicro = function(droid) {
 }
 
 _global.guessBodyArmor = function(name) {
-    var body = bodyStats.filterProperty("stat", name).last()
-    if (defined(body))
-        return body.armor;
-    else
-        niceDebug("Ruleset warning: Couldn't guess body class of", name);
+	var body = bodyStats.filterProperty("stat", name).last()
+	if (defined(body))
+		return body.armor;
+	else
+		niceDebug("Ruleset warning: Couldn't guess body class of", name);
 }
 
 function weaponPathIsAvailable(path, objectType, defrole) {

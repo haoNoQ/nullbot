@@ -67,6 +67,10 @@ Array.prototype.last = function() {
 		return this[this.length - 1];
 }
 
+Array.prototype.max = function() {
+	return Math.max.apply({}, this);
+}
+
 Array.prototype.filterProperty = function(property, value) {
 	return this.filter(function(element) {
 		return element[property] === value;
@@ -84,10 +88,18 @@ Array.prototype.shuffle = function() {
 }
 
 _global.zeroArray = function(l) {
-	var ret = [];
-	for (var i = 0; i < l; ++i)
-		ret[i] = 0;
-	return ret;
+	if (arguments.length == 1) {
+		var ret = [];
+		for (var i = 0; i < l)
+			ret[i] = 0;
+		return ret;
+	} else {
+		var ret = [];
+		var moreArgs = Array.prototype.slice.call(arguments, 1);
+		for (var i = 0; i < arguments[0])
+			ret[i] = zeroArray.call(moreArgs)
+		return ret;
+	}
 }
 
 _global.randomUnitArray = function(l) {
