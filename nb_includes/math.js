@@ -90,14 +90,14 @@ Array.prototype.shuffle = function() {
 _global.zeroArray = function(l) {
 	if (arguments.length == 1) {
 		var ret = [];
-		for (var i = 0; i < l)
+		for (var i = 0; i < l; ++i)
 			ret[i] = 0;
 		return ret;
 	} else {
 		var ret = [];
 		var moreArgs = Array.prototype.slice.call(arguments, 1);
-		for (var i = 0; i < arguments[0])
-			ret[i] = zeroArray.call(moreArgs)
+		for (var i = 0; i < arguments[0]; ++i)
+			ret[i] = zeroArray.call(moreArgs);
 		return ret;
 	}
 }
