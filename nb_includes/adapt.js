@@ -40,9 +40,9 @@ function adaptVote(our, their, verbose) {
 
 function SimpleStat() {
 	// propulsion classes used by the player
-	this.obj = zeroArray(ROLE.LENGTH);
+	this.obj = zeroArray(countKeys(ROLE));
 	// weapon-propulsion classes used by the player
-	this.role = zeroArray(ROLE.LENGTH);
+	this.role = zeroArray(countKeys(ROLE));
 	// armor used by the player
 	this.kbody = 0;
 	this.tbody = 0;
