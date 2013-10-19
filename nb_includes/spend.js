@@ -9,10 +9,25 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 (function(_global) {
 
+_global.fundamentalSpender = function() {
+	return checkConstruction();
+}
+
+_global.researchSpender = function() {
+	return checkResearch();
+}
+
+_global.combatSpender = function() {
+	checkProduction();
+	return true;
+}
+
 _global.spendMoney = function() {
-	queue("checkResearch", 100);
-	queue("checkConstruction", 200);
-	queue("checkProduction", 300);
+	// do we have any money?
+	if (myPower() < 0) return;
+	if (fundamentalSpender()) return;
+	if (researchSpender()) return;
+	if (combatSpender()) return;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

@@ -71,7 +71,7 @@ function doResearch(lab) {
 }
 
 _global.checkResearch = function() {
-	enumIdleStructList(structures.labs).forEach(doResearch);
+	return enumIdleStructList(structures.labs).some(doResearch);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

@@ -348,20 +348,20 @@ function recycleDefenses() {
 }
 
 _global.checkConstruction = function() {
+	// do we have enough trucks?
 	if (enumTrucks().filter(truckFree).length === 0)
-		return;
-	if (functionSeries("construction", [
-		finishStructures,
-		buildOrder,
-		buildExpand,
-		buildEnergy,
-		buildModules,
-		buildVtols,
-		buildExtras,
-		recycleDefenses,
-		buildDefenses,
-	]))
-		queue("checkConstruction");
+		return true;
+	if (finishStructures())
+		return true;
+	// is build order completed?
+	if (buildOrder())
+		return true;
+	// do we have enough generators for derricks?
+	if (buildEnergy())
+		return true;
+	// are we moduled up?
+	if (buildModules())
+		return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
