@@ -14,6 +14,8 @@ _global.setForcedResearch = function(list) {
 }
 
 function doResearch(lab) {
+	if (!structureIdle(lab))
+		return false;
 	if (defined(forcedResearch)) {
 		if (forcedResearch === null)
 			return false;
@@ -70,8 +72,27 @@ function doResearch(lab) {
 	
 }
 
+function defaultResearchPerOil() {
+	var oils = countStructList(structures.derricks);
+	if (oils >= 15)
+		return 5;
+	if (oils >= 10)
+		return 4;
+	if (oils >= 8)
+		return 3;
+	if (oils >= 5)
+		return 2;
+	return 1;
+}
+
 _global.checkResearch = function() {
-	return enumIdleStructList(structures.labs).some(doResearch);
+	var activeLabs = defaultResearchPerOil();
+	if ("researchPerOil" in _global)
+		activeLabs = researchPerOil();
+	var labs = enumStructList(structures.labs).sort(function(lab) {
+		return lab.id;
+	}).slice(-(labs + 1), -1);
+	return labs.some(doResearch);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

@@ -159,10 +159,9 @@ function buildOrder() {
 		if (buildMinimum(structures.factories, 2)) return true;
 		if (buildMinimum(structures.templateFactories, 1)) return true;
 		if (buildMinimum(structures.vtolFactories, 1)) return true;
-		return false;
 	}
 	
-	return true;
+	return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
