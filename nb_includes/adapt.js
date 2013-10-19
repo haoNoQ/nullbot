@@ -470,11 +470,5 @@ _global.scopeRatings = function() {
 	return cached(uncached, 5000);
 }
 
-_global.spendMoney = function() {
-	queue("checkResearch", 100);
-	queue("checkConstruction", 200);
-	queue("checkProduction", 300);
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////
 })(this);

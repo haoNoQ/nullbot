@@ -21,6 +21,7 @@ include(NB_INCLUDES + "produce.js");
 include(NB_INCLUDES + "tactics.js");
 include(NB_INCLUDES + "lassat.js");
 include(NB_INCLUDES + "chat.js");
+include(NB_INCLUDES + "spend.js");
 
 include(NB_INCLUDES + "timers.js");
 include(NB_INCLUDES + "_events.js");
