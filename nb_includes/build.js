@@ -290,7 +290,7 @@ function buildModules() {
 	return false;
 }
 
-function buildVtols() {
+_global.buildVtols = function() {
 	if (buildMinimum(structures.vtolPads, enumDroid(me, DROID_WEAPON).filter(isVTOL).length / 2))
 		return true;
 	return false;

@@ -295,8 +295,10 @@ function vtolReady(droid) {
 		return false;
 	if (vtolArmed(droid, 99))
 		return true;
-	if (droid.order != DORDER_REARM)
+	if (droid.order != DORDER_REARM) {
 		orderDroid(droid, DORDER_REARM);
+		buildVtols() // actually pads
+	}
 	return false;
 }
 
