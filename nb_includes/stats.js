@@ -126,7 +126,7 @@ function weaponPathIsAvailable(path, objectType, defrole) {
 }
 
 _global.getProductionPaths = function() {
-	if (!defined(fallbackWeapon))
+	if (!defined(fallbackWeapon) || gameTime > 600000)
 		return personality.weaponPaths;
 	return [weaponStats[fallbackWeapon]].concat(personality.weaponPaths);
 }
