@@ -281,16 +281,18 @@ function pickVtolTarget(droid) {
 	return cached(uncached, 100, droid.canHitAir + 2 * droid.canHitGround);
 }
 
-function vtolArmed(droid, percent) {
-	for (var i = 0; i < droid.weapons.length; ++i)
-		if (droid.weapons[i].armed >= 99)
+function vtolArmed(obj, percent) {
+	if (obj.type != DROID)
+		return;
+	if (!isVTOL(obj))
+		return false;
+	for (var i = 0; i < obj.weapons.length; ++i)
+		if (obj.weapons[i].armed >= 99)
 			return true;
 	return false;
 }
 
 function vtolReady(droid) {
-	if (!droid.isVTOL)
-		return false;
 	if (droid.order == DORDER_ATTACK)
 		return false;
 	if (vtolArmed(droid, 99))
