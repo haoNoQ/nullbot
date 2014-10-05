@@ -261,13 +261,13 @@ function pickVtolTarget(droid) {
 		}
 		var enemy = enumLivingPlayers().filter(isEnemy).random();
 		var list;
-		list = enumDroid(enemy, DROID_WEAPON).filterProperty("canHitAir", true).filter(canHit);
-		if (list.length > 0) return list.random();
-		list = enumDroid(enemy, DROID_CYBORG).filterProperty("canHitAir", true).filter(canHit);
+		list = enumStructList(miscTargets, enemy).filter(canHit);
 		if (list.length > 0) return list.random();
 		list = enumStruct(enemy, DEFENSE).filterProperty("canHitAir", true).filter(canHit);
 		if (list.length > 0) return list.random();
-		list = enumStructList(miscTargets, enemy).filter(canHit);
+		list = enumDroid(enemy, DROID_WEAPON).filterProperty("canHitAir", true).filter(canHit);
+		if (list.length > 0) return list.random();
+		list = enumDroid(enemy, DROID_CYBORG).filterProperty("canHitAir", true).filter(canHit);
 		if (list.length > 0) return list.random();
 		list = enumStructList(targets, enemy).filter(canHit);
 		if (list.length > 0) return list.random();
