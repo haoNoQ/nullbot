@@ -281,6 +281,8 @@ function vtolReady(droid) {
 	for (var i = 0; i < droid.weapons.length; ++i)
 		if (droid.weapons[i].armed > 0)
 			return true;
+	if (droid.order != DORDER_REARM)
+		orderDroid(droid, DORDER_REARM);
 	return false;
 }
 
