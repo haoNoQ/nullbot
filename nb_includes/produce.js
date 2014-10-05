@@ -26,11 +26,11 @@ function chooseWeapon(forVtol) {
 	if (!defined(forVtol))
 		forVtol = false;
 	if (forVtol) {
-		var ret = chooseAvailableWeaponPathByRoleRatings(personality.weaponPaths, chooseAttackWeaponRole(), 3);
+		var ret = chooseAvailableWeaponPathByRoleRatings(getProductionPaths(), chooseAttackWeaponRole(), 3);
 		if (defined(ret))
 			return ret.vtols.concat().reverse();
 	} else {
-		var ret = chooseAvailableWeaponPathByRoleRatings(personality.weaponPaths, chooseAttackWeaponRole(), 0);
+		var ret = chooseAvailableWeaponPathByRoleRatings(getProductionPaths(), chooseAttackWeaponRole(), 0);
 		if (defined(ret))
 			return ret.weapons.concat().reverse();
 	}
@@ -134,13 +134,13 @@ function produceTemplateFromList(factory, list) {
 }
 
 function produceTemplate(factory) {
-	var path = chooseAvailableWeaponPathByRoleRatings(personality.weaponPaths, chooseAttackWeaponRole(), 1);
+	var path = chooseAvailableWeaponPathByRoleRatings(getProductionPaths(), chooseAttackWeaponRole(), 1);
 	if (defined(path))
 		return produceTemplateFromList(factory, path.templates);
 	return false;
 }
 
-function checkTruckProduction() {
+_global.checkTruckProduction = function() {
 	var trucks = enumTrucks();
 	var hoverTrucksCount = trucks.filter(function(droid) { return isHoverPropulsion(droid.propulsion); }).length;
 	if (iHaveHover() && hoverTrucksCount < personality.minHoverTrucks) {
@@ -215,17 +215,15 @@ function checkVtolProduction() {
 }
 
 _global.checkProduction = function() {
-	if (checkTruckProduction())
-		return; // will proceed on the next cycle
 	switch(chooseObjectType()) {
 		case 1:
 			if (checkTemplateProduction())
 				return;
-		case 0:
-			if (checkTankProduction())
-				return;
 		case 3:
 			if (checkVtolProduction())
+				return;
+		default:
+			if (checkTankProduction())
 				return;
 	}
 	// if having too much energy, don't care about what we produce

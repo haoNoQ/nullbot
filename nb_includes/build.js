@@ -177,7 +177,7 @@ function captureOil(oil) {
 }
 
 function chooseDefense(defrole) {
-	return weaponStatsToDefenses(chooseAvailableWeaponPathByRoleRatings(personality.weaponPaths, chooseDefendWeaponRole(), 2, defrole), defrole);
+	return weaponStatsToDefenses(chooseAvailableWeaponPathByRoleRatings(getProductionPaths(), chooseDefendWeaponRole(), 2, defrole), defrole);
 }
 
 function buildTowers() {

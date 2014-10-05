@@ -124,6 +124,8 @@ const truckTemplates = [
 	{ body: "MiniExcavatorBody", prop: "wheeled01", weapons: [ "MiniExcavatorArm", ] },
 ];
 
+const fallbackWeapon = 'mg';
+
 const weaponStats = {
 	mg: {
 		roles: [ 0.3, 0.3, 0.2, 0.2 ], chatalias: "mg", micro: MICRO.RANGED,

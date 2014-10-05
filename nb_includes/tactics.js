@@ -318,7 +318,6 @@ _global.unsetTarget = function(player) {
 }
 
 _global.groupDroid = function(droid) {
-	
 	if (droid.droidType === DROID_WEAPON || droid.droidType === DROID_CYBORG) {
 		if (isVTOL(droid)) {
 			groupAdd(vtolGroup, droid);

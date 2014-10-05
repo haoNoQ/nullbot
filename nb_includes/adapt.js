@@ -472,8 +472,12 @@ _global.scopeRatings = function() {
 
 _global.spendMoney = function() {
 	queue("checkResearch", 100);
-	queue("checkConstruction", 200);
-	queue("checkProduction", 300);
+	if (checkTruckProduction())
+		return; // will proceed on the next cycle
+	if (chooseObjectType() == OBJTYPE.DEFS)
+		queue("checkConstruction", 200);
+	else
+		queue("checkProduction", 300);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

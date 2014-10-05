@@ -138,6 +138,8 @@ const truckTurrets = [
 const truckTemplates = [
 ];
 
+const fallbackWeapon = 'scavengers';
+
 const weaponStats = {
 	scavengers: {
 		roles: [ 0.25, 0.25, 0.25, 0.25 ], chatalias: "uhm", micro: MICRO.MELEE, 

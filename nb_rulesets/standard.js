@@ -178,6 +178,8 @@ const truckTemplates = [
 	{ body: "CyborgLightBody", prop: "CyborgLegs", weapons: [ "CyborgSpade", ] } // engineer
 ];
 
+const fallbackWeapon = 'machineguns';
+
 // Unlike bodies and propulsions, weapon lines don't have any specific meaning.
 // You can make as many weapon lines as you want for your ruleset.
 const weaponStats = {

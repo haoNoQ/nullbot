@@ -125,6 +125,12 @@ function weaponPathIsAvailable(path, objectType, defrole) {
 	}
 }
 
+_global.getProductionPaths = function() {
+	if (!defined(fallbackWeapon))
+		return personality.weaponPaths;
+	return [weaponStats[fallbackWeapon]].concat(personality.weaponPaths);
+}
+
 _global.chooseAvailableWeaponPathByRoleRatings = function(paths, rating, objectType, defrole) {
 	var minDist = Infinity, minPath;
 	paths.forEach(function(path) {
