@@ -251,13 +251,17 @@ function attackTarget(droid) {
 		}
 }
 
+function vtolCanHit(droid, obj) {
+	if (typeof(obj) === DROID && isVTOL(obj))
+		return droid.canHitAir;
+	else
+		return droid.canHitGround;
+}
+
 function pickVtolTarget(droid) {
 	function uncached() {
 		function canHit(obj) {
-			if (typeof(obj) === DROID && isVTOL(obj))
-				return droid.canHitAir;
-			else
-				return droid.canHitGround;
+			return vtolCanHit(droid, obj);
 		}
 		var enemy = enumLivingPlayers().filter(isEnemy).random();
 		var list;
@@ -277,10 +281,20 @@ function pickVtolTarget(droid) {
 	return cached(uncached, 100, droid.canHitAir + 2 * droid.canHitGround);
 }
 
-function vtolReady(droid) {
+function vtolArmed(droid, percent) {
 	for (var i = 0; i < droid.weapons.length; ++i)
-		if (droid.weapons[i].armed > 0)
+		if (droid.weapons[i].armed >= 99)
 			return true;
+	return false;
+}
+
+function vtolReady(droid) {
+	if (!droid.isVTOL)
+		return false;
+	if (droid.order == DORDER_ATTACK)
+		return false;
+	if (vtolArmed(droid, 99))
+		return true;
 	if (droid.order != DORDER_REARM)
 		orderDroid(droid, DORDER_REARM);
 	return false;
@@ -415,6 +429,18 @@ _global.checkAttack = function() {
 			if (defined(target))
 				orderDroidObj(droid, DORDER_ATTACK, target);
 		});
+}
+
+_global.pushVtols = function(object) {
+	var vtols = enumRange(object.x, object.y, 20, me, false);
+	var enemies = enumRange(object.x, object.y, 8, ENEMIES, true);
+	for (var i = 0; i < vtols.length; ++i)
+		if (vtolArmed(vtols[i], 1))
+			for (var j = 0; j < enemies.length; ++j)
+				if (vtolCanHit(vtols[i], enemies[j])) {
+					orderDroidObj(vtols[i], DORDER_ATTACK, enemies[j]);
+					break;
+				}
 }
 
 _global.inPanic = function() {

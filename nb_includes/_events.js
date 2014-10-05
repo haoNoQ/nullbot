@@ -58,18 +58,17 @@ function eventAttacked(victim, attacker) {
 			fallBack(victim, attacker);
 			setTarget(attacker, victim.group);
 			touchGroup(victim.group);
+		} else if (isVTOL(victim) && victim.player == me && !throttled(5000, victim.id)) {
+			orderDroidObj(victim, DORDER_ATTACK, attacker);
+			pushVtols(attacker);
 		}
 	} else if (victim.type === STRUCTURE) {
-		if (throttled(5000))
+		if (throttled(5000) && victim.player != me)
 			return;
-		if (inPanic()) {
-			if (victim.player !== me)
-				return;
-			else
-				for (var i = 0; i < MAX_GROUPS; ++i)
-					if (groupSize(i) > 0)
-						setTarget(attacker, i);
-		}
+		if (inPanic())
+			for (var i = 0; i < MAX_GROUPS; ++i)
+				if (groupSize(i) > 0)
+					setTarget(attacker, i);
 		setTarget(attacker, miscGroup);
 		setTarget(attacker);
 	}
@@ -98,4 +97,9 @@ function eventBeacon(x, y, from, to) {
 
 function eventBeaconRemoved(from, to) {
 	unnoticeBeacon(from);
+}
+
+function eventDestroyed(object) {
+	if (isEnemy(object.player))
+		pushVtols(object);
 }
