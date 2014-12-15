@@ -1,21 +1,18 @@
 
 /*
- * This file defines a standard AI personality for the base game. 
- * 
+ * This file defines a standard AI personality for the WZMini mod game.
+ *
  * It relies on ruleset definition in /rulesets/ to provide
- * standard strategy descriptions and necessary game stat information.
- * 
+ * WZMini strategy descriptions and necessary game stat information.
+ *
  * Then it passes control to the main code.
- * 
+ *
  */
 
-// You can redefine these paths when you make a customized AI
-// for a map or a challenge.
 NB_PATH = "/multiplay/skirmish/";
 NB_INCLUDES = NB_PATH + "nb_includes/";
 NB_RULESETS = NB_PATH + "nb_rulesets/";
 
-// please don't touch this line
 include(NB_INCLUDES + "_head.js");
 
 ////////////////////////////////////////////////////////////////////////////////////////////
