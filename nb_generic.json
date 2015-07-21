@@ -1,7 +1,7 @@
 {
     "AI": {
         "js": "nb_generic.js",
-        "name": "Harold-git",
-        "tip": "Harold - NullBot's 'Chatty' Brother"
+        "name": "NullBot v3-git",
+        "tip": "NullBot - an adaptive skirmish AI"
     }
 }
