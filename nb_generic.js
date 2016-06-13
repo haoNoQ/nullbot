@@ -14,6 +14,7 @@
 NB_PATH = "/multiplay/skirmish/";
 NB_INCLUDES = NB_PATH + "nb_includes/";
 NB_RULESETS = NB_PATH + "nb_rulesets/";
+NB_COMMON = NB_PATH + "nb_common/";
 
 // please don't touch this line
 include(NB_INCLUDES + "_head.js");
@@ -23,6 +24,7 @@ include(NB_INCLUDES + "_head.js");
 
 // the rules in which this personality plays
 include(NB_RULESETS + "standard.js");
+include(NB_COMMON + "standard_build_order.js");
 
 // variables defining the personality
 var subpersonalities = {
@@ -45,8 +47,8 @@ var subpersonalities = {
 		minTanks: 1, // minimal attack force at game start
 		becomeHarder: 3, // how much to increase attack force every 5 minutes
 		maxTanks: 16, // maximum for the minTanks value (since it grows at becomeHarder rate)
-		minTrucks: 3, // minimal number of trucks around
-		minHoverTrucks: 4, // minimal number of hover trucks around
+		minTrucks: 2, // minimal number of trucks around
+		minHoverTrucks: 3, // minimal number of hover trucks around
 		maxSensors: 1, // number of mobile sensor cars to produce
 		minMiscTanks: 1, // number of tanks to start harassing enemy
 		maxMiscTanks: 2, // number of tanks used for defense and harass
@@ -126,44 +128,31 @@ var subpersonalities = {
 // you can rely on personality.chatalias for choosing different build orders for
 // different subpersonalities
 function buildOrder() {
-	var derrickCount = countFinishedStructList(structures.derricks);
-	// might be good for Insane AI, or for rebuilding
-	if (derrickCount > 0) 
-		if (buildMinimum(structures.gens, 1)) return true;
-	// lab, factory, gen, cc - the current trivial build order for the 3.2+ starting conditions
-	if (buildMinimum(structures.labs, 1)) return true;
-	if (buildMinimum(structures.factories, 1)) return true;
-	if (buildMinimum(structures.gens, 1)) return true;
-	// make sure trucks go capture some oil at this moment
-	if (buildMinimumDerricks(1)) return true;
-	// what if one of them is being upgraded? will need the other anyway.
-	// also, it looks like the right timing in most cases.
-	if (buildMinimum(structures.gens, 2)) return true;
-	if (buildMinimum(structures.hqs, 1)) return true;
-	// make sure we have at least that much oils by now
-	if (buildMinimumDerricks(5)) return true;
-	// support hover maps
-	var ret = scopeRatings();
-	if (ret.land === 0 && !iHaveHover())
-		if (buildMinimum(structures.labs, 4)) return true;
-	if (ret.land === 0 && ret.sea === 0 && !iHaveVtol())
-		if (buildMinimum(structures.labs, 4)) return true;
-	// since we reached that far, we can afford some more trucks
-	if (gameTime > 300000) {
-		personality.minTrucks = 5;
-		personality.maxPower = 300;
-		personality.minMiscTanks = 2;
-		personality.minMiscTanks = 6;
-		// build more factories and labs when we have enough income
-		if (buildMinimum(structures.labs, derrickCount / 3)) return true;
+	// Only use this build order in early game, on standard difficulty, in T1 no bases.
+	// Otherwise, fall back to the safe build order.
+	if (gameTime > 300000 || difficulty === INSANE
+	                      || isStructureAvailable("A0ComDroidControl") || baseType !== CAMP_CLEAN)
+		return buildOrder_StandardFallback();
+	if (personality.chatalias === "fc" || personality.chatalias == "fr") {
+		if (buildMinimum(structures.labs, 1)) return true;
+		if (buildMinimum(structures.factories, 1)) return true;
+		if (buildMinimum(structures.labs, 2)) return true;
 		if (buildMinimum(structures.factories, 2)) return true;
-		if (buildMinimum(structures.templateFactories, 1)) return true;
-		if (buildMinimum(structures.vtolFactories, 1)) return true;
-		return false;
+		if (buildMinimumDerricks(2)) return true;
+		if (buildMinimum(structures.hqs, 1)) return true;
+		if (buildMinimum(structures.gens, 2)) return true;
+	} else {
+		if (buildMinimum(structures.factories, 2)) return true;
+		if (buildMinimumDerricks(1)) return true;
+		if (buildMinimum(structures.labs, 1)) return true;
+		if (buildMinimum(structures.hqs, 1)) return true;
+		if (buildMinimum(structures.factories, 3)) return true;
+		if (buildMinimum(structures.gens, 2)) return true;
 	}
-	
-	return true;
+	return captureSomeOil();
 }
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // Proceed with the main code

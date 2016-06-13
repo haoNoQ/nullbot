@@ -222,7 +222,7 @@ _global.buildMinimum = function(statlist, count, importance) {
 	return false;
 }
 
-function captureSomeOil() {
+_global.captureSomeOil = function() {
 	if (throttled(500))
 		return true;
 	function getOilList() {
@@ -239,7 +239,6 @@ function captureSomeOil() {
 	var oils = cached(getOilList, 5000);
 	if (countFinishedStructList(structures.derricks) >= 4 * structListLimit(structures.gens))
 		return false;
-
 	for (var i = 0; i < oils.length; ++i)
 		if (captureOil(oils[i]) === BUILDRET.SUCCESS)
 			return true;
@@ -304,7 +303,7 @@ function buildExtras() {
 	return false;
 }
 
-function buildDefenses() {
+_global.buildDefenses = function() {
 	if (chooseObjectType() !== 2)
 		return false;
 	if (withChance(33)) {

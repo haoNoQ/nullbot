@@ -14,6 +14,7 @@
 NB_PATH = "/multiplay/skirmish/";
 NB_INCLUDES = NB_PATH + "nb_includes/";
 NB_RULESETS = NB_PATH + "nb_rulesets/";
+NB_COMMON = NB_PATH + "nb_common/";
 
 // please don't touch this line
 include(NB_INCLUDES + "_head.js");
@@ -23,6 +24,7 @@ include(NB_INCLUDES + "_head.js");
 
 // the rules in which this personality plays
 include(NB_RULESETS + "standard.js");
+include(NB_COMMON + "standard_build_order.js");
 
 // variables defining the personality
 var subpersonalities = {
@@ -77,26 +79,18 @@ var subpersonalities = {
 // you can rely on personality.chatalias for choosing different build orders for
 // different subpersonalities
 function buildOrder() {
-	var derrickCount = countFinishedStructList(structures.derricks);
-	// might be good for Insane AI, or for rebuilding
-	if (derrickCount > 0)
-		if (buildMinimum(structures.gens, 1)) return true;
-	// lab, factory, gen, cc - the current trivial build order for the 3.2+ starting conditions
-	if (buildMinimum(structures.labs, 1)) return true;
+	// Only use this build order in early game, on standard difficulty, in T1 no bases.
+	// Otherwise, fall back to the safe build order.
+	if (gameTime > 300000 || difficulty === INSANE
+	                      || isStructureAvailable("A0ComDroidControl") || baseType !== CAMP_CLEAN)
+		return buildOrder_StandardFallback();
 	if (buildMinimum(structures.factories, 1)) return true;
-	if (buildMinimum(structures.gens, 1)) return true;
-	// make sure trucks go capture some oil at this moment
-	if (buildMinimumDerricks(1)) return true;
-	// what if one of them is being upgraded? will need the other anyway.
-	// also, it looks like the right timing in most cases.
-	if (buildMinimum(structures.gens, 2)) return true;
+	if (buildMinimum(structures.labs, 1)) return true;
 	if (buildMinimum(structures.hqs, 1)) return true;
-	// make sure we have at least that much oils by now
+	if (buildMinimum(structures.labs, 3)) return true;
+	if (buildMinimum(structures.gens, 1)) return true;
 	if (buildMinimumDerricks(3)) return true;
-	// make sure we have enough labs
-	if (gameTime > 600000)
-		if (buildMinimum(structures.labs, derrickCount / 2)) return true;
-	return false;
+	return withChance(25) ? captureSomeOil() : buildDefenses();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
