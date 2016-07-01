@@ -256,11 +256,18 @@ function buildExpand() {
 	if (myPower() > personality.maxPower) {
 		switch (chooseObjectType()) {
 			case 0:
-				if (buildMinimum(structures.factories, Infinity)) return true;
+				if (needFastestResearch() === PROPULSIONUSAGE.GROUND)
+					if (buildMinimum(structures.factories, Infinity))
+						return true;
+				// fall-through
 			case 1:
-				if (buildMinimum(structures.templateFactories, Infinity)) return true;
+				if (needFastestResearch() === PROPULSIONUSAGE.GROUND)
+					if (buildMinimum(structures.templateFactories, Infinity))
+						return true;
+				// fall-through
 			case 3:
-				if (buildMinimum(structures.vtolFactories, Infinity)) return true;
+				if (buildMinimum(structures.vtolFactories, Infinity))
+					return true;
 		}
 	}
 	return false;
@@ -281,6 +288,8 @@ function buildEnergy() {
 function buildModules() {
 	var str = [];
 	for (var i = 0; i < modules.length; ++i) {
+		if (modules[i].base === FACTORY && needFastestResearch() !== PROPULSIONUSAGE.GROUND)
+			continue;
 		str = enumStruct(me, modules[i].base);
 		for (var j = 0; j < str.length; ++j)
 			if (buildModule(str[j]) !== BUILDRET.UNAVAILABLE)

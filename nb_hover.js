@@ -43,6 +43,7 @@ var subpersonalities = {
 			"R-Vehicle-Prop-Hover",
 			"R-Wpn-Rocket02-MRL",
 			"R-Vehicle-Body05",
+			"R-Vehicle-Prop-Halftracks",
 			"R-Wpn-Rocket-ROF01",
 			"R-Struc-RepairFacility",
 			"R-Defense-MRL",
@@ -62,7 +63,7 @@ var subpersonalities = {
 		maxMiscTanks: 3, // number of tanks used for defense and harass
 		vtolness: 75, // the chance % of not making droids when adaptation mechanism chooses vtols
 		defensiveness: 75, // same thing for defenses; set this to 100 to enable turtle AI specific code
-		maxPower: 900, // build expensive things if we have more than that
+		maxPower: 1200, // build expensive things if we have more than that
 		repairAt: 60, // how much % healthy should droid be to join the attack group instead of repairing
 	},
 };
@@ -73,7 +74,7 @@ var subpersonalities = {
 function buildOrder() {
 	// Only use this build order in early game, on standard difficulty, in T1 no bases.
 	// Otherwise, fall back to the safe build order.
-	if (gameTime > 600000 || difficulty === INSANE
+	if (gameTime > 720000 || difficulty === INSANE
 	                      || isStructureAvailable("A0ComDroidControl") || baseType !== CAMP_CLEAN)
 		return buildOrder_StandardFallback();
 	if (buildMinimum(structures.labs, 2)) return true;
@@ -83,7 +84,6 @@ function buildOrder() {
 	if (buildMinimumDerricks(1)) return true;
 	if (buildMinimum(structures.labs, 4)) return true;
 	if (buildMinimum(structures.hqs, 1)) return true;
-	if (buildMinimum(structures.factories, 2)) return true;
 	return captureSomeOil();
 }
 

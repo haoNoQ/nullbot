@@ -13,6 +13,15 @@ _global.setForcedResearch = function(list) {
 	forcedResearch = list;
 }
 
+_global.needFastestResearch = function() {
+	var ret = scopeRatings();
+	if (ret.land === 0 && ret.sea === 0 && !iHaveVtol())
+		return PROPULSIONUSAGE.VTOL;
+	if (ret.land === 0 && ret.sea !== 0 && !iHaveHover() && !iHaveVtol())
+		return PROPULSIONUSAGE.HOVER;
+	return PROPULSIONUSAGE.GROUND;
+}
+
 function doResearch(lab) {
 	if (defined(forcedResearch)) {
 		if (forcedResearch === null)
@@ -21,14 +30,14 @@ function doResearch(lab) {
 			return true;
 	}
 	// if we need to quickly get a certain propulsion to reach the enemy, prioritize that.
-	var ret = scopeRatings();
-	if (ret.land === 0 && ret.sea === 0 && !iHaveVtol())
+	var fastest = needFastestResearch();
+	if (fastest === PROPULSIONUSAGE.VTOL)
 		if (pursueResearch(lab, [
 			propulsionStatsToResList(PROPULSIONUSAGE.VTOL),
 			fastestResearch,
 		].random())) 
 			return true;
-	if (ret.land === 0 && ret.sea !== 0 && !iHaveHover() && !iHaveVtol())
+	if (fastest === PROPULSIONUSAGE.HOVER)
 		if (pursueResearch(lab, [
 			propulsionStatsToResList(PROPULSIONUSAGE.HOVER),
 			propulsionStatsToResList(PROPULSIONUSAGE.VTOL),
