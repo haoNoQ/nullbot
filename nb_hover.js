@@ -63,7 +63,7 @@ var subpersonalities = {
 		maxMiscTanks: 3, // number of tanks used for defense and harass
 		vtolness: 75, // the chance % of not making droids when adaptation mechanism chooses vtols
 		defensiveness: 75, // same thing for defenses; set this to 100 to enable turtle AI specific code
-		maxPower: 1200, // build expensive things if we have more than that
+		maxPower: 2500, // build expensive things if we have more than that
 		repairAt: 60, // how much % healthy should droid be to join the attack group instead of repairing
 	},
 };
@@ -72,6 +72,14 @@ var subpersonalities = {
 // you can rely on personality.chatalias for choosing different build orders for
 // different subpersonalities
 function buildOrder() {
+	// HACK: Tweak the rocket path a bit.
+	personality.weaponPaths[0].weapons = [
+		{ res: "R-Wpn-Rocket02-MRL", stat: "Rocket-MRL", weight: WEIGHT.MEDIUM }, // mra
+		{ res: "R-Wpn-Rocket01-LtAT", stat: "Rocket-LtA-T", weight: WEIGHT.MEDIUM }, // lancer
+		{ res: "R-Wpn-Rocket07-Tank-Killer", stat: "Rocket-HvyA-T", weight: WEIGHT.MEDIUM }, // tk
+		{ res: "R-Wpn-Missile2A-T", stat: "Missile-A-T", weight: WEIGHT.MEDIUM }, // scourge
+		{ res: "R-Wpn-MdArtMissile", stat: "Missile-MdArt", weight: WEIGHT.HEAVY }, // seraph
+	];
 	// Only use this build order in early game, on standard difficulty, in T1 no bases.
 	// Otherwise, fall back to the safe build order.
 	if (gameTime > 720000 || difficulty === INSANE
@@ -80,8 +88,9 @@ function buildOrder() {
 	if (buildMinimum(structures.labs, 2)) return true;
 	if (buildMinimum(structures.factories, 1)) return true;
 	if (buildMinimum(structures.labs, 3)) return true;
-	if (buildMinimum(structures.gens, 2)) return true;
+	if (buildMinimum(structures.gens, 1)) return true;
 	if (buildMinimumDerricks(1)) return true;
+	if (buildMinimum(structures.gens, 2)) return true;
 	if (buildMinimum(structures.labs, 4)) return true;
 	if (buildMinimum(structures.hqs, 1)) return true;
 	return captureSomeOil();

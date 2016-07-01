@@ -24,16 +24,14 @@ function buildOrder_StandardFallback() {
 		if (buildMinimum(structures.labs, 4)) return true;
 	if (ret.land === 0 && ret.sea === 0 && !iHaveVtol())
 		if (buildMinimum(structures.labs, 4)) return true;
-	// since we reached that far, we can afford some more trucks
 	if (gameTime > 300000) {
-		personality.minTrucks = 5;
-		personality.maxPower = 300;
-		personality.minMiscTanks = 2;
-		personality.minMiscTanks = 6;
 		// build more factories and labs when we have enough income
 		if (buildMinimum(structures.labs, derrickCount / 3)) return true;
-		if (buildMinimum(structures.factories, 2)) return true;
-		if (buildMinimum(structures.templateFactories, 1)) return true;
+		if (needFastestResearch() === PROPULSIONUSAGE.GROUND) {
+			if (buildMinimum(structures.factories, 2)) return true;
+			if (scopeRatings().land > 0)
+				if (buildMinimum(structures.templateFactories, 1)) return true;
+		}
 		if (buildMinimum(structures.vtolFactories, 1)) return true;
 		return false;
 	}
