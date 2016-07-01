@@ -1,7 +1,7 @@
 {
     "AI": {
         "js": "nb_turtle.js",
-        "name": "Turtle AI v3.06",
+        "name": "Turtle AI v3-git",
         "tip": "Tower wars AI, based on NullBot"
     }
 }
