@@ -89,8 +89,7 @@ function buildOrder() {
 	if (buildMinimum(structures.factories, 1)) return true;
 	if (buildMinimum(structures.labs, 3)) return true;
 	if (buildMinimum(structures.gens, 1)) return true;
-	if (buildMinimumDerricks(1)) return true;
-	if (buildMinimum(structures.gens, 2)) return true;
+	if (buildMinimumDerricks(2)) return true;
 	if (buildMinimum(structures.labs, 4)) return true;
 	if (buildMinimum(structures.hqs, 1)) return true;
 	return captureSomeOil();

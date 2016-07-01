@@ -79,7 +79,7 @@ function buildBasicStructure(statlist, importance) {
 	if (throttled(5000, statlist[0])) return BUILDRET.FAILURE;
 	// by default, don't try building things in dangerous locations
 	if (!defined(importance))
-		importance = IMPORTANCE.PEACETIME;
+		importance = IMPORTANCE.MANDATORY;
 	trucks = getTwoFreeTrucks();
 	if (trucks.length <= 0)
 		return BUILDRET.FAILURE;
@@ -212,7 +212,7 @@ function buildGateways() {
 }
 
 function buildArty() {
-	return buildBasicStructure(chooseDefense(DEFROLE.ARTY));
+	return buildBasicStructure(chooseDefense(DEFROLE.ARTY), IMPORTANCE.PEACETIME);
 }
 
 _global.buildMinimum = function(statlist, count, importance) {
@@ -257,16 +257,16 @@ function buildExpand() {
 		switch (chooseObjectType()) {
 			case 0:
 				if (needFastestResearch() === PROPULSIONUSAGE.GROUND)
-					if (buildMinimum(structures.factories, Infinity))
+					if (buildMinimum(structures.factories, Infinity, IMPORTANCE.PEACETIME))
 						return true;
 				// fall-through
 			case 1:
 				if (needFastestResearch() === PROPULSIONUSAGE.GROUND)
-					if (buildMinimum(structures.templateFactories, Infinity))
+					if (buildMinimum(structures.templateFactories, Infinity, IMPORTANCE.PEACETIME))
 						return true;
 				// fall-through
 			case 3:
-				if (buildMinimum(structures.vtolFactories, Infinity))
+				if (buildMinimum(structures.vtolFactories, Infinity, IMPORTANCE.PEACETIME))
 					return true;
 		}
 	}
@@ -277,7 +277,7 @@ function buildEnergy() {
 	var oils = countFinishedStructList(structures.derricks);
 	var gens = countStructList(structures.gens);
 	if (oils > 4 * gens)
-		if (buildBasicStructure(structures.gens) !== BUILDRET.UNAVAILABLE)
+		if (buildBasicStructure(structures.gens, IMPORTANCE.PEACETIME) !== BUILDRET.UNAVAILABLE)
 			return true;
 	if (withChance(50))
 		if (captureSomeOil())
@@ -299,7 +299,7 @@ function buildModules() {
 }
 
 _global.buildVtols = function() {
-	if (buildMinimum(structures.vtolPads, enumDroid(me, DROID_WEAPON).filter(isVTOL).length / 2))
+	if (buildMinimum(structures.vtolPads, enumDroid(me, DROID_WEAPON).filter(isVTOL).length / 2), IMPORTANCE.PEACETIME)
 		return true;
 	return false;
 }
@@ -307,7 +307,7 @@ _global.buildVtols = function() {
 function buildExtras() {
 	if (throttled(180000))
 		return false;
-	if (buildBasicStructure(structures.extras) !== BUILDRET.UNAVAILABLE)
+	if (buildBasicStructure(structures.extras, IMPORTANCE.PEACETIME) !== BUILDRET.UNAVAILABLE)
 		return true;
 	return false;
 }
