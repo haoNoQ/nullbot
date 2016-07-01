@@ -15,6 +15,7 @@ function rnd() {
 
 _global.setTimers = function() {
 	setTimer("spendMoney", 2000 + 3 * rnd());
+	setTimer("checkConstruction", 3000 + 8 * rnd());
 	setTimer("checkAttack", 100);
 	setTimer("adaptCycle", 100);
 	setTimer("rebalanceGroups", 10000 + 20 * rnd());
