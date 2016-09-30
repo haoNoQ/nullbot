@@ -1,4 +1,4 @@
-
+ 
 /*
  * This file describes standard stats and strategies of 
  * the base (unmodded) game.
@@ -507,22 +507,34 @@ const weaponStats = {
 		],
 		extras: [],
 	},
-	useless_AT: {
+	AT: {
 		roles: [ 1.0, 0.0, 0.0, 0.0 ],
-		chatalias: "useless_AT",
+		chatalias: "at",
+		micro: MICRO.RANGED,
 		weapons: [
-			{ stat: "CannonSuper" }, // cannon fort weapon
-			{ stat: "RocketSuper" }, // rocket bastion weapon
-			{ stat: "MissileSuper" }, // missile fort weapon
-			{ stat: "MassDriver" }, // mass driver fort weapon
-			{ stat: "MortarEMP" }, // emp mortar
-			{ stat: "EMP-Cannon" }, // emp cannon
+			{ res: "R-Wpn-EMPCannon", stat: "EMP-Cannon", weight: WEIGHT.HEAVY }, // emp cannon
+		//	{ res: "R-Wpn-MortarEMP", stat: "MortarEMP", weight: WEIGHT.HEAVY }, 
 		],
 		vtols: [],
-		defenses: [],
+		defenses: [
+		  { res: "R-Defense-Super-Cannon", stat: "X-Super-Cannon", defrole: DEFROLE.STANDALONE },
+		  { res: "R-Defense-Super-Rocket", stat: "X-Super-Rocket", defrole: DEFROLE.STANDALONE },
+		  { res: "R-Defense-Super-Missile", stat: "X-Super-Missile", defrole: DEFROLE.STANDALONE },
+		  { res: "R-Defense-MassDriver", stat: "X-Super-MassDriver", defrole: DEFROLE.STANDALONE },
+		  { res: "R-Defense-EMPCannon", stat: "Emplacement-MortarEMP", defrole: DEFROLE.STANDALONE }, 
+		],
 		templates: [],
-		extras: [],
-	},
+		extras: [
+		  "R-Wpn-Cannon-Damage05",
+		  "R-Defense-WallUpgrade10",
+		  "R-Wpn-Rocket-Damage08",
+		  "R-Wpn-Missile-ROF03",
+		  "R-Wpn-RailGun03",
+		  "R-Wpn-Rail-ROF03",
+		  "R-Sys-SpyTower",
+		  "R-Sys-Sensor-UpLink",
+		],
+	}, 
 	useless_AP: {
 		roles: [ 0.0, 1.0, 0.0, 0.0 ],
 		chatalias: "useless_AP",
@@ -538,27 +550,78 @@ const weaponStats = {
 		templates: [],
 		extras: [],
 	},
-	useless_AS: {
+	AS: {
 		roles: [ 0.0, 0.0, 1.0, 0.0 ],
-		chatalias: "useless_AS",
+		chatalias: "as",
+		micro: MICRO.RANGED,
 		weapons: [
-			{ stat: "PlasmaHeavy" }, // plasma cannon (still unused)
+			{ res: "R-Wpn-PlasmaCannon", stat: "Laser4-PlasmaCannon", weight: WEIGHT.ULTRAHEAVY }, // plasma cannon
 		],
 		vtols: [],
-		defenses: [],
+		defenses: [
+		           { res: "R-Defense-PlasmaCannon", stat: "Emplacement-PlasmaCannon", defrole: DEFROLE.STANDALONE },
+		],
 		templates: [],
-		extras: [],
+		extras: [
+		     "R-Wpn-Cannon4AMk1",
+		     "R-Wpn-Flame2",
+		     "R-Struc-Research-Upgrade06",
+		],
 	},
-	useless_AA: {
-		roles: [ 0.0, 0.0, 0.0, 1.0 ],
-		chatalias: "useless_AA",
-		weapons: [
-			{ stat: "QuadMg1AAGun" }, // hurricane (still unused)
-			{ stat: "QuadRotAAGun" }, // whirlwind (still unused)
+	bombs: {
+		roles: [ 0.1, 0.2, 0.7, 0.0 ],
+		chatalias: "bm",
+		micro: MICRO.DUMB,
+		weapons: [],
+		vtols: [
+			{ res: "R-Wpn-Bomb01", stat: "Bomb1-VTOL-LtHE", weight: WEIGHT.LIGHT}, // cluster bomb
+			{ res: "R-Wpn-Bomb02", stat: "Bomb2-VTOL-HvHE", weight: WEIGHT.HEAVY}, // HEAP bomb
+			{ res: "R-Wpn-Bomb03", stat: "Bomb3-VTOL-LtINC", weight: WEIGHT.LIGHT}, // Phosphor bomb
+			{ res: "R-Wpn-Bomb04", stat: "Bomb4-VTOL-HvyINC", weight: WEIGHT.HEAVY}, // Thermite bomb
+			{ res: "R-Wpn-Bomb05", stat: "Bomb5-VTOL-Plasmite", weight: WEIGHT.HEAVY}, // Plasmite bomb
+			{ res: "R-Wpn-Bomb06", stat: "Bomb6-VTOL-EMP", weight: WEIGHT.HEAVY}, // EMP Missile Launcher
 		],
-		vtols: [],
 		defenses: [],
 		templates: [],
-		extras: [],
+		extras: [
+			"R-Vehicle-Prop-VTOL",
+			"R-Wpn-Mortar-Damage02", //HE bomb shells need this
+			"R-Struc-Research-Upgrade04", //HE bomb shells need this
+			"R-Wpn-Flamer-Damage05", //Phosphor/Thermite bombs need this
+			"R-Wpn-Plasmite-Flamer", //Plasmite bomb needs this
+			"R-Wpn-Bomb-Accuracy03",
+			"R-Wpn-EMPCannon",  // EMP missile launcher needs this
+			"R-Vehicle-Engine09", //Slow is not an option
+		],
+	},
+	AA: {
+		roles: [ 0.0, 0.0, 0.0, 1.0 ],
+		chatalias: "aa",
+		micro: MICRO.RANGED,
+		weapons: [
+			{ res: "R-Wpn-AAGun03", stat: "QuadMg1AAGun", weight: WEIGHT.LIGHT}, // hurricane 
+			{ res: "R-Wpn-AAGun04", stat: "QuadRotAAGun", weight: WEIGHT.MEDIUM}, // whirlwind 
+			{ res: "R-Wpn-AALaser", stat: "AAGunLaser", weight: WEIGHT.HEAVY}, // stormbringer
+		],
+		vtols: [],
+		defenses: [
+			{ res: "R-Defense-AASite-QuadMg1", stat: "AASite-QuadMg1", defrole: DEFROLE.STANDALONEAA}, // hurricane 
+			{ res: "R-Defense-AASite-QuadRotMg", stat: "AASite-QuadRotMg", defrole: DEFROLE.STANDALONEAA}, // whirlwind
+			{ res: "R-Defense-AA-Laser", stat: "P0-AASite-Laser", defrole: DEFROLE.STANDALONEAA}, // stormbringer
+		],
+		templates: [],
+		extras: [
+			//AA needs a LOT of extra research
+			"R-Wpn-MG2Mk1", //needed to build hurricane and later
+			"R-Wpn-MG-ROF01", // Ammunition Hopper needs this
+			"R-Wpn-MG4", //whirlwind needs this
+			"R-Wpn-Cannon-ROF04", // chainfeed loader needs this
+			"R-Wpn-AAGun-Damage06",
+			"R-Wpn-AAGun-ROF06",
+			"R-Wpn-RocketSlow-Accuracy02", //Thermal Imaging Sensor needs this
+			"R-Wpn-Howitzer-Accuracy01", //Target Acquisition Shells need this
+			"R-Struc-Research-Upgrade06", // Target Predication Computer needs this
+			"R-Wpn-AAGun-Accuracy03", //^really need to work to get these upgrades...
+		],
 	},
 };
