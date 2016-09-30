@@ -605,9 +605,9 @@ const weaponStats = {
 		],
 		vtols: [],
 		defenses: [
-			{ res: "R-Defense-AASite-QuadMg1", stat: "AASite-QuadMg1", defrole: DEFROLE.STANDALONEAA}, // hurricane 
-			{ res: "R-Defense-AASite-QuadRotMg", stat: "AASite-QuadRotMg", defrole: DEFROLE.STANDALONEAA}, // whirlwind
-			{ res: "R-Defense-AA-Laser", stat: "P0-AASite-Laser", defrole: DEFROLE.STANDALONEAA}, // stormbringer
+			{ res: "R-Defense-AASite-QuadMg1", stat: "AASite-QuadMg1", defrole: DEFROLE.STANDALONE}, // hurricane 
+			{ res: "R-Defense-AASite-QuadRotMg", stat: "AASite-QuadRotMg", defrole: DEFROLE.STANDALONE}, // whirlwind
+			{ res: "R-Defense-AA-Laser", stat: "P0-AASite-Laser", defrole: DEFROLE.STANDALONE}, // stormbringer
 		],
 		templates: [],
 		extras: [
