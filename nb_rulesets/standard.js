@@ -507,21 +507,17 @@ const weaponStats = {
 		],
 		extras: [],
 	},
-	AT: {
+	fort_AT: {
 		roles: [ 1.0, 0.0, 0.0, 0.0 ],
 		chatalias: "at",
 		micro: MICRO.RANGED,
-		weapons: [
-			{ res: "R-Wpn-EMPCannon", stat: "EMP-Cannon", weight: WEIGHT.HEAVY }, // emp cannon
-		//	{ res: "R-Wpn-MortarEMP", stat: "MortarEMP", weight: WEIGHT.HEAVY }, 
-		],
+		weapons: [],
 		vtols: [],
 		defenses: [
-		  { res: "R-Defense-Super-Cannon", stat: "X-Super-Cannon", defrole: DEFROLE.STANDALONE },
-		  { res: "R-Defense-Super-Rocket", stat: "X-Super-Rocket", defrole: DEFROLE.STANDALONE },
-		  { res: "R-Defense-Super-Missile", stat: "X-Super-Missile", defrole: DEFROLE.STANDALONE },
-		  { res: "R-Defense-MassDriver", stat: "X-Super-MassDriver", defrole: DEFROLE.STANDALONE },
-		  { res: "R-Defense-EMPCannon", stat: "Emplacement-MortarEMP", defrole: DEFROLE.STANDALONE }, 
+		  { res: "R-Defense-Super-Cannon", stat: "X-Super-Cannon", defrole: DEFROLE.FORTRESS },
+		  { res: "R-Defense-Super-Rocket", stat: "X-Super-Rocket", defrole: DEFROLE.FORTRESS },
+		  { res: "R-Defense-Super-Missile", stat: "X-Super-Missile", defrole: DEFROLE.FORTRESS },
+		  { res: "R-Defense-MassDriver", stat: "X-Super-MassDriver", defrole: DEFROLE.FORTRESS },
 		],
 		templates: [],
 		extras: [
@@ -531,8 +527,6 @@ const weaponStats = {
 		  "R-Wpn-Missile-ROF03",
 		  "R-Wpn-RailGun03",
 		  "R-Wpn-Rail-ROF03",
-		  "R-Sys-SpyTower",
-		  "R-Sys-Sensor-UpLink",
 		],
 	}, 
 	useless_AP: {
@@ -559,7 +553,7 @@ const weaponStats = {
 		],
 		vtols: [],
 		defenses: [
-		           { res: "R-Defense-PlasmaCannon", stat: "Emplacement-PlasmaCannon", defrole: DEFROLE.STANDALONE },
+		    { res: "R-Defense-PlasmaCannon", stat: "Emplacement-PlasmaCannon", defrole: DEFROLE.STANDALONE },
 		],
 		templates: [],
 		extras: [
@@ -574,19 +568,18 @@ const weaponStats = {
 		micro: MICRO.DUMB,
 		weapons: [],
 		vtols: [
-			{ res: "R-Wpn-Bomb01", stat: "Bomb1-VTOL-LtHE", weight: WEIGHT.LIGHT}, // cluster bomb
-			{ res: "R-Wpn-Bomb02", stat: "Bomb2-VTOL-HvHE", weight: WEIGHT.HEAVY}, // HEAP bomb
-			{ res: "R-Wpn-Bomb03", stat: "Bomb3-VTOL-LtINC", weight: WEIGHT.LIGHT}, // Phosphor bomb
-			{ res: "R-Wpn-Bomb04", stat: "Bomb4-VTOL-HvyINC", weight: WEIGHT.HEAVY}, // Thermite bomb
-			{ res: "R-Wpn-Bomb05", stat: "Bomb5-VTOL-Plasmite", weight: WEIGHT.HEAVY}, // Plasmite bomb
-			{ res: "R-Wpn-Bomb06", stat: "Bomb6-VTOL-EMP", weight: WEIGHT.HEAVY}, // EMP Missile Launcher
+			{ res: "R-Wpn-Bomb01", stat: "Bomb1-VTOL-LtHE", weight: WEIGHT.LIGHT }, // cluster bomb
+			{ res: "R-Wpn-Bomb02", stat: "Bomb2-VTOL-HvHE", weight: WEIGHT.HEAVY }, // HEAP bomb
+			{ res: "R-Wpn-Bomb03", stat: "Bomb3-VTOL-LtINC", weight: WEIGHT.LIGHT }, // Phosphor bomb
+			{ res: "R-Wpn-Bomb04", stat: "Bomb4-VTOL-HvyINC", weight: WEIGHT.HEAVY }, // Thermite bomb
+			{ res: "R-Wpn-Bomb05", stat: "Bomb5-VTOL-Plasmite", weight: WEIGHT.HEAVY }, // Plasmite bomb
+			{ res: "R-Wpn-Bomb06", stat: "Bomb6-VTOL-EMP", weight: WEIGHT.HEAVY }, // EMP Missile Launcher
 		],
 		defenses: [],
 		templates: [],
 		extras: [
 			"R-Vehicle-Prop-VTOL",
 			"R-Wpn-Mortar-Damage02", //HE bomb shells need this
-			"R-Struc-Research-Upgrade04", //HE bomb shells need this
 			"R-Wpn-Flamer-Damage05", //Phosphor/Thermite bombs need this
 			"R-Wpn-Plasmite-Flamer", //Plasmite bomb needs this
 			"R-Wpn-Bomb-Accuracy03",
@@ -599,15 +592,15 @@ const weaponStats = {
 		chatalias: "aa",
 		micro: MICRO.RANGED,
 		weapons: [
-			{ res: "R-Wpn-AAGun03", stat: "QuadMg1AAGun", weight: WEIGHT.LIGHT}, // hurricane 
-			{ res: "R-Wpn-AAGun04", stat: "QuadRotAAGun", weight: WEIGHT.MEDIUM}, // whirlwind 
-			{ res: "R-Wpn-AALaser", stat: "AAGunLaser", weight: WEIGHT.HEAVY}, // stormbringer
+			{ res: "R-Wpn-AAGun03", stat: "QuadMg1AAGun", weight: WEIGHT.LIGHT }, // hurricane 
+			{ res: "R-Wpn-AAGun04", stat: "QuadRotAAGun", weight: WEIGHT.MEDIUM }, // whirlwind 
+			{ res: "R-Wpn-AALaser", stat: "AAGunLaser", weight: WEIGHT.HEAVY }, // stormbringer
 		],
 		vtols: [],
 		defenses: [
-			{ res: "R-Defense-AASite-QuadMg1", stat: "AASite-QuadMg1", defrole: DEFROLE.STANDALONE}, // hurricane 
-			{ res: "R-Defense-AASite-QuadRotMg", stat: "AASite-QuadRotMg", defrole: DEFROLE.STANDALONE}, // whirlwind
-			{ res: "R-Defense-AA-Laser", stat: "P0-AASite-Laser", defrole: DEFROLE.STANDALONE}, // stormbringer
+			{ res: "R-Defense-AASite-QuadMg1", stat: "AASite-QuadMg1", defrole: DEFROLE.STANDALONE }, // hurricane 
+			{ res: "R-Defense-AASite-QuadRotMg", stat: "AASite-QuadRotMg", defrole: DEFROLE.STANDALONE }, // whirlwind
+			{ res: "R-Defense-AA-Laser", stat: "P0-AASite-Laser", defrole: DEFROLE.STANDALONE }, // stormbringer
 		],
 		templates: [],
 		extras: [
@@ -624,4 +617,5 @@ const weaponStats = {
 			"R-Wpn-AAGun-Accuracy03", //^really need to work to get these upgrades...
 		],
 	},
+	
 };
