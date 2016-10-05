@@ -1,4 +1,4 @@
- 
+
 /*
  * This file describes standard stats and strategies of 
  * the base (unmodded) game.
@@ -520,14 +520,7 @@ const weaponStats = {
 		  { res: "R-Defense-MassDriver", stat: "X-Super-MassDriver", defrole: DEFROLE.FORTRESS },
 		],
 		templates: [],
-		extras: [
-		  "R-Wpn-Cannon-Damage05",
-		  "R-Defense-WallUpgrade10",
-		  "R-Wpn-Rocket-Damage08",
-		  "R-Wpn-Missile-ROF03",
-		  "R-Wpn-RailGun03",
-		  "R-Wpn-Rail-ROF03",
-		],
+		extras: [],
 	}, 
 	useless_AP: {
 		roles: [ 0.0, 1.0, 0.0, 0.0 ],
@@ -556,11 +549,7 @@ const weaponStats = {
 		    { res: "R-Defense-PlasmaCannon", stat: "Emplacement-PlasmaCannon", defrole: DEFROLE.STANDALONE },
 		],
 		templates: [],
-		extras: [
-		     "R-Wpn-Cannon4AMk1",
-		     "R-Wpn-Flame2",
-		     "R-Struc-Research-Upgrade06",
-		],
+		extras: [],
 	},
 	bombs: {
 		roles: [ 0.1, 0.2, 0.7, 0.0 ],
@@ -578,13 +567,8 @@ const weaponStats = {
 		defenses: [],
 		templates: [],
 		extras: [
-			"R-Vehicle-Prop-VTOL",
-			"R-Wpn-Mortar-Damage02", //HE bomb shells need this
-			"R-Wpn-Flamer-Damage05", //Phosphor/Thermite bombs need this
-			"R-Wpn-Plasmite-Flamer", //Plasmite bomb needs this
 			"R-Wpn-Bomb-Accuracy03",
-			"R-Wpn-EMPCannon",  // EMP missile launcher needs this
-			"R-Vehicle-Engine09", //Slow is not an option
+			"R-Vehicle-Engine09",
 		],
 	},
 	AA: {
@@ -604,17 +588,9 @@ const weaponStats = {
 		],
 		templates: [],
 		extras: [
-			//AA needs a LOT of extra research
-			"R-Wpn-MG2Mk1", //needed to build hurricane and later
-			"R-Wpn-MG-ROF01", // Ammunition Hopper needs this
-			"R-Wpn-MG4", //whirlwind needs this
-			"R-Wpn-Cannon-ROF04", // chainfeed loader needs this
 			"R-Wpn-AAGun-Damage06",
 			"R-Wpn-AAGun-ROF06",
-			"R-Wpn-RocketSlow-Accuracy02", //Thermal Imaging Sensor needs this
-			"R-Wpn-Howitzer-Accuracy01", //Target Acquisition Shells need this
-			"R-Struc-Research-Upgrade06", // Target Predication Computer needs this
-			"R-Wpn-AAGun-Accuracy03", //^really need to work to get these upgrades...
+			"R-Wpn-AAGun-Accuracy03",
 		],
 	},
 	
