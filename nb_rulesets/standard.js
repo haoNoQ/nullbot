@@ -568,6 +568,7 @@ const weaponStats = {
 		templates: [],
 		extras: [
 			"R-Wpn-Bomb-Accuracy03",
+			"R-Struc-VTOLPad-Upgrade06",
 			"R-Vehicle-Engine09",
 		],
 	},
