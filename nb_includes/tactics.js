@@ -416,7 +416,7 @@ _global.dangerLevel = function(loc) {
 }
 
 _global.checkAttack = function() {
-	if( enumLivingPlayers().filter(isEnemy) == 0 )
+	if( enumLivingPlayers().filter(isEnemy) === 0 )
 		return;
 	
 	for (var i = 0; i < MAX_GROUPS; ++i)
