@@ -86,7 +86,7 @@ function buildBasicStructure(statlist, importance) {
 	// choose structure type (out of the statlist), 
 	// together with suitable location
 	var idx, loc, avail = false;
-	for (var i = 0; i < statlist.length; ++i)
+	for (var i = statlist.length - 1; i >= 0; --i)
 		if (isAvailable(statlist[i])) {
 			avail = true;
 			if (distanceToBase(trucks[0]) <= baseScale)
