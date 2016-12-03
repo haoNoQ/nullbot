@@ -1,0 +1,21 @@
+To-do List for Harold -
+
+High Priority:
+* Teach Harold to Chat to Human Opponent. Include following responses for following skirmish situations:
+- Greeting upon startup
+- Be polite when given polite response from human player (0).
+- Otherwise, act like an arse when, when human player responds like such.
+- On EASY, declare to player when Harold is "going on the offensive" to serve as warning.
+- On EASY, declare to player when Harold has built any structure, besides Factory, Research Center, and/or Command Center.
+- On EASY, declare to player when Harold has produced the first of any droid and/or cyborg, besides Construction Droid.
+- On EASY, declare to player when Harold catches player is using cowardly tactics (examples of cowardly tactics do not include
+use of debug cheats, rather not applying self to research new tech, thus relying on the same droids, and constantly fleeing 
+from enemy presence. As new info on the subject becomes public, updates will follow.)
+- On EASY (and beyond), declare to player when Harold catches player using Cheats, and warn player when Harold will use them, as well.
+
+Low Prioity:
+- Declare to player unconditional surrender, when Harold is outmatched by player.
+- Praise player when player's attacking force defeats opponent Harold's defending force.
+- Declare vengeful response when Harold successfully eliminates dominating player force.
+- Declare dominating response when Harold continues to eliminate player reinforcements with dominating force.
+- Taunt player.

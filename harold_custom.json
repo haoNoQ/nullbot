@@ -1,0 +1,7 @@
+{
+    "AI": {
+        "js": "harold_custom.js",
+        "name": "Harold-Custom",
+        "tip": "Private Version of Harold for test purposes"
+    }
+}
